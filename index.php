@@ -36,12 +36,12 @@
 
 <!-- VIATRA2 Description part -->
 
-<div id="container"> 
+
 	<!-- Middle part -->
 	<div id="midcolumn">
 
 		<table width="100%">
-			<tr  valign="top">
+			<tr valign="top">
 				<td width="80%">
 
 
@@ -207,11 +207,6 @@
 		</div>
 		<hr class="clearer" />
 
-
-
-
-
-	</div>
 
 <!-- VIATRA2 PRESENTATION PART -->
 
