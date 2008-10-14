@@ -67,16 +67,7 @@
 								with writing VIATRA transformations.<br/>
 								Get it in PDF from <a href="viatratut.pdf">here</a>.	
 								</li>
-								<li>
-								<h4>Project plan & others</h4>
-								The project plan is available <a href="Viatra2_ProjectPlan.pdf">here</a>.<br/>
-								Old versions of the users guide:
-									<ul>
-									<li> <a href="viatratut_October2006.pdf">2006/10/01</a></li>
-									<li> <a href="viatratut2.pdf">2006/05/19</a></li>
-									<li> <a href="viatratut_old.pdf">2005/10/21</a></li>
-									</ul> 
-								</li>
+								
 							</ul>
 				      </p>
 				        		          	  	
