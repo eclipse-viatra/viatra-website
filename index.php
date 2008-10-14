@@ -129,33 +129,8 @@
 					</table>
 				</li>
 
-				<li>
-					<table width="100%">
-						<tr>
-							<td width="80%" valign="bottom">
-								<b><a href="http://viatra.inf.mit.bme.hu">VIATRA2 Project website</a></b></a>
-								<b><a href="contact.html">Contact developers</a></b>
-		  					</td>
 
-							<td align="right">
-
-							</td>
-						</tr>
-					</table>
-				</li>
-				<li>
-					<table width="100%">
-						<tr>
-
-							<td width="80%" valign="bottom">
-								<b><a href="https://trac.inf.mit.bme.hu/VIATRA/roadmap">Roadmap</a></b>, <b><a href="https://trac.inf.mit.bme.hu/VIATRA">Bug tracking system</a></b>
-		  					</td>
-							<td align="right">
-
-							</td>
-						</tr>
-					</table>
-				</li>
+				
 				
 			</ul>
 		</div>
