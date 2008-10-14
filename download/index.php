@@ -64,8 +64,8 @@
 				      VIATRA2 is released under the <a href="http://www.eclipse.org/org/documents/epl-v10.php">Eclipse Public License v1.0</a>.
 				      <h4>Eclipse.org Subversion repository</h4>
 				      	<ul>
-				      		<li>Release3: http://dev.eclipse.org/svnroot/modeling/org.eclipse.gmt.viatra2/tags/VIATRA2%20Release3/
-				      		<li>Development version: http://dev.eclipse.org/svnroot/modeling/org.eclipse.gmt.viatra2/
+				      		<li>Release3: <a href="http://dev.eclipse.org/svnroot/modeling/org.eclipse.gmt.viatra2/tags/VIATRA2%20Release3/">http://dev.eclipse.org/svnroot/modeling/org.eclipse.gmt.viatra2/tags/VIATRA2 Release3/</a>
+				      		<li>Development version: <a href="http://dev.eclipse.org/svnroot/modeling/org.eclipse.gmt.viatra2/">under this URL</a>.
 				      	</ul>
 				      </p>
 				      
