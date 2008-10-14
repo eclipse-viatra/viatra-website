@@ -120,7 +120,7 @@
 						<tr>
 							<td width="80%" valign="bottom">
 
-								<b><a href="http://wiki.eclipse.org/VIATRA2">VIATRA2 Wiki</a></b>,
+								<b><a href="http://wiki.eclipse.org/VIATRA2">VIATRA2 Wiki</a></b>
 		  					</td>
 							<td align="right">
 
