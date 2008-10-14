@@ -23,7 +23,8 @@
 	# $Nav->addNavSeparator("My Page Links", 	"downloads.php");
 	# $Nav->addCustomNav("My Link", "mypage.php", "_self", 3);
 	# $Nav->addCustomNav("Google", "http://www.google.com/", "_blank", 3);
-
+	$Nav->addCustomNav("VIATRA2 Wiki", "http://wiki.eclipse.org/VIATRA", "_blank", 3);
+	
 	# End: page-specific settings
 	#
 	
