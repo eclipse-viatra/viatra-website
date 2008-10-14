@@ -14,7 +14,7 @@
 	
 	#
 	# Begin: page-specific settings.  Change these. 
-	$pageTitle 		= "VIATRA2 Documentation";
+	$pageTitle 		= "VIATRA2 Home page";
 	$pageKeywords	= "";
 	$pageAuthor		= "Istvan Rath";
 	
@@ -24,7 +24,9 @@
 	# $Nav->addCustomNav("My Link", "mypage.php", "_self", 3);
 	# $Nav->addCustomNav("Google", "http://www.google.com/", "_blank", 3);
 	$Nav->addCustomNav("VIATRA2 Wiki", "http://wiki.eclipse.org/VIATRA2", "_blank", 2);
-	$Nav->addCustomNav("Contact", "contact.php", "_blank", 2);	
+	$Nav->addCustomNav("Contact", "contact.php", "_blank", 2);
+	
+	
 	# End: page-specific settings
 	#
 	
@@ -35,10 +37,7 @@
 	# Paste your HTML content between the EOHTML markers!	
 	$html = <<<EOHTML
 
-<!-- VIATRA2 Description part -->
-
-
-	<div id="midcolumn">
+<div id="midcolumn">
 
 		<table width="100%">
 			<tr  valign="top">
@@ -48,26 +47,20 @@
 
 
 
-					  <h3>VIATRA2 Documentation</h3>
+					  <h3>VIATRA2 Developer Team</h3>
 				      <p align="JUSTIFY">
-							Currently, the VIATRA2 Documentation consists of the following documents:
+							We are glad to provide support if you would like to use VIATRA2. We're working on adding content to the Wiki,
+							as well as extending the documentation.
 							<ul>
-								<li>
-								<h4>The VIATRA2 Transformation Language Specification</h4>
-								The document describes the VIATRA2 Transformation Command Language in detail. A VIATRA2 transformation
-								consists of graph pattern definitions (Section 3) defined by precise formal semantics (Section 4), and 
-								control structures (Section 5).<br/>
-								The language specification is available in PDF format from <a href="ViatraSpecification.pdf">here.</a>
-								</li>
-								<li>
-								<h4>Users' Guide</h4>
-								The Users' Guide offers a description of the user interface (which is a bit outdated, for more 
-								accurate descriptions, have a look at the <a href="http://wiki.eclipse.org/VIATRA2">Wiki</a>),
-								howtos for writing model importers and native functions, and a by-example section to get you started 
-								with writing VIATRA transformations.<br/>
-								Get it in PDF from <a href="viatratut.pdf">here</a>.	
-								</li>
-								
+								<li>Project leaders: <a href="http://mit.bme.hu/~varro">Daniel Varro</a>,
+									<a href="http://mit.bme.hu/~abalogh">Andras Balogh</a></li>
+								<li>Principal advisor: <a href="http://mit.bme.hu/~pataric">Andras Pataricza</a></li>
+								<li>Chief Technological Architect: <a href="http://mit.bme.hu/~rath">Istvan Rath</a>
+								<li>Transformation Engine: <a href="http://mit.bme.hu/~ahorvath">Akos Horvath</a>,
+								<a href="http://mit.bme.hu/~pasztor">Peter Pasztor</a>, <a href="http://cs.bme.hu/~gervarro">Gergely Varro</a><li>
+								<li>VTCL Parser: Daniel Varro</li>
+								<li>Documentation: Daniel Varro, Andras Balogh, <a href="http://mit.bme.hu/~polgar">Balazs Polgar</a></li>
+								<li>Contributors: <a href="http://mit.bme.hu/~dtoth">Daniel Toth</a> (transformations, plugins); Andras Schmidt (VIATRA2 R2), David Vago (VIATRA2 R2). 
 							</ul>
 				      </p>
 				        		          	  	
@@ -78,17 +71,6 @@
 		
 		<hr/>
 		
-		
-
-
-				<hr class="clearer" />
-
-
-
-
-
-	</div>
-
 
 EOHTML;
 
