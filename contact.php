@@ -47,7 +47,7 @@
 				      <p align="JUSTIFY">
 							
 							<ul>
-								<li>Bugzilla: You are welcome to report bugs to our bugzilla, reachable at the <a href="- https://bugs.eclipse.org/bugs/describecomponents.cgi?product=GMT">GMT Bugzilla</a>. Don't forget to specify the <b>VIATRA2</b> keyword as the component.</li>							
+								<li>Bugzilla: You are welcome to report bugs to our bugzilla, reachable at the <a href="https://bugs.eclipse.org/bugs/describecomponents.cgi?product=GMT">GMT Bugzilla</a>. Don't forget to specify the <b>VIATRA2</b> keyword as the component.</li>							
 								<li>Newsgroup: <a href="http://www.eclipse.org/newsportal/thread.php?group=eclipse.viatra2">VIATRA2</a>, <a href="http://www.eclipse.org/newsportal/thread.php?group=eclipse.modeling.gmt">GMT</a></li>
 								<li>Developer mailing list: <a href="mailto:viatra-dev <AT> inf.mit.bme.hu">here</a></li>
 							</ul>
