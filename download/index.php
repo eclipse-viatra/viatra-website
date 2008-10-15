@@ -55,7 +55,7 @@
 						Release3 is the latest and much improved version of VIATRA2. Using this is strongly recommended over any previous version you might have.
 						<ul>
 							<li><b>SVN:</b> you can pull the sources from SVN.</li>
-							<li><b>Update site:</b> You can use the following update site URL to get the latest version: http://viatra.inf.mit.bme.hu/update/R3</li>
+							<li><b>Update site:</b> You can use the following official update site URL to get the latest version: http://download.eclipse.org/modeling/gmt/viatra2/update/</li>
 						</ul>
 				      </p>
 				      
