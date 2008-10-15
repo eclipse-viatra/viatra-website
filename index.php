@@ -43,6 +43,8 @@
 	<!-- Middle part -->
 	<div id="midcolumn">
 
+	<img src="resources/viatralogo_small.png" alt="VIATRA2"/>
+
 		<table width="100%">
 			<tr valign="top">
 				<td width="80%">
