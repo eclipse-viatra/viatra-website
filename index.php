@@ -43,14 +43,14 @@
 	<!-- Middle part -->
 	<div id="midcolumn">
 
-	<img src="resources/viatralogo_small.png" alt="VIATRA2"/>
+	
 
 		<table width="100%">
 			<tr valign="top">
 				<td width="80%">
 
 
-<h3>Project Overview</h3>
+<img src="resources/viatralogo_small.png" alt="VIATRA2"/><h3>Project Overview</h3>
 <p align="JUSTIFY">The main objective of the VIATRA2 (VIsual Automated model TRAnsformations) framework is to provide a general-purpose support for the entire life-cycle of engineering model transformations including the specification, design, execution, validation and maintenance of transformations within and between various modeling languages and domains. 
 </p>
 <p align="JUSTIFY">VIATRA2 intends to complement existing model transformation frameworks in providing
