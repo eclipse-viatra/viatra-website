@@ -143,6 +143,11 @@
 			<h3>VIATRA2 News</h3>
 				<ul class="midlist">
 				<li>
+				 <b>October 15<sup>th</sup>&nbsp;2008</b><br/>
+				 VIATRA project migration complete, we are now official part of the Modeling project (as the rest of GMT).<br/>
+                  The homepage was updated with new sections, further additions to the wiki. The official Release3 source tree is available from Eclipse.org SVN as well as our new update site (check the downloads section).
+              	</li>
+				<li>
 				 <b>June 2<sup>th</sup>&nbsp;2008</b><br/>
 				 New VIATRA2 Release available: VIATRA2 Release3 (update site:<a href="http://viatra.inf.mit.bme.hu/update/R2">http://viatra.inf.mit.bme.hu/update/R3</a><br/>
                   New homepage, wiki content under extension.
