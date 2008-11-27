@@ -134,8 +134,19 @@
 					<table width="100%">
 						<tr>
 							<td width="80%" valign="bottom">
-
 								<b><a href="https://bugs.eclipse.org/bugs/enter_bug.cgi?product=GMT">Report bugs</a></b>
+		  					</td>
+							<td align="right">
+
+							</td>
+						</tr>
+					</table>
+				</li>
+				<li>
+					<table width="100%">
+						<tr>
+							<td width="80%" valign="bottom">
+								<b><a href="http://www.eclipse.org/newsportal/thread.php?group=eclipse.viatra2">Newsgroup</a></b>
 		  					</td>
 							<td align="right">
 
