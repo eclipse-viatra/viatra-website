@@ -53,19 +53,24 @@
 							Currently, the VIATRA2 Documentation consists of the following documents:
 							<ul>
 								<li>
-								<h4>The VIATRA2 Transformation Language Specification</h4>
+								<h4>VIATRA2 Documentation</h4>
+								For Release 3.1, a completely new documentation has been established at the <a href="http://wiki.eclipse.org/VIATRA2">VIATRA2 Wiki</a>.<br/>
+								It contains both the users guide and the most up-to-date documentation of the VIATRA2 transformation language.
+								You should start here.
+								</li>
+								<li>
+								<h4>The VIATRA2 Transformation Language Specification [obsolete]</h4>
 								The document describes the VIATRA2 Transformation Command Language in detail. A VIATRA2 transformation
 								consists of graph pattern definitions (Section 3) defined by precise formal semantics (Section 4), and 
 								control structures (Section 5).<br/>
-								The language specification is available in PDF format from <a href="ViatraSpecification.pdf">here.</a>
+								The language specification is archived in PDF format from <a href="ViatraSpecification.pdf">here.</a>
 								</li>
 								<li>
 								<h4>Users' Guide</h4>
-								The Users' Guide offers a description of the user interface (which is a bit outdated, for more 
-								accurate descriptions, have a look at the <a href="http://wiki.eclipse.org/VIATRA2">Wiki</a>),
+								The Users' Guide offered a description of the user interface (which is completely superseded by the wiki),
 								howtos for writing model importers and native functions, and a by-example section to get you started 
 								with writing VIATRA transformations.<br/>
-								Get it in PDF from <a href="viatratut.pdf">here</a>.	
+								Archived in PDF from <a href="viatratut.pdf">here</a>.	
 								</li>
 								
 							</ul>
