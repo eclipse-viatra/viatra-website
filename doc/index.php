@@ -66,7 +66,7 @@
 								The language specification is archived in PDF format from <a href="ViatraSpecification.pdf">here.</a>
 								</li>
 								<li>
-								<h4>Users' Guide</h4>
+								<h4>Users' Guide [obsolete]</h4>
 								The Users' Guide offered a description of the user interface (which is completely superseded by the wiki),
 								howtos for writing model importers and native functions, and a by-example section to get you started 
 								with writing VIATRA transformations.<br/>
