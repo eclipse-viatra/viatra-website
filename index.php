@@ -169,6 +169,13 @@
 			<h3>VIATRA2 News</h3>
 				<ul class="midlist">
 				<li>
+				 <b>March 23<sup>th</sup>&nbsp;2010</b><br/>
+				 VIATRA2 Release 3.1 is finally complete. More information available at <a href="http://wiki.eclipse.org/VIATRA2/ReleaseNotes3.1">the release notes wiki page</a>.<br/>
+                 For this release, we completely redesigned the VIATRA2 wiki and added lots of new content. This content is also included in the VIATRA2 online help. <br/>
+                 The official Release3.1 source tree will be available from Eclipse.org SVN as well as the update site as soon as the IP check process is completed.<br/>
+                 In the mean time, you can get the binaries from our official update site at http://viatra.inf.mit.bme.hu/update/R3.1/
+              	</li>
+				<li>
 				 <b>October 15<sup>th</sup>&nbsp;2008</b><br/>
 				 VIATRA project migration complete, we are now official part of the Modeling project (as the rest of GMT).<br/>
                   The homepage was updated with new sections, further additions to the wiki. The official Release3 source tree is available from Eclipse.org SVN as well as our new update site (check the downloads section).
