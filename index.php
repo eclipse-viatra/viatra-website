@@ -169,6 +169,10 @@
 			<h3>VIATRA2 News</h3>
 				<ul class="midlist">
 				<li>
+				 <b>April 12<sup>th</sup>&nbsp;2010</b><br/>
+				 Check out the VIATRA2 Release 3.1 video on <a href="http://vimeo.com/7412871">Vimeo.com</a>! The text is in Hungarian, but the screen captures towards the end highlight the most important features.
+              	</li>
+				<li>
 				 <b>March 23<sup>th</sup>&nbsp;2010</b><br/>
 				 VIATRA2 Release 3.1 is finally complete. More information available at <a href="http://wiki.eclipse.org/VIATRA2/ReleaseNotes3.1">the release notes wiki page</a>.<br/>
                  For this release, we completely redesigned the VIATRA2 wiki and added lots of new content. This content is also included in the VIATRA2 online help.
