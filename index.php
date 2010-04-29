@@ -169,6 +169,10 @@
 			<h3>VIATRA2 News</h3>
 				<ul class="midlist">
 				<li>
+				 <b>April 29<sup>th</sup>&nbsp;2010</b><br/>
+				 The VIATRA2 Release 3.1 has been approved by Eclipse.org! Both the source and the update site archive is available from eclipse.org servers now, check out the downloads section.
+              	</li>
+				<li>
 				 <b>April 12<sup>th</sup>&nbsp;2010</b><br/>
 				 Check out the VIATRA2 Release 3.1 video on <a href="http://vimeo.com/7412871">Vimeo.com</a>! The text is in Hungarian, but the screen captures towards the end highlight the most important features.
               	</li>
@@ -181,7 +185,7 @@
               	</li>
 				<li>
 				 <b>October 15<sup>th</sup>&nbsp;2008</b><br/>
-				 VIATRA project migration complete, we are now official part of the Modeling project (as the rest of GMT).<br/>
+				 VIATRA2 project migration complete, we are now official part of the Modeling project (as the rest of GMT).<br/>
                   The homepage was updated with new sections, further additions to the wiki. The official Release3 source tree is available from Eclipse.org SVN as well as our new update site (check the downloads section).
               	</li>
 				<li>
