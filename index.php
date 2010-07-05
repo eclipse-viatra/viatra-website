@@ -205,11 +205,8 @@
                   Expect a new homepage, new source archive and news soon.
               	</li>
               	<li>
-                  <b>April 3<sup>th</sup>&nbsp;2007</b>
-                  span class="normal">&nbsp;-&nbsp;</span></td>
-                  <td><span class="normal">New VIATRA2 Release 2 CVS Snapshot available: <a href="download/viatra2r2_cvs20070401.zip">Download</a>
-                  </span></td>
-                  
+                  <b>April 3<sup>th</sup>&nbsp;2007</b><br/>
+                 New VIATRA2 Release 2 CVS Snapshot available: <a href="download/viatra2r2_cvs20070401.zip">Download</a>
                 </li>
 				<li>
                   <b>October 10<sup>th</sup>&nbsp;2006</b><br/>
