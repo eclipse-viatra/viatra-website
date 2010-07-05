@@ -169,6 +169,11 @@
 			<h3>VIATRA2 News</h3>
 				<ul class="midlist">
 				<li>
+				 <b>July 2<sup>th</sup>&nbsp;2010</b><br/>
+				 We have submitted a solution to this year's Transformation Tool Contest (<a href="http://is.tm.tue.nl/staff/pvgorp/events/TTC2010/">TTC2010</a>),
+				 to the "ECore to GenModel" case. You can also check the <a href="http://www.youtube.com/watch?v=XfR-53B6Da0">YouTube screencast</a> which describes the solution in detail.
+              	</li>
+				<li>
 				 <b>April 29<sup>th</sup>&nbsp;2010</b><br/>
 				 The VIATRA2 Release 3.1 has been approved by Eclipse.org! Both the source and the update site archive is available from eclipse.org servers now, check out the downloads section.
               	</li>
