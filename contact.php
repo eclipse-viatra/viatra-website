@@ -59,13 +59,15 @@
 							We are glad to provide support if you would like to use VIATRA2. We're working on adding content to the Wiki,
 							as well as extending the documentation.
 							<ul>
-								<li>Project leader: <a href="http://mit.bme.hu/~varro">Daniel Varro</a></li>
-								<li>Principal advisor: <a href="http://mit.bme.hu/~pataric">Andras Pataricza</a></li>
-								<li>Chief Technological Architect: <a href="http://mit.bme.hu/~rath">Istvan Rath</a>
-								<li>Transformation Engine: <a href="http://mit.bme.hu/~ahorvath">Akos Horvath</a>, <a href="http://cs.bme.hu/~gervarro">Gergely Varro</a><li>
-								<li>VTCL Parser: Daniel Varro</li>
-								<li>Documentation: Daniel Varro, Andras Balogh, <a href="http://mit.bme.hu/~polgar">Balazs Polgar</a></li>
-								<li>Other contributors from the past: <a href="http://mit.bme.hu/~abalogh">Andras Balogh</a> (technological architect), <a href="http://mit.bme.hu/~pasztor">Peter Pasztor</a> (transformation engine), <a href="http://mit.bme.hu/~dtoth">Daniel Toth</a> (transformations, plugins); Andras Schmidt and David Vago (VIATRA2 R2). 
+								<li>Project leader: <a href="http://mit.bme.hu/~varro">Dániel Varró</a></li>
+								<li>Principal advisor: <a href="http://mit.bme.hu/~pataric">András Pataricza</a></li>
+								<li>Chief Technological Architect: <a href="http://mit.bme.hu/~rath">István Ráth</a>
+								<li>Transformation Engine: <a href="http://mit.bme.hu/~ahorvath">Ákos Horváth</a>, <a href="http://cs.bme.hu/~gervarro">Gergely Varró</a><li>
+								<li>Incremental pattern matcher: <a href="http://mit.bme.hu/~bergmann/">Gábor Bergmann</a></li>
+								<li>VTCL Parser: Daniel Varro, <a href="http://mit.bme.hu/~ujhelyiz/">Zoltán Ujhelyi</a></li>
+								<li>Model space visualization: <a href="http://mit.bme.hu/~hegedusa/">Ábel Hegedüs</a>, Zoltán Ujhelyi</li>
+								<li>Documentation: Dániel Varró, <a href="http://mit.bme.hu/~polgar">Balázs Polgar</a>, Gábor Bergmann, Ábel Hegedüs, Zoltán Ujhelyi, István Ráth, Ákos Horváth</li>
+								<li>Other contributors from the past: <a href="http://mit.bme.hu/~abalogh">Andras Balogh</a> (technological architect), <a href="http://mit.bme.hu/~pasztor">Péter Pásztor</a> (transformation engine), <a href="http://mit.bme.hu/~dtoth">Dániel Tóth</a> (transformations, plugins); András Schmidt and Dávid Vágó (VIATRA2 R2). 
 							</ul>
 				      </p>
 				        		          	  	
