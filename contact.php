@@ -62,7 +62,7 @@
 								<li>Project leader: <a href="http://mit.bme.hu/~varro">Dániel Varró</a></li>
 								<li>Principal advisor: <a href="http://mit.bme.hu/~pataric">András Pataricza</a></li>
 								<li>Chief Technological Architect: <a href="http://mit.bme.hu/~rath">István Ráth</a>
-								<li>Transformation Engine: <a href="http://mit.bme.hu/~ahorvath">Ákos Horváth</a>, <a href="http://cs.bme.hu/~gervarro">Gergely Varró</a><li>
+								<li>Transformation Engine: <a href="http://mit.bme.hu/~ahorvath">Ákos Horváth</a>, <a href="http://cs.bme.hu/~gervarro">Gergely Varró</a></li>
 								<li>Incremental pattern matcher: <a href="http://mit.bme.hu/~bergmann/">Gábor Bergmann</a></li>
 								<li>VTCL Parser: Daniel Varro, <a href="http://mit.bme.hu/~ujhelyiz/">Zoltán Ujhelyi</a></li>
 								<li>Model space visualization: <a href="http://mit.bme.hu/~hegedusa/">Ábel Hegedüs</a>, Zoltán Ujhelyi</li>
