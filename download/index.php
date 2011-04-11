@@ -51,8 +51,15 @@
 
 					  <h3>VIATRA2 Downloads</h3>
 				      <p align="JUSTIFY">
+				        <h4>VIATRA2 Release 3.2</h4>
+						Release 3.2 is the most current version of VIATRA2. Using this is strongly recommended over any previous version you might have.
+						<ul>
+							<li><b>SVN:</b> you can pull the sources from SVN.</li>
+							<li><b>Update site:</b> You can use the following official update site URL to get the latest nightly version:<br/> <b>http://static.inf.mit.bme.hu/viatra/update/nightly/</b></li>
+						</ul><br/>
+				      
 				        <h4>VIATRA2 Release 3.1</h4>
-						Release 3.1 is the most current version of VIATRA2. Using this is strongly recommended over any previous version you might have.
+						Release 3.1 is the previous version of VIATRA2.
 						<ul>
 							<li><b>SVN:</b> you can pull the sources from SVN.</li>
 							<li><b>Update site:</b> You can use the following official update site URL to get the latest version:<br/> <b>http://download.eclipse.org/modeling/gmt/viatra2/update/</b></li>
@@ -67,10 +74,13 @@
 				      <p align="JUSTIFY">
 				      <h3>Sources</h3>
 				      VIATRA2 is released under the <a href="http://www.eclipse.org/org/documents/epl-v10.php">Eclipse Public License v1.0</a>.
+				      <h4>BME.hu Subversion repository</h4>
+				      	<ul>
+				      		<li>Release 3.2 (development version): <a href="https://viatra.inf.mit.bme.hu/svn/core/trunk/">https://viatra.inf.mit.bme.hu/svn/core/trunk/</a>
+				      	</ul>
 				      <h4>Eclipse.org Subversion repository</h4>
 				      	<ul>
 				      		<li>Release 3.1: <a href="http://dev.eclipse.org/svnroot/modeling/org.eclipse.gmt.viatra2/tags/VIATRA2%20Release%203.1/">http://dev.eclipse.org/svnroot/modeling/org.eclipse.gmt.viatra2/tags/VIATRA2 Release 3.1/</a>
-				      		<li>Development version: <a href="http://dev.eclipse.org/svnroot/modeling/org.eclipse.gmt.viatra2/trunk">under this URL</a>.
 				      	</ul>
 				      </p>
 				      
