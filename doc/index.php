@@ -54,7 +54,7 @@
 							<ul>
 								<li>
 								<h4>VIATRA2 Documentation</h4>
-								For Release 3.1, a completely new documentation has been established at the <a href="http://wiki.eclipse.org/VIATRA2">VIATRA2 Wiki</a>.<br/>
+								For current Releases (3.x), a completely new documentation has been established at the <a href="http://wiki.eclipse.org/VIATRA2">VIATRA2 Wiki</a>.<br/>
 								It contains both the users guide and the most up-to-date documentation of the VIATRA2 transformation language.
 								You should start here.
 								</li>
