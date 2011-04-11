@@ -175,7 +175,7 @@
 
 				<li>
 				 <b>April 4<sup>th</sup>&nbsp;2011</b><br/>
-				 We are proud to announce the EMF-IncQuery project, a spin-off of VIATRA2 to bring the incremental pattern matching technology to EMF models. With EMF-IncQuery, you can re-use your VIATRA2 pattern definitions in a pure EMF technology environment, will all the advanced features of the VIATRA2 pattern matching engine (i.e. automatic update propagation through ResourceSets, and delta monitors for high level change detection). EMF-IncQuery is available as open source software under the EPL v1.0 from <a href="http://viatra.inf.mit.bme.hu/incquery>http://viatra.inf.mit.bme.hu/incquery</a><br/>
+Á				 We are proud to announce the EMF-IncQuery project, a spin-off of VIATRA2 to bring the incremental pattern matching technology to EMF models. With EMF-IncQuery, you can re-use your VIATRA2 pattern definitions in a pure EMF technology environment, will all the advanced features of the VIATRA2 pattern matching engine (i.e. automatic update propagation through ResourceSets, and delta monitors for high level change detection). EMF-IncQuery is available as open source software under the EPL v1.0 from <a href="http://viatra.inf.mit.bme.hu/incquery">http://viatra.inf.mit.bme.hu/incquery</a><br/>
 				 EMF-IncQuery also features a generic EMF importer for VIATRA2, which can be used to import EMF meta- and instance models into VIATRA2 model spaces. 				
 				 </li>
 
