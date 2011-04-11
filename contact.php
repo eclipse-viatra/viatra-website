@@ -59,7 +59,7 @@
 							We are glad to provide support if you would like to use VIATRA2. We're working on adding content to the Wiki,
 							as well as extending the documentation.
 							<ul>
-								<li>Project leaders: <a href="http://mit.bme.hu/~varro">Daniel Varro</a></li>
+								<li>Project leader: <a href="http://mit.bme.hu/~varro">Daniel Varro</a></li>
 								<li>Principal advisor: <a href="http://mit.bme.hu/~pataric">Andras Pataricza</a></li>
 								<li>Chief Technological Architect: <a href="http://mit.bme.hu/~rath">Istvan Rath</a>
 								<li>Transformation Engine: <a href="http://mit.bme.hu/~ahorvath">Akos Horvath</a>, <a href="http://cs.bme.hu/~gervarro">Gergely Varro</a><li>
