@@ -169,6 +169,18 @@
 			<h3>VIATRA2 News</h3>
 				<ul class="midlist">
 				<li>
+				 <b>April 11<sup>th</sup>&nbsp;2011</b><br/>
+				 VIATRA2 Release 3.2 has been released through our new <a href="http://static.inf.mit.bme.hu/viatra/update/nightly/">update site</a>, supporting a "rolling release" model. The release notes can be found on the <a href="http://wiki.eclipse.org/VIATRA2/ReleaseNotes3.2">Eclipse Wiki</a>, as always.
+				</li>
+
+				<li>
+				 <b>April 4<sup>th</sup>&nbsp;2011</b><br/>
+				 We are proud to announce the EMF-IncQuery project, a spin-off of VIATRA2 to bring the incremental pattern matching technology to EMF models. With EMF-IncQuery, you can re-use your VIATRA2 pattern definitions in a pure EMF technology environment, will all the advanced features of the VIATRA2 pattern matching engine (i.e. automatic update propagation through ResourceSets, and delta monitors for high level change detection). EMF-IncQuery is available as open source software under the EPL v1.0 from <a href="http://viatra.inf.mit.bme.hu/incquery>http://viatra.inf.mit.bme.hu/incquery</a><br/>
+				 EMF-IncQuery also features a generic EMF importer for VIATRA2, which can be used to import EMF meta- and instance models into VIATRA2 model spaces. 				
+				 </li>
+
+				
+				<li>
 				 <b>July 2<sup>th</sup>&nbsp;2010</b><br/>
 				 We have submitted a solution to this year's Transformation Tool Contest (<a href="http://is.tm.tue.nl/staff/pvgorp/events/TTC2010/">TTC2010</a>),
 				 to the "ECore to GenModel" case. You can also check the <a href="http://www.youtube.com/watch?v=XfR-53B6Da0">YouTube screencast</a> which describes the solution in detail.
