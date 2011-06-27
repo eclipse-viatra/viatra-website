@@ -52,14 +52,14 @@
 					  <h3>VIATRA2 Downloads</h3>
 				      <p align="JUSTIFY">
 				        <h4>VIATRA2 Release 3.2</h4>
-						Release 3.2 is the most current version of VIATRA2. Using this is strongly recommended over any previous version you might have.
+						Release 3.2 is the most current version of VIATRA2. Using this is strongly recommended over any previous version you might have. The release notes are found <a href="http://wiki.eclipse.org/VIATRA2/ReleaseNotes3.2">here</a>.
 						<ul>
 							<li><b>SVN:</b> you can pull the sources from SVN.</li>
 							<li><b>Update site:</b> You can use the following official update site URL to get the latest nightly version:<br/> <b>http://static.inf.mit.bme.hu/viatra/update/nightly/</b></li>
 						</ul><br/>
 				      
 				        <h4>VIATRA2 Release 3.1</h4>
-						Release 3.1 is the previous version of VIATRA2.
+						Release 3.1 is the previous version of VIATRA2. Release notes are <a href="http://wiki.eclipse.org/VIATRA2/ReleaseNotes3.1">here</a>.
 						<ul>
 							<li><b>SVN:</b> you can pull the sources from SVN.</li>
 							<li><b>Update site:</b> You can use the following official update site URL to get the latest version:<br/> <b>http://download.eclipse.org/modeling/gmt/viatra2/update/</b></li>
