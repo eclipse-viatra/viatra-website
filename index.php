@@ -48,7 +48,7 @@
         align="center" src="/images/egg-incubation.png" 
         border="0" alt="Incubation" /></a></div>
  </div>
-/div>
+</div>
 
 	<!-- Middle part -->
 	<div id="midcolumn">
