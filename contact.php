@@ -38,6 +38,16 @@
 	# Paste your HTML content between the EOHTML markers!	
 	$html = <<<EOHTML
 
+<!-- add incubation branding -->
+<div id="rightcolumn">
+ <div class="sideitem">
+   <h6>Incubation</h6>
+   <div align="center"><a href="/projects/what-is-incubation.php"><img 
+        align="center" src="/images/egg-incubation.png" 
+        border="0" alt="Incubation" /></a></div>
+ </div>
+</div>
+
 <div id="midcolumn">
 
 		<table width="100%">
