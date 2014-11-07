@@ -106,7 +106,3 @@ a strong {
 a.external:before {
 	content: url(/eclipse.org-common/themes/Nova/images/separator.png);
 }
-
-#btn-call-for-action {
-	display: none;
-}

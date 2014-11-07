@@ -63,6 +63,11 @@
 					//'target' => '_blank' // Optional
 			),
 	);
+	
+	// CFA Link - Big orange button in header
+	$variables['btn_cfa'] = array(
+			'hide' => TRUE
+	);
 	// Set Solstice theme variables (Array)
 	$App->setThemeVariables($variables);
 ?>
