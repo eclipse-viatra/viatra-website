@@ -1,84 +1,43 @@
 <!-- VIATRA2 Description part -->
 
-<!-- Middle part -->
-<div id="maincontent">
-  <div id="midcolumn" class="frontpage">
-  
-  
-  	<h3>Project Overview</h3>
-  	<p>The main objective of the VIATRA2 (VIsual Automated model
-  		TRAnsformations) framework is to provide a general-purpose support for
-  		the entire life-cycle of engineering model transformations including
-  		the specification, design, execution, validation and maintenance of
-  		transformations within and between various modeling languages and
-  		domains.</p>
-  	<p>VIATRA2 intends to complement existing model transformation
-  		frameworks in providing</p>
-  
-  	<ul>
-  		<li>a <a href="https://wiki.eclipse.org/VIATRA2/Model_Space"
-  			title="VIATRA2 Model Space"> model space</a> for uniform
-  			representation of models and metamodels
-  		</li>
-  		<li>a <a
-  			href="https://wiki.eclipse.org/VIATRA2/Transformation_Language"
-  			title="VIATRA2 Transformation Language"> transformation language</a>
-  			with
-  			<ul>
-  				<li>both declarative and imperative features</li>
-  				<li>based upon popular formal mathematical techniques of <i>graph
-  						transformation (GT)</i> and <i>abstract state machines (ASM)</i>
-  
-  				</li>
-  			</ul>
-  		</li>
-  		<li>a high performance transformation engine
-  			<ul>
-  				<li>supporting <b>incremental model transformations</b>
-  				</li>
-  				<li>trigger-driven <b>live transformations</b> where complex
-  					model changes may trigger execution of transformations
-  				</li>
-  				<li>handling well over 100,000 model elements (see our <a
-  					href="https://wiki.eclipse.org/VIATRA2/Benchmarks" class="new"
-  					title="VIATRA2 Benchmarks"> benchmarks</a>)
-  
-  				</li>
-  			</ul>
-  		</li>
-  		<li>with main <a
-  			href="https://wiki.eclipse.org/VIATRA2/Target_Application_Domains"
-  			title="Target Application Domains"> target application domains</a> in
-  			<ul>
-  				<li>model-based tool integration framework</li>
-  				<li>model analysis transformations</li>
-  			</ul>
-  		</li>
-  	</ul>
-  	<p>Further issues frequently asked by users:</p>
-  	<ul>
-  		<li><a
-  			href="https://wiki.eclipse.org/VIATRA2/Standard_Conformance"
-  			title="Standard Conformance of VIATRA2"> Conformance to standards</a></li>
-  		<li><a href="https://wiki.eclipse.org/VIATRA2/Known_Uses"
-  			title="VIATRA2 Known Uses"> Known uses of VIATRA2</a></li>
-  	</ul>
-  
-  </div>
-  <!-- VIATRA2 PRESENTATION PART -->
-  
-  <!-- add incubation branding -->
-  <div id="rightcolumn" class="frontpage">
-  
-  	<div>
-  		<h3><a href="/projects/project_summary.php?projectid=modeling.viatra2">About This Project</a></h3>
-  	</div>
-  
-  	~~INCUBATION~~
-  	<div id="headlines">
-  		<div class="sideitem">
-  			<h3>VIATRA2 News</h3>
-  			<ul class="midlist">
+<h2 style="clear: both;">An Event-driven and Reactive Model Transformation Platform</h2>
+<div id="rightcolumn" class="frontpage">
+
+	<div>
+		<h3>
+			<a href="/projects/project_summary.php?projectid=modeling.viatra">About
+				This Project</a>
+		</h3>
+	</div>
+
+	~~INCUBATION~~
+
+</div>
+<div id="introText" style="margin-right: 300px;">
+	<p>
+        The VIATRA framework supports the development of model transformations with specific focus on event-driven, reactive transformations. Building upon the incremental query support of the <a href="http://eclipse.org/incquery">EMF-IncQuery</a> project, VIATRA offers a language to define transformations and a reactive transformation engine to execute certain transformations upon changes in the underlying model.
+	</p>
+
+	<p>The VIATRA project provides:</p>
+
+	<ul>
+		<li>An internal DSL over the <a href="http://eclipse.org/xtend">Xtend</a> language to specify both <a href="https://wiki.eclipse.org/VIATRA/Transformation_API">batch and event-driven, reactive transformations</a>.</li>
+		<li><a href="https://wiki.eclipse.org/VIATRA/CEP">A complex event-processing engine</a> over EMF models to specify reactions upon detecting complex sequences of events.</li>
+		<li>A rule-based <a href="https://wiki.eclipse.org/VIATRA/DSE">design space exploration</a> framework to explore design candidates as models satisfying multiple criteria.</li>
+        <li>A <a href="http://modeling-languages.com/model-obfuscator/">model obfuscator</a> to remove sensitive information from a confidential model (e.g. to create bug reports).</li>
+	</ul>
+
+    <p>The current VIATRA project is a full rewrite of the previous <a href="/viatra/archive">VIATRA2 framework</a>, now with full compatibility and support for EMF models. The project features a <a href="https://wiki.eclipse.org/VIATRA/History">History wiki page</a> that describes the main differences between the different versions.</p>
+</div>
+<div class="news-list" style="clear: both;">
+	<h2>
+		<a href="http://incquery.net">News</a>
+	</h2>
+    <ul class="midlist">
+                <li><b>February 2<sup>nd</sup>&nbsp;2015</b><br />
+                    <a href="http://modeling-languages.com/model-obfuscator/">An open source model obfuscator</a> - a blog post on modeling-languages.com about the model obfuscator of VIATRA.</li>
+                <li><b>Apr 30<sup>th</sup>&nbsp;2014</b><br />
+                    The VIATRA2 project is <a href="https://projects.eclipse.org/projects/modeling.viatra2/reviews/rename-viatra2-viatra">renamed to VIATRA.</a></li>
   				<li><b>Aug 16<sup>th</sup>&nbsp;2013
   				</b><br /> <a
   					href="http://wiki.eclipse.org/VIATRA2/ReleaseNotes3.3">VIATRA2 version 3.3</a>
@@ -87,9 +46,102 @@
   				</b><br /> EMF-IncQuery has been officially <a
   					href="http://www.eclipse.org/proposals/modeling.emf.incquery/">proposed</a>
   					as a new Eclipse.org subproject.</li>
-  			  <li><a href="/viatra2/news.php">All news</a></li>
   			</ul>
-  		</div>
-  	</div>
-  </div>
 </div>
+
+
+<div class="timeline">
+	<div class="row">
+		<div class="col-md-6 one gs-item">
+			<div class="circle">1</div>
+			<h1 class="fw-600">Getting Started</h1>
+			<div>
+				<p>
+					<a class="btn btn-warning"
+						href="https://www.eclipse.org/download.php">Download</a>
+				</p>
+			</div>
+            <hr/>
+                <p><strong>Important!</strong> Installing VIATRA requires EMF-IncQuery installed. Furthermore, some components also require a current version of Xtext available as well.</p>
+			<hr/>
+			<div class="drag_installbutton">
+				<a
+					href="http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=2292729"
+					class="drag"> <img
+					src="/eclipse.org-common/themes/solstice/public/images/components/drag-drop/installbutton.png">
+					<span class="tooltip">
+						<h3>Drag to Install!</h3> Drag to your running Eclipse workspace.
+				</span>
+				</a>
+			</div>
+		</div>
+		<div class="col-md-6 two  gs-item">
+			<div class="circle">2</div>
+			<h1>Documentation</h1>
+			<ul>
+
+				<li>Our <a href="https://wiki.eclipse.org/VIATRA">Documentation</a>&nbsp;page
+					contains information about the tooling and API of EMF-IncQuery.
+				</li>
+				<li>Example projects can be accessed from <a
+					href="https://wiki.eclipse.org/EMFIncQuery/UserDocumentation/Examples/">the
+						example documentation</a> page.
+				</li>
+				<li>If you are interested in performance benchmarking, be sure
+					to check <a href="http://incquery.net/performance">our
+						recommendations</a>.
+				</li>
+			</ul>
+		</div>
+		<div class="col-md-6 three gs-item">
+			<div class="circle">3</div>
+
+			<h1>Additional Resources</h1>
+			<dl>
+				<dt>Research Papers</dt>
+				<dd>
+					<p>
+						Research papers related to VIATRA are collected on the <a
+							href="http://incquery.net/publications">publications page</a>&nbsp;and
+						papers with online material are listed&nbsp;<a
+							href="http://incquery.net/viatra/publications">here</a>
+					</p>
+				</dd>
+				<dt>Project blog</dt>
+				<dd>
+					Available at <a href="http://incquery.net">http://incquery.net</a>
+			</dl>
+		</div>
+		<div class="col-md-6 four gs-item">
+			<div class="circle">4</div>
+			<h1>Getting Help</h1>
+			<ul>
+				<li>If you need help or support with EMF-IncQuery,
+					you can ask a question in the <a
+					href="https://www.eclipse.org/forums/index.php/f/147/">Eclipse.org
+						Forum</a>.
+
+				</li>
+				<li>If you want to report a bug or an issue, you can use the <a
+					href="https://bugs.eclipse.org/bugs/describecomponents.cgi?product=viatra">Eclipse.org
+						Bugzilla</a>.
+
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+
+
+<h3>Partners</h3>
+<p>The EMF-IncQuery Project is supported by the following partners:</p>
+<ul>
+	<li><a href="http://incquerylabs.com/">IncQuery Labs Ltd.</a>
+		provides professional support for VIATRA and related
+		technologies.</li>
+	<li>YourKit is kindly supporting VIATRA open source project
+		with its <a href="http://www.yourkit.com/java/profiler/index.jsp">full-featured
+			Java Profiler</a>.
+	</li>
+</ul>

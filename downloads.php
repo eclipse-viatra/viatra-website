@@ -14,7 +14,7 @@
 	
 	#
 	# Begin: page-specific settings.  Change these. 
-	$pageTitle 		= "VIATRA2 Downloads";
+	$pageTitle 		= "VIATRA - Downloads";
 	$pageKeywords	= "";
 	$pageAuthor		= "Istvan Rath";
 	
@@ -36,5 +36,5 @@
 
 
 	# Generate the web page
-	$App->generatePage($theme, $Menu, $Nav, $pageAuthor, $pageKeywords, $pageTitle, $html);
+	$App->generatePage($theme, $Menu, null, $pageAuthor, $pageKeywords, $pageTitle, $html);
 ?>

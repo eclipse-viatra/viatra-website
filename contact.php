@@ -14,7 +14,7 @@
 
 #
 # Begin: page-specific settings.  Change these.
-$pageTitle 		= "VIATRA2 Home page";
+$pageTitle 		= "VIATRA - Support";
 $pageKeywords	= "";
 $pageAuthor		= "Istvan Rath";
 
@@ -34,5 +34,5 @@ $incubation = file_get_contents('pages/incubation.html');
 $html = str_replace("~~INCUBATION~~", $incubation, $html);
 
 # Generate the web page
-$App->generatePage($theme, $Menu, $Nav, $pageAuthor, $pageKeywords, $pageTitle, $html);
+$App->generatePage($theme, $Menu, null, $pageAuthor, $pageKeywords, $pageTitle, $html);
 ?>

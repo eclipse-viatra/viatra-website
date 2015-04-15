@@ -6,17 +6,15 @@
 	# Define your project-wide Nav bars here.
 	# Format is Link text, link URL (can be http://www.someothersite.com/), target (_self, _blank), level (1, 2 or 3)
 	# these are optional
-	$Nav->addNavSeparator("VIATRA2", "/viatra2");
-	$Nav->addCustomNav("Download", "/viatra2/downloads.php", "_self", 2);
-	$Nav->addCustomNav("Documentation", "/viatra2/documentation.php", "_self", 2);
-	$Nav->addCustomNav("VIATRA2 Wiki", "http://wiki.eclipse.org/VIATRA2", "_self", 2);
-	$Nav->addCustomNav("Partners and supporters", "http://wiki.eclipse.org/VIATRA2#Partners_and_supporters", "_self", 2);
-	$Nav->addCustomNav("Contact", "/viatra2/contact.php", "_self", 2);
-	$Nav->addCustomNav("About this project", "http://www.eclipse.org/projects/project.php?id=modeling.gmt.viatra2", "_self", 2);
+	$Nav->addNavSeparator("VIATRA", "/viatra");
+	$Nav->addCustomNav("Download", "/viatra/downloads.php", "_self", 2);
+	$Nav->addCustomNav("Documentation", "http://wiki.eclipse.org/VIATRA", "_self", 2);
+	$Nav->addCustomNav("Contact", "/viatra/contact.php", "_self", 2);
+	$Nav->addCustomNav("About this project", "http://www.eclipse.org/projects/project.php?id=modeling.viatra", "_self", 2);
 	$Nav->addNavSeparator("Eclipse Modeling Home", "/modeling");
 
 	# To define additional CSS or other pre-body headers
-	$App->AddExtraHtmlHeader('<link rel="stylesheet" type="text/css" href="/viatra2/style.css"/>');
+	$App->AddExtraHtmlHeader('<link rel="stylesheet" type="text/css" href="/viatra/style.css"/>');
 	
 	// Initialize $variables.
 	$variables = array();
@@ -24,7 +22,7 @@
 	
 	$links[] = array(
 			'icon' => 'fa-download', // Required
-			'url' => '/viatra2/downloads.php', // Required
+			'url' => '/viatra/downloads.php', // Required
 			'title' => 'Download', // Required
 			//'target' => '_blank', // Optional
 			'text' => 'Update Sites, Additional Features' // Optional
@@ -40,15 +38,15 @@
 	
 	$links[] = array(
 			'icon' => 'fa-book', // Required
-			'url' => '/viatra2/documentation.php', // Required
+			'url' => 'http://wiki.eclipse.org/VIATRA', // Required
 			'title' => 'Documentation', // Required
 			//'target' => '_blank', // Optional
-			'text' => 'Tutorials, Examples, Javadoc, Wiki' // Optional
+			'text' => 'Tutorials, Examples, Wiki' // Optional
 	);
 	
 	$links[] = array(
 			'icon' => 'fa-support', // Required
-			'url' => '/viatra2/contact.php', // Required
+			'url' => '/viatra/contact.php', // Required
 			'title' => 'Support', // Required
 			//'target' => '_blank', // Optional
 			'text' => 'Bug Tracker, Forum' // Optional
@@ -57,9 +55,9 @@
 	$variables['header_nav'] = array(
 			'links' =>  $links, // Required
 			'logo' => array( // Required
-					'src' => '/viatra2/images/viatra_logo.png', // Required
+					'src' => '/viatra/images/viatra_logo.png', // Required
 					'alt' => 'The VIATRA project', // Optional
-					'url' => '/viatra2', // Optional
+					'url' => '/viatra', // Optional
 					//'target' => '_blank' // Optional
 			),
 	);
