@@ -15,11 +15,11 @@
 
 	# To define additional CSS or other pre-body headers
 	$App->AddExtraHtmlHeader('<link rel="stylesheet" type="text/css" href="/viatra/style.css"/>');
-	
+
 	// Initialize $variables.
 	$variables = array();
 	$links = array();
-	
+
 	$links[] = array(
 			'icon' => 'fa-download', // Required
 			'url' => '/viatra/downloads.php', // Required
@@ -27,7 +27,7 @@
 			//'target' => '_blank', // Optional
 			'text' => 'Update Sites, Additional Features' // Optional
 	);
-	
+
 #	$links[] = array(
 #			'icon' => 'fa-users', // Required
 #			'url' => '/incquery/getting_involved.php', // Required
@@ -35,7 +35,7 @@
 #			//'target' => '_blank', // Optional
 #			'text' => 'Git, Mailing List' // Optional
 #	);
-	
+
 	$links[] = array(
 			'icon' => 'fa-book', // Required
 			'url' => 'http://wiki.eclipse.org/VIATRA', // Required
@@ -43,7 +43,7 @@
 			//'target' => '_blank', // Optional
 			'text' => 'Tutorials, Examples, Wiki' // Optional
 	);
-	
+
 	$links[] = array(
 			'icon' => 'fa-support', // Required
 			'url' => '/viatra/contact.php', // Required
@@ -51,7 +51,15 @@
 			//'target' => '_blank', // Optional
 			'text' => 'Bug Tracker, Forum' // Optional
 	);
-	
+
+	$links[] = array(
+			'icon' => 'fa-support', // Required
+			'url' => '/viatra/query.php', // Required
+			'title' => 'EMF-IncQuery', // Required
+			//'target' => '_blank', // Optional
+			'text' => 'For users of EMF-IncQuery' // Optional
+	);
+
 	$variables['header_nav'] = array(
 			'links' =>  $links, // Required
 			'logo' => array( // Required
@@ -61,7 +69,7 @@
 					//'target' => '_blank' // Optional
 			),
 	);
-	
+
 	// CFA Link - Big orange button in header
 	$variables['btn_cfa'] = array(
 			'hide' => TRUE

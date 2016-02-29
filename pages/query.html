@@ -1,0 +1,179 @@
+<h2 style="clear: both;">High performance graph search for EMF
+	models</h2>
+<div id="rightcolumn" class="frontpage">
+
+<div class="sideitem">
+	<div align="center">
+		<img align="center" src="/viatra/images/incquery_logo.png" border="0"/>
+	</div>
+</div>
+
+
+</div>
+<div id="introText" style="margin-right: 300px;">
+	<p>
+		EMF-IncQuery is a framework for defining&nbsp;<em>declarative&nbsp;</em>graph
+		queries over&nbsp;<a href="http://www.eclipse.org/emf/">EMF</a>&nbsp;models,
+		and executing them efficiently&nbsp;<em>without manual coding</em> in
+		an imperative programming language such as Java.
+	</p>
+
+	<p>With EMF-IncQuery, you can:</p>
+
+	<ul>
+		<li><a href="http://incquery.net/incquery/documentation/ui">Define</a>
+			model queries using a high level yet powerful <a
+			href="http://wiki.eclipse.org/VIATRA/Query/UserDocumentation/QueryLanguage">query
+				language</a> (supported by state-of-the-art Xtext-based development
+			tools)</li>
+		<li><a href="http://viatra.net/performance">Execute</a> the
+			queries efficiently and incrementally, with proven scalability for
+			complex queries over large instance models</li>
+		<li>Integrate queries into your applications using essential
+			feature APIs including <a
+			href="http://wiki.eclipse.org/VIATRA/Query/UserDocumentation/IncQuery_Viewers">IncQuery
+				Viewers</a>, <a
+			href="http://wiki.eclipse.org/VIATRA/Query/UserDocumentation/Databinding">Databinding</a>,
+			<a
+			href="http://wiki.eclipse.org/VIATRA/Query/UserDocumentation/Validation">Validation</a>
+			and <a
+			href="http://wiki.eclipse.org/VIATRA/Query/UserDocumentation/Query_Based_Features">Query-based
+				derived features with notifications</a>.
+		</li>
+	</ul>
+
+	<p>In February 2016, the EMF-IncQuery project was merged into VIATRA. This page contains information about accessing the previous versions of EMF-IncQuery. After version 1.2, the first combined release comes out (planned for April 2016), we recommend migrating to the new version.</p>
+</div>
+
+		<h1>EMF-IncQuery - Downloads</h1>
+		<p>EMF-IncQuery can be installed from the Eclipse Marketplace. You
+			can simply drag the Marketplace button to an open Eclipse install to
+			start the installation.</p>
+		<p>
+			<a
+				href="http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=450505"
+				title="Drag and drop into a running Eclipse Indigo workspace to install EMF-IncQuery">
+				<img
+				src="https://marketplace.eclipse.org/sites/all/modules/custom/marketplace/images/installbutton.png" />
+			</a>
+		</p>
+		<h2>Update sites</h2>
+		<p>The EMF-IncQuery project maintains different update sites to
+			download from. The various sites contains versions of different
+			stability and are subject of different amount of testing.</p>
+		<p>Generally, CI and integration builds can contain breaking
+			changes, while milestone and release builds should be stable for use.</p>
+		<p>As a general rule of thumb, you should use the release (or
+			maybe the milestone) update site, and resort to the integration
+			site only if you need bleeding edge features/improvements and/or you
+			need an 'extra feature' that is not available in a milestone build
+			yet.</p>
+		<dl>
+			<dt>Release builds</dt>
+			<dd>
+				<code>http://download.eclipse.org/viatra/incquery/updates/release</code>
+			</dd>
+			<dt>Milestone builds</dt>
+			<dd>
+				<code>http://download.eclipse.org/viatra/incquery/updates/milestone</code>
+			</dd>
+		</dl>
+		<h2>Additional Features</h2>
+		<p>In addition to the core features the EMF-IncQuery project also
+			provides an additional update site with further, experimental
+			features. These features are managed together with the main update
+			site, but as they are less stable, they are not considered part of
+			the EMF-IncQuery releases. As the components stabilize, they will
+			become part of the main repository.</p>
+		<p>Although these extra features are not considered part of the
+			release, it is recommended to select the site corresponding to the
+			installed EMF-IncQuery version (e.g. for the release site, select the
+			release extra site).</p>
+		<p>
+			The contents of the update sites are described in more detail in <a
+				href="http://wiki.eclipse.org/EMFIncQuery/UserDocumentation/Installation">installation
+				wiki page</a>.
+		<dl>
+			<dt>Release site</dt>
+			<dd>
+				<code>http://download.eclipse.org/viatra/incquery/updates-extra/release</code>
+			</dd>
+			<dt>Milestone site</dt>
+			<dd>
+				<code>http://download.eclipse.org/viatra/incquery/updates-extra/milestone</code>
+			</dd>
+		</dl>
+		<h2>Zipped update sites</h2>
+		<p>
+			For offline installations it is possible to download the latest
+			release sites as a zip file. In this case, make sure you have the corresponding Xtext
+			version installed, or download it from the <a
+				href="http://www.eclipse.org/Xtext/download.html">home page of
+				the Xtext project</a>.
+		</p>
+		<p>
+			To install such a version, download the zip file from below, and add
+			it as a local update site using the <em>Install new software...</em>
+			wizard from the Help menu.
+		<dl>
+			<dt>0.7.0 (Xtext 2.4.0)</dt>
+			<dd>
+				<a
+					href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates/zipped/org.eclipse.incquery.update-0.7.0-incubation.zip">Main
+					site</a> - <a
+					href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates-extra/zipped/org.eclipse.incquery.update.extras-0.7.0-incubation.zip">Extra
+					Site</a>
+			</dd>
+			<dt>0.8.0 (Xtext 2.6.0)</dt>
+			<dd>
+				<a
+					href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates/zipped/org.eclipse.incquery.update-0.8.0-incubation.zip">Main
+					site</a> - <a
+					href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates-extra/zipped/org.eclipse.incquery.update.extras-0.8.0-incubation.zip">Extra
+					Site</a>
+			</dd>
+			<dt>0.8.1 (Xtext 2.6.0)</dt>
+			<dd>
+				<a
+					href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates/zipped/org.eclipse.incquery.update-0.8.1-incubation.zip">Main
+					site</a> - <a
+					href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates-extra/zipped/org.eclipse.incquery.update.extras-0.8.1-incubation.zip">Extra
+					Site</a>
+			</dd>
+            <dt>0.9.1 (Xtext 2.7.0)</dt>
+			<dd>
+				<a
+					href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates/zipped/org.eclipse.incquery.update-0.9.1-incubation.zip">Main
+					site</a> - <a
+					href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates-extra/zipped/org.eclipse.incquery.update.extras-0.9.1-incubation.zip">Extra
+					Site</a>
+			</dd>
+            <dt>1.0.0 (Xtext 2.8.0)</dt>
+			<dd>
+				<a
+					href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates/zipped/org.eclipse.incquery.update-1.0.0.zip">Main
+					site</a> - <a
+					href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates-extra/zipped/org.eclipse.incquery.update.extras-1.0.0-incubation.zip">Extra
+					Site (Contains incubating contents)</a>
+			</dd>
+		</dl>
+		<h2>Compatibility with older Xtext versions</h2>
+		<p>EMF-IncQuery 0.7 requires the Xtext version 2.4.2
+			available from the Kepler update site, and does not work with older
+			versions with Xtext. However, for compatibility reasons, a P2
+			repository was created from the last version that is compatible with
+			Xtext 2.3 (created on the 21st July, 2013). Generally, as this
+			version does not contain all fixes and enhancements of the final
+			0.7.0 release, it is not recommended to rely on this version, unless
+			you strictly need Xtext 2.3-compatibility.</p>
+		<dl>
+			<dt>Update site:</dt>
+			<dd><code>http://download.eclipse.org/viatra/incquery/updates/xtext23</code></dd>
+			<dt>Zipped repository</dt>
+			<dd>
+				<a
+					href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates/zipped/org.eclipse.incquery.update-0.7.0-xtext-2.3-incubation.zip">/viatra/incquery/updates/zipped/org.eclipse.incquery.update-0.7.0-xtext-2.3-incubation.zip</a>
+			</dd>
+		</dl>
+	</div>
+</div>
