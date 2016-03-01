@@ -14,7 +14,7 @@
 
 #
 # Begin: page-specific settings.  Change these.
-$pageTitle 		= "VIATRA - Support";
+$pageTitle 		= "VIATRA Support";
 $pageKeywords	= "";
 $pageAuthor		= "Istvan Rath";
 

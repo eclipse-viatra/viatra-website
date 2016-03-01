@@ -7,22 +7,22 @@
   # Author:     Istvan Rath
   # Date:     7-October-2008
   #
-  # Description: 
+  # Description:
   #
   #
   #****************************************************************************
-  
+
   #
-  # Begin: page-specific settings.  Change these. 
-  $pageTitle    = "VIATRA2 News";
+  # Begin: page-specific settings.  Change these.
+  $pageTitle    = "VIATRA News";
   $pageKeywords = "";
   $pageAuthor   = "Istvan Rath";
   #
-  
-  # Paste your HTML content between the EOHTML markers! 
+
+  # Paste your HTML content between the EOHTML markers!
   $html = file_get_contents('pages/all_news.html');
   $incubation = file_get_contents('pages/incubation.html');
-  
+
   $html = str_replace("~~INCUBATION~~", $incubation, $html);
 
   # Generate the web page
