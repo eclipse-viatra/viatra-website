@@ -14,7 +14,7 @@
 
 	#
 	# Begin: page-specific settings.  Change these.
-	$pageTitle 		= "VIATRA - Downloads";
+	$pageTitle 		= "VIATRA - EMF-IncQuery";
 	$pageKeywords	= "";
 	$pageAuthor		= "Istvan Rath";
 
