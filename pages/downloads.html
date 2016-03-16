@@ -1,6 +1,12 @@
 <div id="midcolumn">
 
 	<h3>VIATRA Downloads</h3>
+		<p>VIATRA can be installed from Eclipse Marketplace. You
+			can simply drag the Marketplace button to an open Eclipse install to
+			start the installation.</p>
+		<p>
+			<a href="http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=2292729" class="drag" title="Drag to your running Eclipse workspace to install VIATRA"><img class="img-responsive" src="https://marketplace.eclipse.org/sites/all/themes/solstice/public/images/marketplace/btn-install.png" alt="Drag to your running Eclipse workspace to install VIATRA" /></a>
+		</p>
 
     <h4>Update sites</h4>
 		<p>The VIATRA project maintains different update sites to
@@ -13,7 +19,7 @@
 			site only if you need bleeding edge features/improvements and/or you
 			need an 'extra feature' that is not available in a milestone build
 			yet.</p>
-		<p><strong>Warning!</strong> Release builds are retained undefinitly, but other builds will be periodically removed. Integration and milestone builds will be removed after the next version is released. In case of CI builds, only the latest build will be available.
+		<p><strong>Warning!</strong> Release builds are retained undefinitely, but other builds will be periodically removed. Integration and milestone builds will be removed after the next version is released. In case of CI builds, only the latest build will be available.
 		</p>
 		<dl>
 			<dt>Release builds</dt>
@@ -34,11 +40,123 @@
 			</dd>
 		</dl>
 
+		<h4>VIATRA and EMF-IncQuery</h4>
+		<p>The VIATRA project before version 1.2.0 depended on EMF-IncQuery; for each version of VIATRA the corresponding EMF-IncQuery version is to be used. Since version 1.2.0, EMF-IncQuery was merged, and it makes no sense to install EMF-IncQuery separately. Furthermore, version 0.9.0 was used for VIATRA as a temporary version before the merging of EMF-IncQuery, and there are a few integration and milestone builds for this version. Users of version 0.9.0 are strongly recommended to migrate to VIATRA 1.2.0 as soon as possible.</p>
+
+		<table>
+			<thead>
+				<tr>
+					<th>VIATRA version</th><th>EMF-IncQuery version</th><th>Xtext version</th><th>Availability</th><th>Notes</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><a href="https://projects.eclipse.org/projects/modeling.viatra/releases/1.2.0">1.2.0</a></td><td> -- </td><td>2.9</td><td><strong>integration</strong> site</td><td>First version after merging EMF-IncQuery</td>
+				</tr>
+				<tr>
+						<td>0.9.0</td><td>1.2.0</td><td>2.9</td><td><strong>milestone</strong> site</td><td>Temporary version; not to be released</td>
+				</tr>
+				<tr>
+						<td><a href="https://projects.eclipse.org/projects/modeling.viatra/releases/0.8.0">0.8.0</a></td><td>1.1.0</td><td>2.9</td><td><strong>release</strong> site</td><td></td>
+				</tr>
+				<tr>
+						<td><a href="https://projects.eclipse.org/projects/modeling.viatra/releases/0.7.0">0.7.0</a></td><td>1.0.0</td><td>2.8</td><td><strong>release</strong> site</td><td></td>
+				</tr>
+			</tbody>
+		</table>
 
     <h4>Zipped update sites</h4>
+
+		<p>
+			For offline installations it is possible to download the release sites as a zip file. In this case, make sure you have the corresponding EMF-IncQuery (see below) and <a
+		href="http://www.eclipse.org/Xtext/download.html">Xtext</a> version installed.
+		</p>
+
+		<p>
+			To install such a version, download the zip file from below, and add
+			it as a local update site using the <em>Install new software...</em>
+			wizard from the Help menu.
+		<dl>
+
     <ul>
 			<li><a href="http://www.eclipse.org/downloads/download.php?file=viatra/updates/zipped/org.ecipse.viatra.update.0.8.0-incubation.zip">Release 0.8.0</a></li>
 		</ul>
+
+	<h3 id="incquery">EMF-IncQuery releases</h4>
+
+	<p>EMF-IncQuery can be installed from the Eclipse Marketplace. You
+		can simply drag the Marketplace button to an open Eclipse install to
+		start the installation.</p>
+	<p>
+		<a href="http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=450505" class="drag" title="Drag to your running Eclipse workspace to install VIATRA"><img class="img-responsive" src="https://marketplace.eclipse.org/sites/all/themes/solstice/public/images/marketplace/btn-install.png" alt="Drag to your running Eclipse workspace to install VIATRA" /></a>
+	</p>
+	<h4>Update sites</h4>
+	<p>In addition to the core features the EMF-IncQuery project also
+		provides an additional update site with further, experimental
+		features. These features are managed together with the main update
+		site, but as they are less stable, they are not considered part of
+		the EMF-IncQuery releases. As the components stabilized, they were
+		integrated into the main repository.</p>
+
+	<dl>
+		<dt>Release builds</dt>
+		<dd>
+			<ul>
+				<li>Main site: <code>http://download.eclipse.org/viatra/incquery/updates/release</code></li>
+				<li>Extra site: <code>http://download.eclipse.org/viatra/incquery/updates-extra/release</code></li>
+			</ul>
+		</dd>
+		<dt>Milestone builds</dt>
+		<dd>
+			<ul>
+				<li>Main site: <code>http://download.eclipse.org/viatra/incquery/updates/milestone</code></li>
+				<li>Extra site: <code>http://download.eclipse.org/viatra/incquery/updates-extra/milestone</code></li>
+			</ul>
+		</dd>
+	</dl>
+
+	<h4>Zipped update sites</h4>
+		<dt>0.7.0 (Xtext 2.4.0)</dt>
+		<dd>
+			<a
+				href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates/zipped/org.eclipse.incquery.update-0.7.0-incubation.zip">Main
+				site</a> - <a
+				href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates-extra/zipped/org.eclipse.incquery.update.extras-0.7.0-incubation.zip">Extra
+				Site</a>
+		</dd>
+		<dt>0.8.0 (Xtext 2.6.0)</dt>
+		<dd>
+			<a
+				href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates/zipped/org.eclipse.incquery.update-0.8.0-incubation.zip">Main
+				site</a> - <a
+				href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates-extra/zipped/org.eclipse.incquery.update.extras-0.8.0-incubation.zip">Extra
+				Site</a>
+		</dd>
+		<dt>0.8.1 (Xtext 2.6.0)</dt>
+		<dd>
+			<a
+				href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates/zipped/org.eclipse.incquery.update-0.8.1-incubation.zip">Main
+				site</a> - <a
+				href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates-extra/zipped/org.eclipse.incquery.update.extras-0.8.1-incubation.zip">Extra
+				Site</a>
+		</dd>
+					<dt>0.9.1 (Xtext 2.7.0)</dt>
+		<dd>
+			<a
+				href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates/zipped/org.eclipse.incquery.update-0.9.1-incubation.zip">Main
+				site</a> - <a
+				href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates-extra/zipped/org.eclipse.incquery.update.extras-0.9.1-incubation.zip">Extra
+				Site</a>
+		</dd>
+					<dt>1.0.0 (Xtext 2.8.0)</dt>
+		<dd>
+			<a
+				href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates/zipped/org.eclipse.incquery.update-1.0.0.zip">Main
+				site</a> - <a
+				href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates-extra/zipped/org.eclipse.incquery.update.extras-1.0.0-incubation.zip">Extra
+				Site (Contains incubating contents)</a>
+		</dd>
+	</dl>
 
 	<h3>Older VIATRA2 releases</h4>
 	<p>
