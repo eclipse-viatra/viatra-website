@@ -38,7 +38,7 @@
 	include('pages/_index.html');
 	$incubation = file_get_contents('pages/incubation.html');
   $html = ob_get_clean();
-	$html = str_replace("~~INCUBATION~~", $incubation, $html);
+	$Theme->setHtml(str_replace("~~INCUBATION~~", $incubation, $html));
 
 
 	# Generate the web page
