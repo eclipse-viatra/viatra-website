@@ -60,7 +60,7 @@
 	);
 
 	$links[] = array(
-			'icon' => 'fa-book', // Required
+			'icon' => 'fa-barcode', // Required
 			'url' => 'http://www.eclipse.org/projects/project.php?id=modeling.viatra', // Required
 			'title' => 'About this project', // Required
 			//'target' => '_blank', // Optional
