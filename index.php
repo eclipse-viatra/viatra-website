@@ -19,9 +19,8 @@
 
 	#
 	# Begin: page-specific settings.  Change these.
-	$pageTitle 		= "VIATRA Project";
-	$pageKeywords	= "";
-	$pageAuthor		= "VIATRA Project";
+  $Theme->setPageAuthor("VIATRA Project");
+  $Theme->setPageTitle("VIATRA Project");
 
 	# Add page-specific Nav bars here
 	# Format is Link text, link URL (can be http://www.someothersite.com/), target (_self, _blank), level (1, 2 or 3)
@@ -43,5 +42,5 @@
 
 
 	# Generate the web page
-	$App->generatePage($theme, $Menu, null, $pageAuthor, $pageKeywords, $pageTitle, $html);
+  $Theme->generatePage();
 ?>
