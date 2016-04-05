@@ -92,6 +92,6 @@
 	$App->setThemeVariables($variables);
 
    $Theme = $App->getThemeClass($App->getHTTPParameter('theme'));
-   $Theme->setLayout("thin");
+   $Theme->setLayout("thin-header");
 	//$App->generatePage($theme, $Menu, null, $pageAuthor, $pageKeywords, $pageTitle, $html);
 ?>
