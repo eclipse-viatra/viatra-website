@@ -36,12 +36,12 @@
 
 	# Paste your HTML content between the EOHTML markers!
   ob_start();
-	$html = file_get_contents('pages/_index.html');
+	include('pages/_index.html');
 	$incubation = file_get_contents('pages/incubation.html');
-
+  $html = ob_get_clean();
 	$html = str_replace("~~INCUBATION~~", $incubation, $html);
 
 
 	# Generate the web page
-	$App->generatePage($theme, $Menu, $Nav, $pageAuthor, $pageKeywords, $pageTitle, $html);
+	$App->generatePage($theme, $Menu, null, $pageAuthor, $pageKeywords, $pageTitle, $html);
 ?>
