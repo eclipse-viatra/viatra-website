@@ -9,7 +9,6 @@
 	$Nav->addNavSeparator("VIATRA", "/viatra");
 	$Nav->addCustomNav("Download", "/viatra/downloads.php", "_self", 2);
 	$Nav->addCustomNav("Documentation", "http://wiki.eclipse.org/VIATRA", "_self", 2);
-	$Nav->addCustomNav("Contact", "/viatra/contact.php", "_self", 2);
 	$Nav->addCustomNav("About this project", "http://www.eclipse.org/projects/project.php?id=modeling.viatra", "_self", 2);
 	$Nav->addNavSeparator("Eclipse Modeling Home", "/modeling");
 
@@ -44,13 +43,13 @@
 			'text' => 'Tutorials, Examples, Wiki' // Optional
 	);
 
-	$links[] = array(
-			'icon' => 'fa-support', // Required
-			'url' => '/viatra/contact.php', // Required
-			'title' => 'Support', // Required
-			//'target' => '_blank', // Optional
-			'text' => 'Bug Tracker, Forum' // Optional
-	);
+#	$links[] = array(
+#			'icon' => 'fa-support', // Required
+#			'url' => '/viatra/contact.php', // Required
+#			'title' => 'Support', // Required
+#			//'target' => '_blank', // Optional
+#			'text' => 'Bug Tracker, Forum' // Optional
+#	);
 
 	$links[] = array(
 			'icon' => 'fa-support', // Required
@@ -58,6 +57,14 @@
 			'title' => 'EMF-IncQuery', // Required
 			//'target' => '_blank', // Optional
 			'text' => 'For users of EMF-IncQuery' // Optional
+	);
+
+	$links[] = array(
+			'icon' => 'fa-book', // Required
+			'url' => 'http://www.eclipse.org/projects/project.php?id=modeling.viatra', // Required
+			'title' => 'About this project', // Required
+			//'target' => '_blank', // Optional
+			'text' => 'Eclipse Project Portal' // Optional
 	);
 
 	$variables['header_nav'] = array(
