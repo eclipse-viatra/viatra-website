@@ -78,9 +78,16 @@
 	);
 
 	// CFA Link - Big orange button in header
-	$variables['btn_cfa'] = array(
-			'hide' => TRUE
-	);
+	//$variables['btn_cfa'] = array(
+	//		'hide' => TRUE
+	//);
+
+	  $variables['btn_cfa'] = array(
+    	'hide' => FALSE, // Optional - Hide the CFA button.
+    	'class' => 'btn btn-huge btn-info', // Optional - Replace class on CFA link.
+    	'href' => '/viatra/downloads.php', // Optional - Replace href on CFA link.
+    	'text' => '<i class="fa fa-download"></i> Download VIATRA' // Optional - Replace text of CFA link.
+  );
 	// Set Solstice theme variables (Array)
 	$App->setThemeVariables($variables);
 
