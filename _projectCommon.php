@@ -81,6 +81,8 @@
 	$variables['btn_cfa'] = array(
 			'hide' => TRUE
 	);
+
+	$variables['layout'] = 'thin';
 	// Set Solstice theme variables (Array)
 	$App->setThemeVariables($variables);
 ?>
