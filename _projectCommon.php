@@ -9,6 +9,7 @@
 	$Nav->addNavSeparator("VIATRA", "/viatra");
 	$Nav->addCustomNav("Download", "/viatra/downloads.php", "_self", 2);
 	$Nav->addCustomNav("Documentation", "http://wiki.eclipse.org/VIATRA", "_self", 2);
+	$Nav->addCustomNav("Getting Started", "/viatra/documentation/tutorial.php", "_self", 3);
 	$Nav->addCustomNav("About this project", "http://www.eclipse.org/projects/project.php?id=modeling.viatra", "_self", 2);
 	$Nav->addNavSeparator("Eclipse Modeling Home", "/modeling");
 
