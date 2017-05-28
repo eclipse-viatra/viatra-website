@@ -21,11 +21,7 @@
 <li><a href="#environment">1. Setting up the tutorial</a></li>
 <li><a href="#_query_development">2. Query Development</a>
 <ul class="sectlevel2">
-<li><a href="#_define_your_first_query">2.1. Define your First Query</a></li>
-<li><a href="#_evaluate_queries_in_the_query_results_view">2.2. Evaluate Queries in the Query Results View</a></li>
-<li><a href="#_define_additional_queries">2.3. Define Additional Queries</a></li>
-<li><a href="#_validation">2.4. Validation</a></li>
-<li><a href="#_references">2.5. References</a></li>
+<li><a href="#_using_the_query_development_environment">2.1. Using the Query Development Environment</a></li>
 </ul>
 </li>
 <li><a href="#_model_transformation_development">3. Model Transformation Development</a>
@@ -46,11 +42,11 @@
 <p>This tutorial was written for version 1.6 (released on 28th June 2017).</p>
 </div>
 <div class="paragraph">
-<p>Starting with version 1.6 VIATRA is available from the Simultaneous Release Train (Oxygen version); otherwise it can be downloaded from the p2 repository at <a href="http://download.eclipse.org/viatra/updates/release/" class="bare">http://download.eclipse.org/viatra/updates/release/</a></p>
+<p>Starting with version 1.6 VIATRA is available from the Simultaneous Release Train (Oxygen version: <a href="http://download.eclipse.org/releases/oxygen" class="bare">http://download.eclipse.org/releases/oxygen</a>); for older releases or for older version use the release p2 repository at <a href="http://download.eclipse.org/viatra/updates/release/" class="bare">http://download.eclipse.org/viatra/updates/release/</a></p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/screenshots/install.png" alt="Install window">
+<img src="images/install.png" alt="Install window">
 </div>
 <div class="title">Figure 1. Install window</div>
 </div>
@@ -61,17 +57,19 @@
 <p>This tutorial relies on the CPS demonstrator example from <a href="https://git.eclipse.org/c/viatra/org.eclipse.viatra.examples.git/tree/cps" class="bare">https://git.eclipse.org/c/viatra/org.eclipse.viatra.examples.git/tree/cps</a> (for a description of the example please consult <a href="https://github.com/viatra/viatra-docs/blob/master/cps/Home.adoc" class="bare">https://github.com/viatra/viatra-docs/blob/master/cps/Home.adoc</a>).</p>
 </div>
 <div class="paragraph">
-<p>This document assumes that the metamodels themselves are installed into the Eclipse instance. They are available from the p2 repository <a href="https://build.incquerylabs.com/jenkins/job/CPS-Demonstrator/lastSuccessfulBuild/artifact/cps/releng/org.eclipse.viatra.examples.cps.update/target/repository/" class="bare">https://build.incquerylabs.com/jenkins/job/CPS-Demonstrator/lastSuccessfulBuild/artifact/cps/releng/org.eclipse.viatra.examples.cps.update/target/repository/</a></p>
+<p>This document assumes that the metamodels themselves are installed into the Eclipse instance. They are available from the p2 repository <a href="https://hudson.eclipse.org/viatra/job/viatra-examples-cps/lastSuccessfulBuild/artifact/cps/releng/org.eclipse.viatra.examples.cps.update/target/repository/" class="bare">https://hudson.eclipse.org/viatra/job/viatra-examples-cps/lastSuccessfulBuild/artifact/cps/releng/org.eclipse.viatra.examples.cps.update/target/repository/</a></p>
 </div>
 <div class="paragraph">
 <p>VIATRA defines a custom perspective called <code>Transformation Development</code> that includes a few views and shortcuts that make it easier to develop queries and transformations. The remainder of the tutorial expects that this perspective is selected; in case a different perspective is used, the corresponding views and wizards are still available in their standard respective locations.</p>
 </div>
-<div style="page-break-after: always;"></div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_query_development"><a class="link" href="#_query_development">2. Query Development</a></h2>
 <div class="sectionbody">
+<div style="page-break-after: always;"></div>
+<div class="sect2">
+<h3 id="_using_the_query_development_environment"><a class="link" href="#_using_the_query_development_environment">2.1. Using the Query Development Environment</a></h3>
 <div class="paragraph">
 <p>Constraints and conditions in the VIATRA framework are expressed using a graph pattern-based language. This declarative formalism allows very compact definitions of complex conditions, while it is still possible to provide live query evaluation based on the Rete algorithm.</p>
 </div>
@@ -88,13 +86,13 @@
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The pattern language always works on sets: neither the constraints nor the match set is ordered; and match set includes never includes multiple tuples with exactly the same model elements.
+The pattern language always works on sets: neither the constraints nor the match set is ordered; and match set never includes multiple tuples with exactly the same model elements.
 </td>
 </tr>
 </table>
 </div>
-<div class="sect2">
-<h3 id="_define_your_first_query"><a class="link" href="#_define_your_first_query">2.1. Define your First Query</a></h3>
+<div class="sect3">
+<h4 id="_define_your_first_query"><a class="link" href="#_define_your_first_query">2.1.1. Define your First Query</a></h4>
 <div class="paragraph">
 <p>To define queries, first a  <em>VIATRA Query Project</em> has to be created with the standard <em>New Project Wizard</em> of Eclipse. Such projects are specialized Eclipse plug-in projects with preconfigured VIATRA dependencies and the query generator initialized. Query specifications have to be added to the Java classpath of the projects, more specifically into Java packages. Based on these observations the creation of the first query consists of the following steps:</p>
 </div>
@@ -131,8 +129,8 @@ pattern hostIpAddress(host: HostInstance, ip : java String) {
 <p>Looking at the pattern header, we see that this pattern has two parameters, meaning its results will be a pair of values, the first selecting a <code>HostInstance</code> from the model, while the second one a <code>String</code> literal. The connection between these elements is described by a single constraint ensuring that <code>ip</code> variable stores the <code>nodeIp</code> attribute of a corresponding <code>HostInstance</code>.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_evaluate_queries_in_the_query_results_view"><a class="link" href="#_evaluate_queries_in_the_query_results_view">2.2. Evaluate Queries in the Query Results View</a></h3>
+<div class="sect3">
+<h4 id="_evaluate_queries_in_the_query_results_view"><a class="link" href="#_evaluate_queries_in_the_query_results_view">2.1.2. Evaluate Queries in the Query Results View</a></h4>
 <div class="paragraph">
 <p>VIATRA includes a view to evaluate the results of queries over various editors, and reacts on changes in the editor.</p>
 </div>
@@ -166,7 +164,7 @@ pattern hostIpAddress(host: HostInstance, ip : java String) {
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/screenshots/queryresultview.png" alt="Query Results View in Action">
+<img src="images/queryresultview.png" alt="Query Results View in Action">
 </div>
 <div class="title">Figure 2. Query Results View</div>
 </div>
@@ -183,8 +181,8 @@ If the 'Load model from active editor' button is not enabled, it either means, t
 </table>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_define_additional_queries"><a class="link" href="#_define_additional_queries">2.3. Define Additional Queries</a></h3>
+<div class="sect3">
+<h4 id="_define_additional_queries"><a class="link" href="#_define_additional_queries">2.1.3. Define Additional Queries</a></h4>
 <div class="paragraph">
 <p>In the following, we define a set of patterns that illustrate additional capabilities of the query language. Each pattern will come with a short definition, followed by the code itself and some remarks about how the pattern works.</p>
 </div>
@@ -211,7 +209,7 @@ If the 'Load model from active editor' button is not enabled, it either means, t
 </div>
 </li>
 <li>
-<p>List are <code>HostInstance</code>-<code>HostInstance</code> pairs that share a common IP address</p>
+<p>List all <code>HostInstance</code>-<code>HostInstance</code> pairs that share a common IP address</p>
 <div class="ulist">
 <ul>
 <li>
@@ -374,8 +372,8 @@ pattern countApplications(host : HostInstance, M) {
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_validation"><a class="link" href="#_validation">2.4. Validation</a></h3>
+<div class="sect3">
+<h4 id="_validation"><a class="link" href="#_validation">2.1.4. Validation</a></h4>
 <div class="paragraph">
 <p>VIATRA provides facilities to create validation rules based on the pattern language of the framework. These rules can be evaluated on various EMF instance models and upon violations of constraints, markers are automatically created in the Eclipse Problems View.</p>
 </div>
@@ -421,8 +419,8 @@ pattern sameIpAddress(host1: HostInstance, host2: HostInstance, commonIp) {
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_references"><a class="link" href="#_references">2.5. References</a></h3>
+<div class="sect3">
+<h4 id="_references"><a class="link" href="#_references">2.1.5. References</a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -437,6 +435,7 @@ pattern sameIpAddress(host1: HostInstance, host2: HostInstance, commonIp) {
 </ul>
 </div>
 <div style="page-break-after: always;"></div>
+</div>
 </div>
 </div>
 </div>
@@ -504,7 +503,7 @@ pattern cps2depTrace(
 <p>Create new <em>Model Transformation</em> with the wizard</p>
 <div class="imageblock">
 <div class="content">
-<img src="images/screenshots/transformation_wizard.png" alt="transformation wizard">
+<img src="images/transformation_wizard.png" alt="transformation wizard">
 </div>
 <div class="title">Figure 3. Model Transformation Wizard - Create new transformation</div>
 </div>
@@ -513,7 +512,7 @@ pattern cps2depTrace(
 <p>Setup the name of the transformation and click Next</p>
 <div class="imageblock">
 <div class="content">
-<img src="images/screenshots/batch_transformation_wizard_name.png" alt="batch transformation wizard name">
+<img src="images/batch_transformation_wizard_name.png" alt="batch transformation wizard name">
 </div>
 <div class="title">Figure 4. Model Transformation Wizard - Name of the new batch transformation</div>
 </div>
@@ -522,7 +521,7 @@ pattern cps2depTrace(
 <p>Setup the type of the transformation to <em>BatchTransformation</em> and click Finish</p>
 <div class="imageblock">
 <div class="content">
-<img src="images/screenshots/batch_transformation_wizard_type.png" alt="batch transformation wizard type">
+<img src="images/batch_transformation_wizard_type.png" alt="batch transformation wizard type">
 </div>
 <div class="title">Figure 5. Model Transformation Wizard - Type of the new transformation</div>
 </div>
@@ -778,7 +777,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <p>Copy a <code>.cyberphysicalsystem</code> resource in it if you already have one, or create a new <em>CaberPhysicalSystem Model</em></p>
 <div class="imageblock">
 <div class="content">
-<img src="images/screenshots/viatraIncr_example1.png" alt="viatraIncr example1">
+<img src="images/viatraIncr_example1.png" alt="viatraIncr example1">
 </div>
 <div class="title">Figure 6. Project with a .cyberphysicalsystem resource</div>
 </div>
@@ -791,7 +790,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <p>Root element shall be <em>Deployment</em></p>
 <div class="imageblock">
 <div class="content">
-<img src="images/screenshots/viatraIncr_example2.png" alt="viatraIncr example2">
+<img src="images/viatraIncr_example2.png" alt="viatraIncr example2">
 </div>
 <div class="title">Figure 7. New Deployment Model</div>
 </div>
@@ -807,7 +806,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <p>Root element shall be <em>CPS To Deployment</em></p>
 <div class="imageblock">
 <div class="content">
-<img src="images/screenshots/viatraIncr_example3.png" alt="viatraIncr example3">
+<img src="images/viatraIncr_example3.png" alt="viatraIncr example3">
 </div>
 <div class="title">Figure 8. New Traceability Model</div>
 </div>
@@ -819,7 +818,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <p>In the Traceability editor, load both CPS and Deployment models with <em>Load Resources...</em> in the context menu</p>
 <div class="imageblock">
 <div class="content">
-<img src="images/screenshots/viatraIncr_example4.png" alt="viatraIncr example4">
+<img src="images/viatraIncr_example4.png" alt="viatraIncr example4">
 </div>
 <div class="title">Figure 9. Load necessary resources into the Tracebility Model</div>
 </div>
@@ -828,7 +827,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <p>Set CPS and Deployment references of traceability model in the properties view</p>
 <div class="imageblock">
 <div class="content">
-<img src="images/screenshots/viatraIncr_example5.png" alt="viatraIncr example5">
+<img src="images/viatraIncr_example5.png" alt="viatraIncr example5">
 </div>
 <div class="title">Figure 10. Set the references of the Traceability Model</div>
 </div>
@@ -840,7 +839,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <p>Execute transformation using the created command (on the context menu of the Traceability model root)</p>
 <div class="imageblock">
 <div class="content">
-<img src="images/screenshots/viatrabatch.png" alt="viatrabatch">
+<img src="images/viatrabatch.png" alt="viatrabatch">
 </div>
 <div class="title">Figure 11. Transformation command in the context menu</div>
 </div>
@@ -912,7 +911,7 @@ pattern cps2depTrace(cps2dep, trace, cpsElement, depElement) {
 <p>Create new <em>Model Transformation</em> with the wizard</p>
 <div class="imageblock">
 <div class="content">
-<img src="images/screenshots/transformation_wizard.png" alt="transformation wizard">
+<img src="images/transformation_wizard.png" alt="transformation wizard">
 </div>
 <div class="title">Figure 12. Model Transformation Wizard - Create new transformation</div>
 </div>
@@ -922,7 +921,7 @@ pattern cps2depTrace(cps2dep, trace, cpsElement, depElement) {
 <p>Setup the name of the transformation and click Next</p>
 <div class="imageblock">
 <div class="content">
-<img src="images/screenshots/eventdriven_transformation_wizard_name.png" alt="eventdriven transformation wizard name">
+<img src="images/eventdriven_transformation_wizard_name.png" alt="eventdriven transformation wizard name">
 </div>
 <div class="title">Figure 13. Model Transformation Wizard - Name of the new batch transformation</div>
 </div>
@@ -931,7 +930,7 @@ pattern cps2depTrace(cps2dep, trace, cpsElement, depElement) {
 <p>Setup the type of the transformation to <em>BatchTransformation</em> and click Finish</p>
 <div class="imageblock">
 <div class="content">
-<img src="images/screenshots/eventdriven_transformation_wizard_type.png" alt="eventdriven transformation wizard type">
+<img src="images/eventdriven_transformation_wizard_type.png" alt="eventdriven transformation wizard type">
 </div>
 <div class="title">Figure 14. Model Transformation Wizard - Type of the new transformation</div>
 </div>
@@ -1279,7 +1278,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <p>Copy a <code>.cyberphysicalsystem</code> resource in it</p>
 <div class="imageblock">
 <div class="content">
-<img src="images/screenshots/viatraIncr_example1.png" alt="viatraIncr example1">
+<img src="images/viatraIncr_example1.png" alt="viatraIncr example1">
 </div>
 <div class="title">Figure 15. Project with a .cyberphysicalsystem resource</div>
 </div>
@@ -1292,7 +1291,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <p>Root element shall be Deployment</p>
 <div class="imageblock">
 <div class="content">
-<img src="images/screenshots/viatraIncr_example2.png" alt="viatraIncr example2">
+<img src="images/viatraIncr_example2.png" alt="viatraIncr example2">
 </div>
 <div class="title">Figure 16. New Deployment Model</div>
 </div>
@@ -1308,7 +1307,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <p>Root element shall be "CPS To Deployment"</p>
 <div class="imageblock">
 <div class="content">
-<img src="images/screenshots/viatraIncr_example3.png" alt="viatraIncr example3">
+<img src="images/viatraIncr_example3.png" alt="viatraIncr example3">
 </div>
 <div class="title">Figure 17. New Traceability Model</div>
 </div>
@@ -1320,7 +1319,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <p>In the Traceability editor, load both CPS and Deployment models with "Load Resources.." in the context menu</p>
 <div class="imageblock">
 <div class="content">
-<img src="images/screenshots/viatraIncr_example4.png" alt="viatraIncr example4">
+<img src="images/viatraIncr_example4.png" alt="viatraIncr example4">
 </div>
 <div class="title">Figure 18. Load necessary resources into the Traceability Model</div>
 </div>
@@ -1329,7 +1328,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <p>Set CPS and Deployment references of traceability model in the properties view</p>
 <div class="imageblock">
 <div class="content">
-<img src="images/screenshots/viatraIncr_example5.png" alt="viatraIncr example5">
+<img src="images/viatraIncr_example5.png" alt="viatraIncr example5">
 </div>
 <div class="title">Figure 19. Set the references of the Traceability Model</div>
 </div>
@@ -1338,7 +1337,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <p>Toggle transformation using the created command (on the context menu of the Traceability model root)</p>
 <div class="imageblock">
 <div class="content">
-<img src="images/screenshots/viatraIncr_example6.png" alt="viatraIncr example6">
+<img src="images/viatraIncr_example6.png" alt="viatraIncr example6">
 </div>
 <div class="title">Figure 20. Toggle transformation in the context menu</div>
 </div>
