@@ -4,7 +4,7 @@
 <p><a href="http://www.eclipse.org/viatra/">VIATRA</a> is an open source model transformation framework, focusing on efficient evaluation of model queries and supports various transformation workflows. This document contains a tutorial for getting started with the query and transformation development.</p>
 </div>
 <div class="paragraph">
-<p>The tutorial relies on the <a href="../cps/Home.html">CPS Demonstrator application</a>. The CPS Demonstrator is specified to cover a usual workflow in Model-driven Engineering, where a system is (1) first described in a source model, then (2) automated model-to-model transformations are used to derive a target model. Finally, (3) model-to-text transformation is performed to generate code from the target domain. In addition, a model generator that can automatically create source domain models can support the correctness testing and performance evaluation of the components. This tutorial uses only a subset of the transformation problem, as its main goal is to illustrate the basics of the VIATRA environment. Consult the original demonstrator for a more complex transformation example.</p>
+<p>The tutorial relies on the <a href="https://github.com/viatra/viatra-docs/blob/master/cps/Home.adoc">CPS Demonstrator application</a>. The CPS Demonstrator is specified to cover a usual workflow in Model-driven Engineering, where a system is (1) first described in a source model, then (2) automated model-to-model transformations are used to derive a target model. Finally, (3) model-to-text transformation is performed to generate code from the target domain. In addition, a model generator that can automatically create source domain models can support the correctness testing and performance evaluation of the components. This tutorial uses only a subset of the transformation problem, as its main goal is to illustrate the basics of the VIATRA environment. Consult the original demonstrator for a more complex transformation example.</p>
 </div>
 <div class="paragraph">
 <p>We expect readers to be familiar with the basics of Eclipse plug-in development, more specifically creating plug-in projects and defining basic UI extensions such as commands. Additionally, we expect a basic understanding of EMF-based modeling. If required, look at the Plug-in development tutorial at <a href="http://www.vogella.com/tutorials/EclipsePlugin/article.html" class="bare">http://www.vogella.com/tutorials/EclipsePlugin/article.html</a> or the EMF tutorial at <a href="http://www.vogella.com/tutorials/EclipseEMF/article.html" class="bare">http://www.vogella.com/tutorials/EclipseEMF/article.html</a> for a short presentation on these subjects.</p>
@@ -22,6 +22,7 @@
 <li><a href="#_query_development">2. Query Development</a>
 <ul class="sectlevel2">
 <li><a href="#_using_the_query_development_environment">2.1. Using the Query Development Environment</a></li>
+<li><a href="#_using_queries_programmatically">2.2. Using Queries Programmatically</a></li>
 </ul>
 </li>
 <li><a href="#_model_transformation_development">3. Model Transformation Development</a>
@@ -135,13 +136,16 @@ pattern hostIpAddress(host: HostInstance, ip : java String) {
 <p>VIATRA includes a view to evaluate the results of queries over various editors, and reacts on changes in the editor.</p>
 </div>
 <div class="paragraph">
-<p>The <strong>Query Results</strong> view is the primary tool for debugging graph patterns. Open the view by selecting <em>Window/Show View/Query Results</em> or you can simply press the <span class="keyseq"><kbd>CTRL</kbd>+<kbd>3</kbd></span> shortcut and start to type the name of the view. The view allows loading models and queries, and display (and update) the results of queries automatically.</p>
+<p>The <strong>Query Results</strong> view is the primary tool for debugging graph patterns. Open the view by selecting <em>Window/Show View/Query Results</em> or you can simply press the <span class="keyseq"><kbd>CTRL</kbd>+<kbd>3</kbd></span> shortcut and start to type the name of the view. The view allows loading models and queries, and display (and update) the results of queries automatically. Together with the installed metamodels there is also an example instance model included that will be used in this tutorial as an example.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/generate_cps_example.png" alt="Generate CPS example">
+</div>
+<div class="title">Figure 2. Initialize the example CPS demonstrator project</div>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
-<li>
-<p>Import instances project <code><code>models\org.eclipse.viatra.examples.cps.instances</code></code> from the <a href="https://git.eclipse.org/c/viatra/org.eclipse.viatra.examples.git/tree/cps/">CPS Git repository</a>. Note that this is <strong>not</strong> a Git repository URL, but a web interface; a repository url can be found in the bottom of the page.</p>
-</li>
 <li>
 <p>Open our example instance model (/org.eclipse.viatra.examples.cps.instances/example.cyberphysicalsystem)</p>
 </li>
@@ -166,7 +170,7 @@ pattern hostIpAddress(host: HostInstance, ip : java String) {
 <div class="content">
 <img src="images/queryresultview.png" alt="Query Results View in Action">
 </div>
-<div class="title">Figure 2. Query Results View</div>
+<div class="title">Figure 3. Query Results View</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -437,6 +441,454 @@ pattern sameIpAddress(host1: HostInstance, host2: HostInstance, commonIp) {
 <div style="page-break-after: always;"></div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_using_queries_programmatically"><a class="link" href="#_using_queries_programmatically">2.2. Using Queries Programmatically</a></h3>
+<div class="paragraph">
+<p>VIATRA Query provides an API to execute queries on various models, including support for listening to match set changes. However, as the incremental evaluation relies on indexes, the API also covers lifecycle management for the runtime. The central element of the API is the Query Engine that is responsible for loading query specifications, setting up indexes and providing match results. This approach is supported by code generators that create a runtime representation for graph patterns and provide a type-safe API to access VIATRA code.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/query_runtime.png" alt="query runtime">
+</div>
+<div class="title">Figure 4. Overview of the runtime components of VIATRA Query</div>
+</div>
+<div class="paragraph">
+<p>To start working with the VIATRA Query API, we have to provide (1) a Scope representing the model and a (2) set of query specifications. The easiest way to initialize a scope, is to simply wrap an EMF ResourceSet inside a new EMFScope instace. For query specifications, the generated matcher classes can be used as an example, see as follows.</p>
+</div>
+<div class="paragraph">
+<p>In general, the generated code in a VIATRA Query project consists of a (1) query specification classes that represents the original VQL specifications for the runtime API, (2) a Match and Matcher class for each pattern definition (recommended for general usage) and (3) a group class for each file that can be used to initialize all queries together.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/query_generated_code.png" alt="query generated code">
+</div>
+<div class="title">Figure 5. Structure of the query generated code</div>
+</div>
+<div class="sect3">
+<h4 id="_initialize_a_headless_application"><a class="link" href="#_initialize_a_headless_application">2.2.1. Initialize a headless Application</a></h4>
+<div class="paragraph">
+<p>To illustrate the usage of the VIATRA Query API, we will create a headless Eclipse application, and execute it over one of the queries written in the previous part. Such an application is a Java class registered using the extension point <code><code>org.eclipse.core.runtime.applications</code></code> (requiring the <code><code>org.eclipse.core.runtime</code></code> bundle as a dependency).</p>
+</div>
+<div id="app-listing" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">  &lt;extension id="queryrunner" point="org.eclipse.core.runtime.applications"&gt;
+    &lt;application cardinality="singleton-global" thread="main" visible="true"&gt;
+      &lt;run class="org.eclipse.viatra.examples.cps.queries.runner.QueryRunner"/&gt;
+    &lt;/application&gt;
+  &lt;/extension&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code><code>IApplication</code></code> interface requires two methods to be implemented, called <code><code>start</code></code> and <code><code>stop</code></code>. In our case, we will only use start (and returning 0 to mark successful execution), stop is unnecessary.</p>
+</div>
+<div id="app-listing" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">public class QueryRunner implements IApplication {
+
+	@Override
+	public Object start(IApplicationContext context) throws Exception {
+        // Return value 0 is considered as a successful execution on Unix systems
+		return 0;
+	}
+
+	@Override
+	public void stop() {
+        // Headless applications do not require specific stop steps
+	}
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The created application can be started as an Eclipse application by specifically selecting the previously created extension.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/run_headless_application.png" alt="run headless application">
+</div>
+<div class="title">Figure 6. Running the Query Runner application</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_initializing_a_query_engine"><a class="link" href="#_initializing_a_query_engine">2.2.2. Initializing a Query Engine</a></h4>
+<div class="paragraph">
+<p>To initialize a query engine, as first step an EMF scope has to be loaded. This can be done using the following code segment (expecting the model file was copied into the root of the queries project):</p>
+</div>
+<div id="app-listing" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">private EMFScope initializeModelScope() throws IOException, ViatraQueryException {
+	ResourceSet rs = new ResourceSetImpl();
+	Resource res = rs.createResource(URI.createPlatformPluginURI("org.eclipse.viatra.examples.cps.queries/example.cyberphysicalsystem", false));
+	res.load(new HashMap&lt;&gt;());
+    return new EMFScope(rs);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If we have a model scope, it can be used to initialize a managed query engine. The internal implementation of the <code><code>ViatraQueryEngine.on</code></code> method ensure that only a single query engine will be created for each scope, and the query engine will be disposed together with the backing model, making this the preferred implementation for common cases.</p>
+</div>
+<div class="paragraph">
+<p>Additionally, it is recommended to prepare the engine with all queries that will be used. For this, the generated query groups (one per query file) include a <code><code>prepare</code></code> method that creates all indexes required for the pattern matchers, with only a single round of model traversal required.</p>
+</div>
+<div id="app-listing" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">private ViatraQueryEngine prepareQueryEngine(EMFScope scope) throws ViatraQueryException {
+	// Access managed query engine
+    ViatraQueryEngine engine = ViatraQueryEngine.on(scope);
+
+    // Initialize all queries on engine
+	CPSQueries.instance().prepare(engine);
+
+	return engine;
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If multiple query groups are to be loaded, either create a generic pattern group that holds all the patterns, or create a coalesce traversal block where you can execute multiple prepare statements together using the <code><code>engine.getBaseIndex().coalesceTraversals()</code></code> method.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_the_pattern_matcher_api"><a class="link" href="#_the_pattern_matcher_api">2.2.3. The pattern matcher API</a></h4>
+<div class="paragraph">
+<p>The easiest way to use all the query engine is to ask for all matches of a query. The <code><code>getAllMatches</code></code> method of a pattern matcher returns a <strong>set</strong> of match objects that allow named references to its parameters</p>
+</div>
+<div id="app-listing" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">private void printAllMatches(ViatraQueryEngine engine) throws ViatraQueryException {
+    // Access pattern matcher
+    HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
+    // Get and iterate over all matches
+    for (HostIpAddressMatch match : matcher.getAllMatches()) {
+        // Print all the matches to the standard output
+        System.out.println(match.getHost());
+    }
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+It is safe to ask for the same matcher multiple times using the <code><code>on</code></code> method. Although the returned matcher instances may be different, but internally they reuse the same indexes. Given the matchers themselves are stateless, they are safe to use and forget, and at a later point ask for it again.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>It is also possible to use a more functional style processing of matches using match processors.</p>
+</div>
+<div id="app-listing" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">private void printAllMatches2(ViatraQueryEngine engine) throws ViatraQueryException {
+    HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
+    matcher.forEachMatch(new HostIpAddressProcessor() {
+
+        @Override
+        public void process(HostInstance pHost, String pIp) {
+            System.out.println(pHost);
+        }
+    });
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When using Java 8, the same functionality can be accessed using lambda functions, however in this case only the match can be used as a parameter.</p>
+</div>
+<div id="app-listing" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">private void printAllMatches3(ViatraQueryEngine engine) throws ViatraQueryException {
+    HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
+    // The lambda method implements IMatchProcessor&lt;HostIpAddressMatch&gt;
+    matcher.forEachMatch((match) -&gt; {
+            System.out.println(match.getHost());
+        });
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Often it is beneficial to check for and process only a single match. For this reason it is possible to ask for a single match using the <code><code>getOneArbitraryMatch</code></code> method.</p>
+</div>
+<div id="app-listing" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">private void printOneMatch(ViatraQueryEngine engine) throws ViatraQueryException {
+    HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
+    System.out.println(matcher.getOneArbitraryMatch());
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The match returned by the <code><code>getOneArbitraryMatch</code></code> is neither random nor deterministic, but unspecified. <em>Usually</em> repeatedly calling it on the same model (without any model updates) returns the same match, but this is also not guaranteed. On the other hand, restarting the application on the same model <em>usually</em> changes the match returned.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The generated matchers also include a few methods to access values of the parameters. For example, in case of the <code><code>hostIpAddress</code></code> pattern there is a <code><code>getAllValuesOfip</code></code> method that returns all values the parameter <code><code>ip</code></code> finds.</p>
+</div>
+<div id="app-listing" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">private void printAllAddresses(ViatraQueryEngine engine) throws ViatraQueryException {
+    HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
+    for (String ip : matcher.getAllValuesOfip()) {
+        System.out.println(ip);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Caution"></i>
+</td>
+<td class="content">
+If there are multiple hosts that have the same IP address, the <code><code>getAllValuesOfip()</code></code> call will return each IP address only once. This is consistent with all other APIs that always return sets. If duplicates are required, you have to process all matches manually.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>All matcher methods allow to filter the matches with constants. By setting some filter parameters with a non-null value we state that we are interesting in only matches</p>
+</div>
+<div id="app-listing" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">private void printFilteredMatches(ViatraQueryEngine engine) throws ViatraQueryException {
+    HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
+    for (HostIpAddressMatch match : matcher.getAllMatches(null, "152.66.102.2")) {
+        System.out.println(match.prettyPrint());
+    }
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Regardless of input values receiving null values, the query engine will never return matches with null values. If no matches fulfill all the set parameters, the returned set will be empty.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If a filter condition has to be reused, it is possible to create mutable matches where the filtered values are set accordingly. This approach is also useful to use named setters (e.g. if multiple String parameters are to be set) or one does not want to write <code><code>null</code></code> literals.</p>
+</div>
+<div id="app-listing" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">private void printFilteredMatches2(ViatraQueryEngine engine) throws ViatraQueryException {
+    HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
+    HostIpAddressMatch filterMatch = HostIpAddressMatch.newEmptyMatch();
+	filterMatch.setIp("152.66.102.3");
+    for (HostIpAddressMatch match : matcher.getAllMatches(filterMatch)) {
+        System.out.println(match.prettyPrint());
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, if we are only interested in whether there exist any match fulfilling the query, or we want to know how many matches there are, the matcher has methods that calculate these. Both of these methods can be combined with filter matches.</p>
+</div>
+<div id="app-listing" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">private void countMatches(ViatraQueryEngine engine) throws ViatraQueryException {
+    HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
+    System.out.printf("Count matches: %d %n", matcher.countMatches());
+    System.out.printf("Has matches: %b %n", matcher.hasMatch(HostIpAddressMatch.newEmptyMatch()));
+    System.out.printf("Count matches with ip 152.66.102.3: %d %n", matcher.countMatches(null, "152.66.102.3"));
+    System.out.printf("Has matches with ip 152.66.102.13: %b %n", matcher.hasMatch(null, "152.66.102.13"));
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+If asking for the has/count calls is followed by the processing of the said matches, it is usually better to call <code><code>getAllMatches</code></code> or <code><code>getOneArbitraryMatch</code></code> directly, and calculate the count/existence using them.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_advanced_query_engine_features"><a class="link" href="#_advanced_query_engine_features">2.2.4. Advanced query engine features</a></h4>
+<div class="paragraph">
+<p>There are cases where the standard engine lifecycle is inappropriate, e.g. the models will not be unloaded but we want to spare memory by freeing up indexes. Furthermore, there are some functionality, like hint handling or match update listener support that was not added the the base implementation to keep its API clean.</p>
+</div>
+<div id="app-listing" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">private AdvancedViatraQueryEngine prepareAdvancedQueryEngine(EMFScope scope) throws ViatraQueryException {
+    AdvancedViatraQueryEngine engine = AdvancedViatraQueryEngine.createUnmanagedEngine(scope);
+
+    // Initialize all queries on engine
+    CPSQueries.instance().prepare(engine);
+
+    return engine;
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Caution"></i>
+</td>
+<td class="content">
+Do not forget to dispose unmanaged engine manually using the <code><code>AdvancedQueryEngine.dispose()</code></code> method. If you want to use managed query engines but use the advanced features, you might use the <code><code>AdvancedQueryEngine.from(engine)</code></code> call; however, do <strong>NOT</strong> dispose such engines.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_react_to_match_updates"><a class="link" href="#_react_to_match_updates">2.2.4.1. React to match updates</a></h5>
+<div class="paragraph">
+<p>One feature of the advanced query engine is to allow listening to changes, e.g. registering a match update listener for a pattern matcher. Such a listener is triggered when the match set for a pattern matcher changes, together with the direction of the changes.</p>
+</div>
+<div id="app-listing" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">IMatchUpdateListener&lt;HostIpAddressMatch&gt; listener = new IMatchUpdateListener&lt;HostIpAddressMatch&gt;() {
+
+    @Override
+    public void notifyAppearance(HostIpAddressMatch match) {
+        System.out.printf("[ADD] %s %n", match.prettyPrint());
+    }
+
+    @Override
+    public void notifyDisappearance(HostIpAddressMatch match) {
+        System.out.printf("[REM] %s %n", match.prettyPrint());
+
+    }
+};
+
+private void addChangeListener(AdvancedViatraQueryEngine engine) throws ViatraQueryException {
+    HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
+
+    try {
+        // fireNow = true parameter means all current matches are sent to the listener
+        engine.addMatchUpdateListener(matcher, listener, true);
+        // execute model manipulations
+        matcher.getOneArbitraryMatch().getHost().setNodeIp("123.123.123.123");
+    } finally {
+        // Don't forget to remove listeners if not required anymore
+        engine.removeMatchUpdateListener(matcher, listener);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+By registering the match update listener with a <code><code>true</code></code> value for the <code><code>fireNow</code></code> parameter, we ensure that all existing matches are sent to the listener. If we only want to consider future updates, set that parameter to false.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>When looking at the output, the setNodeIp call will result in two changes: the first one represents the removal of the old match (host - old IP pair), while the second one represents an addition of a new one (host - new IP pair). In general, model updates often are often represented by two changes.</p>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Caution"></i>
+</td>
+<td class="content">
+Be very careful when using match update listeners, as sometimes they are called while the model indexes are in an inconsistent state. For this reason, do not update the underlying model and do not execute further model queries. If such cases are required, delay the execution for a later phase. Better still, you can rely on the transformation API of VIATRA that ensure that rules are only executed when the indexes are in a consistent state.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_local_search_backends_and_hints"><a class="link" href="#_local_search_backends_and_hints">2.2.4.2. Local Search backends and hints</a></h5>
+<div class="paragraph">
+<p>The advanced query engine also allows to initialize patterns with non-default settings called <strong>hints</strong>. The most important feature of these hints allow setting the pattern matcher backend, and other backend-specific settings could be changed.</p>
+</div>
+<div class="paragraph">
+<p>In addition to Rete-based incremental query evaluation VIATRA also includes a local search-based approach. By default, Rete is used, but by adding the <code><code>org.eclipse.viatra.query.runtime.localsearch</code></code> bundle as a dependency of the project, it is possible to set up query evaluation hints.</p>
+</div>
+<div id="app-listing" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">private void queryWithLocalSearch(AdvancedViatraQueryEngine engine) throws ViatraQueryException {
+    QueryEvaluationHint hint = LocalSearchHints.getDefault().build();
+    HostIpAddressMatcher matcher = engine.getMatcher(HostIpAddressQuerySpecification.instance(), hint);
+
+    for (HostIpAddressMatch match : matcher.getAllMatches()) {
+        System.out.println(match.prettyPrint());
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see, after the initialization the local search based backend can be queried with the same backend as the Rete-based one, however, it calculates the results when queried instead of relying on previously cached results. This means, usually it is cheaper (in memory and prepare time) to initialize a local search based matcher, but gathering the results is more expensive.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+As the name suggests, <strong>hints</strong> might be ignored by the query engine, e.g. if an incorrect configuration was set, or the engine knows of a functionally equivalent way that has a better performance. For details about the hints, consult the LocalSearchHints and ReteHintOptions classes.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>There are a few aspects where the current local search backend behaves differently to the original, Rete-based algorithm:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Recursive queries are not supported. Trying to initialize a query with recursion results in a runtime error.</p>
+</li>
+<li>
+<p>The algorithm cannot provide change notifications, so registering a MatchUpdateListener over local search-based queries is prohibited.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+The local search backend of VIATRA is almost functionally compatible with the Rete-based backend, but has very different performance characterics. If performance is critical, make sure to understand both algorithms to choose the appropriate one for the problem at hand.
+</td>
+</tr>
+</table>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -505,7 +957,7 @@ pattern cps2depTrace(
 <div class="content">
 <img src="images/transformation_wizard.png" alt="transformation wizard">
 </div>
-<div class="title">Figure 3. Model Transformation Wizard - Create new transformation</div>
+<div class="title">Figure 7. Model Transformation Wizard - Create new transformation</div>
 </div>
 </li>
 <li>
@@ -514,7 +966,7 @@ pattern cps2depTrace(
 <div class="content">
 <img src="images/batch_transformation_wizard_name.png" alt="batch transformation wizard name">
 </div>
-<div class="title">Figure 4. Model Transformation Wizard - Name of the new batch transformation</div>
+<div class="title">Figure 8. Model Transformation Wizard - Name of the new batch transformation</div>
 </div>
 </li>
 <li>
@@ -523,7 +975,7 @@ pattern cps2depTrace(
 <div class="content">
 <img src="images/batch_transformation_wizard_type.png" alt="batch transformation wizard type">
 </div>
-<div class="title">Figure 5. Model Transformation Wizard - Type of the new transformation</div>
+<div class="title">Figure 9. Model Transformation Wizard - Type of the new transformation</div>
 </div>
 </li>
 </ul>
@@ -779,7 +1231,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <div class="content">
 <img src="images/viatraIncr_example1.png" alt="viatraIncr example1">
 </div>
-<div class="title">Figure 6. Project with a .cyberphysicalsystem resource</div>
+<div class="title">Figure 10. Project with a .cyberphysicalsystem resource</div>
 </div>
 </li>
 <li>
@@ -792,7 +1244,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <div class="content">
 <img src="images/viatraIncr_example2.png" alt="viatraIncr example2">
 </div>
-<div class="title">Figure 7. New Deployment Model</div>
+<div class="title">Figure 11. New Deployment Model</div>
 </div>
 </li>
 </ul>
@@ -808,7 +1260,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <div class="content">
 <img src="images/viatraIncr_example3.png" alt="viatraIncr example3">
 </div>
-<div class="title">Figure 8. New Traceability Model</div>
+<div class="title">Figure 12. New Traceability Model</div>
 </div>
 </li>
 </ul>
@@ -820,7 +1272,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <div class="content">
 <img src="images/viatraIncr_example4.png" alt="viatraIncr example4">
 </div>
-<div class="title">Figure 9. Load necessary resources into the Tracebility Model</div>
+<div class="title">Figure 13. Load necessary resources into the Tracebility Model</div>
 </div>
 </li>
 <li>
@@ -829,7 +1281,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <div class="content">
 <img src="images/viatraIncr_example5.png" alt="viatraIncr example5">
 </div>
-<div class="title">Figure 10. Set the references of the Traceability Model</div>
+<div class="title">Figure 14. Set the references of the Traceability Model</div>
 </div>
 </li>
 <li>
@@ -841,7 +1293,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <div class="content">
 <img src="images/viatrabatch.png" alt="viatrabatch">
 </div>
-<div class="title">Figure 11. Transformation command in the context menu</div>
+<div class="title">Figure 15. Transformation command in the context menu</div>
 </div>
 </li>
 </ul>
@@ -913,7 +1365,7 @@ pattern cps2depTrace(cps2dep, trace, cpsElement, depElement) {
 <div class="content">
 <img src="images/transformation_wizard.png" alt="transformation wizard">
 </div>
-<div class="title">Figure 12. Model Transformation Wizard - Create new transformation</div>
+<div class="title">Figure 16. Model Transformation Wizard - Create new transformation</div>
 </div>
 <div class="ulist">
 <ul>
@@ -923,7 +1375,7 @@ pattern cps2depTrace(cps2dep, trace, cpsElement, depElement) {
 <div class="content">
 <img src="images/eventdriven_transformation_wizard_name.png" alt="eventdriven transformation wizard name">
 </div>
-<div class="title">Figure 13. Model Transformation Wizard - Name of the new batch transformation</div>
+<div class="title">Figure 17. Model Transformation Wizard - Name of the new batch transformation</div>
 </div>
 </li>
 <li>
@@ -932,7 +1384,7 @@ pattern cps2depTrace(cps2dep, trace, cpsElement, depElement) {
 <div class="content">
 <img src="images/eventdriven_transformation_wizard_type.png" alt="eventdriven transformation wizard type">
 </div>
-<div class="title">Figure 14. Model Transformation Wizard - Type of the new transformation</div>
+<div class="title">Figure 18. Model Transformation Wizard - Type of the new transformation</div>
 </div>
 </li>
 </ul>
@@ -1280,7 +1732,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <div class="content">
 <img src="images/viatraIncr_example1.png" alt="viatraIncr example1">
 </div>
-<div class="title">Figure 15. Project with a .cyberphysicalsystem resource</div>
+<div class="title">Figure 19. Project with a .cyberphysicalsystem resource</div>
 </div>
 </li>
 <li>
@@ -1293,7 +1745,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <div class="content">
 <img src="images/viatraIncr_example2.png" alt="viatraIncr example2">
 </div>
-<div class="title">Figure 16. New Deployment Model</div>
+<div class="title">Figure 20. New Deployment Model</div>
 </div>
 </li>
 </ul>
@@ -1309,7 +1761,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <div class="content">
 <img src="images/viatraIncr_example3.png" alt="viatraIncr example3">
 </div>
-<div class="title">Figure 17. New Traceability Model</div>
+<div class="title">Figure 21. New Traceability Model</div>
 </div>
 </li>
 </ul>
@@ -1321,7 +1773,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <div class="content">
 <img src="images/viatraIncr_example4.png" alt="viatraIncr example4">
 </div>
-<div class="title">Figure 18. Load necessary resources into the Traceability Model</div>
+<div class="title">Figure 22. Load necessary resources into the Traceability Model</div>
 </div>
 </li>
 <li>
@@ -1330,7 +1782,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <div class="content">
 <img src="images/viatraIncr_example5.png" alt="viatraIncr example5">
 </div>
-<div class="title">Figure 19. Set the references of the Traceability Model</div>
+<div class="title">Figure 23. Set the references of the Traceability Model</div>
 </div>
 </li>
 <li>
@@ -1339,7 +1791,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <div class="content">
 <img src="images/viatraIncr_example6.png" alt="viatraIncr example6">
 </div>
-<div class="title">Figure 20. Toggle transformation in the context menu</div>
+<div class="title">Figure 24. Toggle transformation in the context menu</div>
 </div>
 </li>
 <li>
