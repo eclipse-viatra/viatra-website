@@ -8,8 +8,9 @@
 	# these are optional
 	$Nav->addNavSeparator("VIATRA", "/viatra");
 	$Nav->addCustomNav("Download", "/viatra/downloads.php", "_self", 2);
-	$Nav->addCustomNav("Documentation", "http://wiki.eclipse.org/VIATRA", "_self", 2);
+	$Nav->addCustomNav("Documentation", "/viatra/documentation", "_self", 2);
 	$Nav->addCustomNav("Getting Started", "/viatra/documentation/tutorial.php", "_self", 3);
+	$Nav->addCustomNav("Eclipse Wiki", "http://wiki.eclipse.org/VIATRA", "_self", 3);
 	$Nav->addCustomNav("About this project", "http://www.eclipse.org/projects/project.php?id=modeling.viatra", "_self", 2);
 	$Nav->addNavSeparator("Eclipse Modeling Home", "/modeling");
 
@@ -38,7 +39,7 @@
 
 	$links[] = array(
 			'icon' => 'fa-book', // Required
-			'url' => 'http://wiki.eclipse.org/VIATRA', // Required
+			'url' => '/viatra/documentation', // Required
 			'title' => 'Documentation', // Required
 			//'target' => '_blank', // Optional
 			'text' => 'Tutorials, Examples, Wiki' // Optional

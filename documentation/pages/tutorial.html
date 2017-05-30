@@ -10,7 +10,7 @@
 <p>We expect readers to be familiar with the basics of Eclipse plug-in development, more specifically creating plug-in projects and defining basic UI extensions such as commands. Additionally, we expect a basic understanding of EMF-based modeling. If required, look at the Plug-in development tutorial at <a href="http://www.vogella.com/tutorials/EclipsePlugin/article.html" class="bare">http://www.vogella.com/tutorials/EclipsePlugin/article.html</a> or the EMF tutorial at <a href="http://www.vogella.com/tutorials/EclipseEMF/article.html" class="bare">http://www.vogella.com/tutorials/EclipseEMF/article.html</a> for a short presentation on these subjects.</p>
 </div>
 <div class="paragraph">
-<p>This document starts with a <a href="#environment">quick setup guide</a>, then describes model <a href="#_query_development">query development</a>. Both <a href="#_batch_transformations">batch</a> and <a href="#_event_driven_transformations">event-driven transformations</a> are covered later.</p>
+<p>This tutorial includes a <strong>quick setup guide</strong>, then describes both <strong>model query development</strong> and their usage in the <strong>query runtime</strong>. Then, both <strong>batch</strong> and <strong>event-driven transformations</strong> are covered.</p>
 </div>
 <div class="paragraph">
 <p>This document is intended only as a short tutorial for the usage of the Query and Transformation capabilities of VIATRA. A more detailed documentation is maintained at <a href="http://wiki.eclipse.org/VIATRA" class="bare">http://wiki.eclipse.org/VIATRA</a>.</p>
@@ -19,16 +19,23 @@
 <div id="toctitle" class="title">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#environment">1. Setting up the tutorial</a></li>
-<li><a href="#_query_development">2. Query Development</a>
+<li><a href="#_domains">2. Domains</a>
 <ul class="sectlevel2">
-<li><a href="#_using_the_query_development_environment">2.1. Using the Query Development Environment</a></li>
-<li><a href="#_using_queries_programmatically">2.2. Using Queries Programmatically</a></li>
+<li><a href="#_cyber_physical_system">2.1. Cyber Physical System</a></li>
+<li><a href="#_deployment">2.2. Deployment</a></li>
+<li><a href="#_traceability">2.3. Traceability</a></li>
 </ul>
 </li>
-<li><a href="#_model_transformation_development">3. Model Transformation Development</a>
+<li><a href="#_query_development">3. Query Development</a>
 <ul class="sectlevel2">
-<li><a href="#_batch_transformations">3.1. Batch Transformations</a></li>
-<li><a href="#_event_driven_transformations">3.2. Event-driven Transformations</a></li>
+<li><a href="#_using_the_query_development_environment">3.1. Using the Query Development Environment</a></li>
+<li><a href="#_using_queries_programmatically">3.2. Using Queries Programmatically</a></li>
+</ul>
+</li>
+<li><a href="#_model_transformation_development">4. Model Transformation Development</a>
+<ul class="sectlevel2">
+<li><a href="#_batch_transformations">4.1. Batch Transformations</a></li>
+<li><a href="#_event_driven_transformations">4.2. Event-driven Transformations</a></li>
 </ul>
 </li>
 </ul>
@@ -55,22 +62,74 @@
 <p>For a faster installation, you may deselect the <em>Contact all update sites during install...</em> field, but then it might be necessary to install the required <em>Xtext Runtime</em> manually.</p>
 </div>
 <div class="paragraph">
-<p>This tutorial relies on the CPS demonstrator example from <a href="https://git.eclipse.org/c/viatra/org.eclipse.viatra.examples.git/tree/cps" class="bare">https://git.eclipse.org/c/viatra/org.eclipse.viatra.examples.git/tree/cps</a> (for a description of the example please consult <a href="https://github.com/viatra/viatra-docs/blob/master/cps/Home.adoc" class="bare">https://github.com/viatra/viatra-docs/blob/master/cps/Home.adoc</a>).</p>
-</div>
-<div class="paragraph">
-<p>This document assumes that the metamodels themselves are installed into the Eclipse instance. They are available from the p2 repository <a href="https://hudson.eclipse.org/viatra/job/viatra-examples-cps/lastSuccessfulBuild/artifact/cps/releng/org.eclipse.viatra.examples.cps.update/target/repository/" class="bare">https://hudson.eclipse.org/viatra/job/viatra-examples-cps/lastSuccessfulBuild/artifact/cps/releng/org.eclipse.viatra.examples.cps.update/target/repository/</a></p>
+<p>This document assumes that the CPS metamodels are installed into the Eclipse instance. They are available from the p2 repository <a href="https://hudson.eclipse.org/viatra/job/viatra-examples-cps/lastSuccessfulBuild/artifact/cps/releng/org.eclipse.viatra.examples.cps.update/target/repository/" class="bare">https://hudson.eclipse.org/viatra/job/viatra-examples-cps/lastSuccessfulBuild/artifact/cps/releng/org.eclipse.viatra.examples.cps.update/target/repository/</a></p>
 </div>
 <div class="paragraph">
 <p>VIATRA defines a custom perspective called <code>Transformation Development</code> that includes a few views and shortcuts that make it easier to develop queries and transformations. The remainder of the tutorial expects that this perspective is selected; in case a different perspective is used, the corresponding views and wizards are still available in their standard respective locations.</p>
 </div>
+<div style="page-break-after: always;"></div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_query_development"><a class="link" href="#_query_development">2. Query Development</a></h2>
+<h2 id="_domains"><a class="link" href="#_domains">2. Domains</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_cyber_physical_system"><a class="link" href="#_cyber_physical_system">2.1. Cyber Physical System</a></h3>
+<div class="paragraph">
+<p>The CPS domain specifies application and host types and their instances, requests and requirements on applications and resource requirements of applications towards hosts. Application types have a state machine that describes their behavior through states and transitions. Finally, application instances can be allocated to host instances that can communicate with each other.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/cps_ecore.png" alt="Cyber Physical System model Ecore diagram">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Host instances have a unique node IP address.</p>
+</li>
+<li>
+<p>Application instances have a unique identifier.</p>
+</li>
+<li>
+<p>State machines can define an initial state.</p>
+</li>
+<li>
+<p>Transitions may specify an action for sending or waiting for a signal. A signal can be sent by providing an application type (with its ID) and a signal identifier, while waiting for a signal is done by specifying its identifier.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_deployment"><a class="link" href="#_deployment">2.2. Deployment</a></h3>
+<div class="paragraph">
+<p>In the deployment model, host instances contain the applications that are running on them, while each application has a behavior with states and transitions. The behavior has a current state and transitions may trigger other transitions when the triggered transition is waiting for the signal they are sending and the application type is correct.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/deployment_ecore.png" alt="Deployment model Ecore diagram">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_traceability"><a class="link" href="#_traceability">2.3. Traceability</a></h3>
+<div class="paragraph">
+<p>The traceability model describes the correspondence between a CPS and a deployment model. The traceability is stored in a set of traces that refer to zero, one or multiple CPS and deployment elements.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/traceability_ecore.png" alt="Traceability model Ecore diagram">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_query_development"><a class="link" href="#_query_development">3. Query Development</a></h2>
 <div class="sectionbody">
 <div style="page-break-after: always;"></div>
 <div class="sect2">
-<h3 id="_using_the_query_development_environment"><a class="link" href="#_using_the_query_development_environment">2.1. Using the Query Development Environment</a></h3>
+<h3 id="_using_the_query_development_environment"><a class="link" href="#_using_the_query_development_environment">3.1. Using the Query Development Environment</a></h3>
 <div class="paragraph">
 <p>Constraints and conditions in the VIATRA framework are expressed using a graph pattern-based language. This declarative formalism allows very compact definitions of complex conditions, while it is still possible to provide live query evaluation based on the Rete algorithm.</p>
 </div>
@@ -93,7 +152,7 @@ The pattern language always works on sets: neither the constraints nor the match
 </table>
 </div>
 <div class="sect3">
-<h4 id="_define_your_first_query"><a class="link" href="#_define_your_first_query">2.1.1. Define your First Query</a></h4>
+<h4 id="_define_your_first_query"><a class="link" href="#_define_your_first_query">3.1.1. Define your First Query</a></h4>
 <div class="paragraph">
 <p>To define queries, first a  <em>VIATRA Query Project</em> has to be created with the standard <em>New Project Wizard</em> of Eclipse. Such projects are specialized Eclipse plug-in projects with preconfigured VIATRA dependencies and the query generator initialized. Query specifications have to be added to the Java classpath of the projects, more specifically into Java packages. Based on these observations the creation of the first query consists of the following steps:</p>
 </div>
@@ -131,7 +190,7 @@ pattern hostIpAddress(host: HostInstance, ip : java String) {
 </div>
 </div>
 <div class="sect3">
-<h4 id="_evaluate_queries_in_the_query_results_view"><a class="link" href="#_evaluate_queries_in_the_query_results_view">2.1.2. Evaluate Queries in the Query Results View</a></h4>
+<h4 id="_evaluate_queries_in_the_query_results_view"><a class="link" href="#_evaluate_queries_in_the_query_results_view">3.1.2. Evaluate Queries in the Query Results View</a></h4>
 <div class="paragraph">
 <p>VIATRA includes a view to evaluate the results of queries over various editors, and reacts on changes in the editor.</p>
 </div>
@@ -186,7 +245,7 @@ If the 'Load model from active editor' button is not enabled, it either means, t
 </div>
 </div>
 <div class="sect3">
-<h4 id="_define_additional_queries"><a class="link" href="#_define_additional_queries">2.1.3. Define Additional Queries</a></h4>
+<h4 id="_define_additional_queries"><a class="link" href="#_define_additional_queries">3.1.3. Define Additional Queries</a></h4>
 <div class="paragraph">
 <p>In the following, we define a set of patterns that illustrate additional capabilities of the query language. Each pattern will come with a short definition, followed by the code itself and some remarks about how the pattern works.</p>
 </div>
@@ -377,7 +436,7 @@ pattern countApplications(host : HostInstance, M) {
 </div>
 </div>
 <div class="sect3">
-<h4 id="_validation"><a class="link" href="#_validation">2.1.4. Validation</a></h4>
+<h4 id="_validation"><a class="link" href="#_validation">3.1.4. Validation</a></h4>
 <div class="paragraph">
 <p>VIATRA provides facilities to create validation rules based on the pattern language of the framework. These rules can be evaluated on various EMF instance models and upon violations of constraints, markers are automatically created in the Eclipse Problems View.</p>
 </div>
@@ -424,7 +483,7 @@ pattern sameIpAddress(host1: HostInstance, host2: HostInstance, commonIp) {
 </div>
 </div>
 <div class="sect3">
-<h4 id="_references"><a class="link" href="#_references">2.1.5. References</a></h4>
+<h4 id="_references"><a class="link" href="#_references">3.1.5. References</a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -442,7 +501,7 @@ pattern sameIpAddress(host1: HostInstance, host2: HostInstance, commonIp) {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_using_queries_programmatically"><a class="link" href="#_using_queries_programmatically">2.2. Using Queries Programmatically</a></h3>
+<h3 id="_using_queries_programmatically"><a class="link" href="#_using_queries_programmatically">3.2. Using Queries Programmatically</a></h3>
 <div class="paragraph">
 <p>VIATRA Query provides an API to execute queries on various models, including support for listening to match set changes. However, as the incremental evaluation relies on indexes, the API also covers lifecycle management for the runtime. The central element of the API is the Query Engine that is responsible for loading query specifications, setting up indexes and providing match results. This approach is supported by code generators that create a runtime representation for graph patterns and provide a type-safe API to access VIATRA code.</p>
 </div>
@@ -465,7 +524,7 @@ pattern sameIpAddress(host1: HostInstance, host2: HostInstance, commonIp) {
 <div class="title">Figure 5. Structure of the query generated code</div>
 </div>
 <div class="sect3">
-<h4 id="_initialize_a_headless_application"><a class="link" href="#_initialize_a_headless_application">2.2.1. Initialize a headless Application</a></h4>
+<h4 id="_initialize_a_headless_application"><a class="link" href="#_initialize_a_headless_application">3.2.1. Initialize a headless Application</a></h4>
 <div class="paragraph">
 <p>To illustrate the usage of the VIATRA Query API, we will create a headless Eclipse application, and execute it over one of the queries written in the previous part. Such an application is a Java class registered using the extension point <code><code>org.eclipse.core.runtime.applications</code></code> (requiring the <code><code>org.eclipse.core.runtime</code></code> bundle as a dependency).</p>
 </div>
@@ -510,7 +569,7 @@ pattern sameIpAddress(host1: HostInstance, host2: HostInstance, commonIp) {
 </div>
 </div>
 <div class="sect3">
-<h4 id="_initializing_a_query_engine"><a class="link" href="#_initializing_a_query_engine">2.2.2. Initializing a Query Engine</a></h4>
+<h4 id="_initializing_a_query_engine"><a class="link" href="#_initializing_a_query_engine">3.2.2. Initializing a Query Engine</a></h4>
 <div class="paragraph">
 <p>To initialize a query engine, as first step an EMF scope has to be loaded. This can be done using the following code segment (expecting the model file was copied into the root of the queries project):</p>
 </div>
@@ -557,7 +616,7 @@ If multiple query groups are to be loaded, either create a generic pattern group
 </div>
 </div>
 <div class="sect3">
-<h4 id="_the_pattern_matcher_api"><a class="link" href="#_the_pattern_matcher_api">2.2.3. The pattern matcher API</a></h4>
+<h4 id="_the_pattern_matcher_api"><a class="link" href="#_the_pattern_matcher_api">3.2.3. The pattern matcher API</a></h4>
 <div class="paragraph">
 <p>The easiest way to use all the query engine is to ask for all matches of a query. The <code><code>getAllMatches</code></code> method of a pattern matcher returns a <strong>set</strong> of match objects that allow named references to its parameters</p>
 </div>
@@ -733,7 +792,7 @@ If asking for the has/count calls is followed by the processing of the said matc
 </div>
 </div>
 <div class="sect3">
-<h4 id="_advanced_query_engine_features"><a class="link" href="#_advanced_query_engine_features">2.2.4. Advanced query engine features</a></h4>
+<h4 id="_advanced_query_engine_features"><a class="link" href="#_advanced_query_engine_features">3.2.4. Advanced query engine features</a></h4>
 <div class="paragraph">
 <p>There are cases where the standard engine lifecycle is inappropriate, e.g. the models will not be unloaded but we want to spare memory by freeing up indexes. Furthermore, there are some functionality, like hint handling or match update listener support that was not added the the base implementation to keep its API clean.</p>
 </div>
@@ -762,7 +821,7 @@ Do not forget to dispose unmanaged engine manually using the <code><code>Advance
 </table>
 </div>
 <div class="sect4">
-<h5 id="_react_to_match_updates"><a class="link" href="#_react_to_match_updates">2.2.4.1. React to match updates</a></h5>
+<h5 id="_react_to_match_updates"><a class="link" href="#_react_to_match_updates">3.2.4.1. React to match updates</a></h5>
 <div class="paragraph">
 <p>One feature of the advanced query engine is to allow listening to changes, e.g. registering a match update listener for a pattern matcher. Such a listener is triggered when the match set for a pattern matcher changes, together with the direction of the changes.</p>
 </div>
@@ -826,7 +885,7 @@ Be very careful when using match update listeners, as sometimes they are called 
 </div>
 </div>
 <div class="sect4">
-<h5 id="_local_search_backends_and_hints"><a class="link" href="#_local_search_backends_and_hints">2.2.4.2. Local Search backends and hints</a></h5>
+<h5 id="_local_search_backends_and_hints"><a class="link" href="#_local_search_backends_and_hints">3.2.4.2. Local Search backends and hints</a></h5>
 <div class="paragraph">
 <p>The advanced query engine also allows to initialize patterns with non-default settings called <strong>hints</strong>. The most important feature of these hints allow setting the pattern matcher backend, and other backend-specific settings could be changed.</p>
 </div>
@@ -892,7 +951,7 @@ The local search backend of VIATRA is almost functionally compatible with the Re
 </div>
 </div>
 <div class="sect1">
-<h2 id="_model_transformation_development"><a class="link" href="#_model_transformation_development">3. Model Transformation Development</a></h2>
+<h2 id="_model_transformation_development"><a class="link" href="#_model_transformation_development">4. Model Transformation Development</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>For model transformation development a Java API is available, allowing seamless integration of the transformations into any Java applications. However, to enhance readability, we recommend using a higher-level JVM language, as it allows defining the transformation as an internal DSL of this host language.</p>
@@ -901,14 +960,14 @@ The local search backend of VIATRA is almost functionally compatible with the Re
 <p>In this tutorial we rely on the <a href="https://eclipse.org/xtend/">Xtend language</a> to host the VIATRA transformation DSL, and we rely on its extension method and type inference support to reduce unnecessary elements. However, other JVM-based languages can also be used with similar efficiency (for an example in <a href="https://kotlinlang.org/">Kotlin</a> see <a href="https://gist.github.com/doczir/bfe95c470599c5b8e60b400b80f92ea2" class="bare">https://gist.github.com/doczir/bfe95c470599c5b8e60b400b80f92ea2</a>).</p>
 </div>
 <div class="sect2">
-<h3 id="_batch_transformations"><a class="link" href="#_batch_transformations">3.1. Batch Transformations</a></h3>
+<h3 id="_batch_transformations"><a class="link" href="#_batch_transformations">4.1. Batch Transformations</a></h3>
 <div class="paragraph">
 <p>This exercise helps the audience to create a simple batch transformation using the VIATRA Transformation API.
 The transformation will transform the hosts and applications in a CPS model to a deployment model.
 The exercise also covers registering a menu command which initializes the transformation.</p>
 </div>
 <div class="sect3">
-<h4 id="_create_transformation"><a class="link" href="#_create_transformation">3.1.1. Create transformation</a></h4>
+<h4 id="_create_transformation"><a class="link" href="#_create_transformation">4.1.1. Create transformation</a></h4>
 <div class="paragraph">
 <p>For the transformation, we have to created a <em>VIATRA Query Project</em> (the one from the <a href="#_query_development">query development tutorial</a> could also be reused), and create a new query file called <em>CpsXformM2M.vql</em> to store the patterns we want to use in the transformation with the following contents:</p>
 </div>
@@ -1128,7 +1187,7 @@ new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 </div>
 </div>
 <div class="sect3">
-<h4 id="_create_a_menu_command_to_execute_the_transformation"><a class="link" href="#_create_a_menu_command_to_execute_the_transformation">3.1.2. Create a menu command to execute the transformation</a></h4>
+<h4 id="_create_a_menu_command_to_execute_the_transformation"><a class="link" href="#_create_a_menu_command_to_execute_the_transformation">4.1.2. Create a menu command to execute the transformation</a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1216,7 +1275,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_execute_the_transformation"><a class="link" href="#_execute_the_transformation">3.1.3. Execute the transformation</a></h4>
+<h4 id="_execute_the_transformation"><a class="link" href="#_execute_the_transformation">4.1.3. Execute the transformation</a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1300,7 +1359,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_references_2"><a class="link" href="#_references_2">3.1.4. References</a></h4>
+<h4 id="_references_2"><a class="link" href="#_references_2">4.1.4. References</a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1315,7 +1374,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_event_driven_transformations"><a class="link" href="#_event_driven_transformations">3.2. Event-driven Transformations</a></h3>
+<h3 id="_event_driven_transformations"><a class="link" href="#_event_driven_transformations">4.2. Event-driven Transformations</a></h3>
 <div class="paragraph">
 <p>This exercise heps the audience to create a simple event-driven transformation using the VIATRA Transformation API. The transformation will create (and then incrementally update while active) a deployment model based on a CPS model. The exercise also covers registering a menu command which initializes the transformation.</p>
 </div>
@@ -1323,7 +1382,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <p>Given the batch and event-driven transformations are really similar, this section focuses mainly on the differences; if required, consult the <a href="#_batch_transformations">batch transformation tutorial</a>.</p>
 </div>
 <div class="sect3">
-<h4 id="_create_transformation_2"><a class="link" href="#_create_transformation_2">3.2.1. Create transformation</a></h4>
+<h4 id="_create_transformation_2"><a class="link" href="#_create_transformation_2">4.2.1. Create transformation</a></h4>
 <div class="paragraph">
 <p>Specific patterns have to be defined for event-driven rules; note that there are small differences to the batch definitions, e.g. there is an additional pattern called <em>allocatedDeploymentApplication</em>.</p>
 </div>
@@ -1615,7 +1674,7 @@ new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 </div>
 </div>
 <div class="sect3">
-<h4 id="_creating_a_menu_command_to_execute_the_transformation"><a class="link" href="#_creating_a_menu_command_to_execute_the_transformation">3.2.2. Creating a menu command to execute the transformation</a></h4>
+<h4 id="_creating_a_menu_command_to_execute_the_transformation"><a class="link" href="#_creating_a_menu_command_to_execute_the_transformation">4.2.2. Creating a menu command to execute the transformation</a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1717,7 +1776,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_executing_the_transformation"><a class="link" href="#_executing_the_transformation">3.2.3. Executing the transformation</a></h4>
+<h4 id="_executing_the_transformation"><a class="link" href="#_executing_the_transformation">4.2.3. Executing the transformation</a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1801,7 +1860,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_references_3"><a class="link" href="#_references_3">3.2.4. References</a></h4>
+<h4 id="_references_3"><a class="link" href="#_references_3">4.2.4. References</a></h4>
 <div class="ulist">
 <ul>
 <li>
