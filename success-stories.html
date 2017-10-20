@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Content-language" content="en">
+	<meta name="description" content="Graphical Editors for your DSL">
+	<meta name="MobileOptimized" content="width" />
+	<meta name="HandheldFriendly" content="true" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="js/googleAnalytics.js"></script>
+	<script type="text/javascript" src="js/magnific-popup.video.js"></script>
+	<script type="text/javascript" src="js/magnific-popup.min.js"></script>
+	<script type="text/javascript" src="js/functions.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+	<script src="angular/viatra.js"></script>
+
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+	<title>Viatra - Scalable reactive model transformations</title>
+	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
+	<link type="text/css" rel="stylesheet" href="css/style.css" />
+	<link type="text/css" rel="stylesheet" href="css/media.css" />
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> 
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300italic,700,300' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://use.fontawesome.com/ef6567f233.css">
+</head>
+
+<body ng-app="viatra" ng-controller="main" class="cloak">
+<ng-include src="'angular/blocks/header.html'"></ng-include>
+
+<div class="clear"></div>
+<div id="body_wrapper">
+
+	<h1 class="page_title">Success stories</h1>
+
+	<div id="usecases">
+		<div class="usecase">
+				<h2>EMDW (model-to-model, code generation)</h2>
+				<p>The Ericsson Model Driven Workflow (EMDW) project used the incremental code generation aspect of VIATRA in order to optimize the turnaround time of large and complex code generation processes. </p>
+
+				<p>The EMDW code generator works with UML-like dynamic models and produces optimized C++ code. The challenge was to make sure the code generation process could run in an incremental way, meaning that the generator only updates the necessary C++ files in order to reduce the amount of work done by the compiler. As a result, the turnaround time was reduced from hours to minutes, proving to be a huge productivity gain for software engineers. </p>
+		</div>
+		<div class="usecase">
+				<h2>Papyrus (queries, derived features, live transformations)</h2>
+				<p>Papyrus is the Polarsys UML modeling tool used in a wide spectrum of domains. Papyrus also incorporates VIATRA incremental mode-code synchronization technology allows Papyrus to sync with Java. The VIATRA model indexer is also used to speed up model loading times and responsiveness of the user interface. </p>
+		</div>
+		<div class="usecase">
+				<h2>Capella (queries)</h2>
+				<p>Capella is an open source systems engineering tool by Thales. VIATRA powers an add-on that allows systems engineers and managers to perform ad-hoc queries in an easy-to-use and visual way. </p>
+		</div>
+		<div class="usecase">
+				<h2>Artop (model indexing)</h2>
+				<p>Artop, the AUTOSAR implementation based on Eclipse Modeling technology uses the VIATRA indexer to speed up model management operations through the Sphinx framework.</p>
+		</div>
+		<div class="usecase">
+				<h2>IOT (complex event processing)</h2>
+				<p>Today, the Internet of Things is the one of the fastest growing and innovative territories, making basic, everyday technologies simple to use for the average person. Yet, IoT challenges exist. These include, but aren’t limited to, on-the-fly filtering and high-level sensor data fusion for smart home gateways or smart sporting equipment. Luckily, VIATRA can help assist by providing advanced complex event processing frameworks such as Drools Fusion or VIATRA-CEP. With VIATRA, stream processors can be augmented or even replaced. </p>
+		</div>
+	</div>
+
+</div>	
+
+<div class="clear"></div>
+<ng-include src="'angular/blocks/footer.html'"></ng-include>
+
+</body>
+</html>

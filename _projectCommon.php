@@ -72,7 +72,7 @@
 	$variables['header_nav'] = array(
 			'links' =>  $links, // Required
 			'logo' => array( // Required
-					'src' => '/viatra/images/viatra_logo.png', // Required
+					'src' => '/viatra/images/logos/viatra_logo.png', // Required
 					'alt' => 'The VIATRA project', // Optional
 					'url' => '/viatra', // Optional
 					//'target' => '_blank' // Optional

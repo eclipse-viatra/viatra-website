@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Content-language" content="en">
+	<meta name="description" content="Graphical Editors for your DSL">
+	<meta name="MobileOptimized" content="width" />
+	<meta name="HandheldFriendly" content="true" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="js/googleAnalytics.js"></script>
+	<script type="text/javascript" src="js/magnific-popup.video.js"></script>
+	<script type="text/javascript" src="js/magnific-popup.min.js"></script>
+	<script type="text/javascript" src="js/functions.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+	<script src="angular/viatra.js"></script>
+
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
+	<title>Viatra - Scalable reactive model transformations</title>
+	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
+	<link type="text/css" rel="stylesheet" href="css/style.css" />
+	<link type="text/css" rel="stylesheet" href="css/media.css" />
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> 
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300italic,700,300' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://use.fontawesome.com/ef6567f233.css">
+</head>
+
+<body ng-app="viatra" ng-controller="main" class="cloak">
+<ng-include src="'angular/blocks/header.html'"></ng-include>
+
+<div class="clear"></div>
+<div id="body_wrapper">
+
+	<h1 class="page_title">Add-ons<br>
+	<span style="font-size: 16px">VIATRA allows for many add-ons that enhance the open source experience even further. </span>
+	</h1>
+
+	<div id="usecases">
+		<div class="usecase">
+				<h2>Model obfuscation </h2>
+				<p>Model obfuscation enables you to share information and collaborate in new ways. It ensures that only model elements that you want to share can be viewed by certain people. Read more at https://wiki.eclipse.org/VIATRA/ModelObfuscator  </p>
+		</div>
+		<div class="usecase">
+				<h2>Design space exploration</h2>
+				<p>Design space exploration uses AI to aid creative engineering processes. With the top-notch resource of configuration generation, one can formulate a baseline, define self goals, and make any necessary design and space changes. <br>Read more at <a href="https://wiki.eclipse.org/VIATRA/DSE" target="_blank">https://wiki.eclipse.org/VIATRA/DSE</a> </p>
+		</div>
+		<div class="usecase">
+				<h2>Capella (queries)</h2>
+				<p>Capella is an open source systems engineering tool by Thales. VIATRA powers an add-on that allows systems engineers and managers to perform ad-hoc queries in an easy-to-use and visual way. </p>
+		</div>
+		<div class="usecase">
+				<h2>Model Validation Framework</h2>
+				<p>Model Validation Framework allows you to define rules for well-formedness validation, which is an important development used to detect design flaws. This works in an incremental way, incorporating the Syntax driven modeling, guaranteeing the minimum amount of design flaws. Overall it’s a huge time saver.</p>
+		</div>
+		<div class="usecase">
+				<h2>Viewers Framework</h2>
+				<p>Viewers Framework is useful for view maintenance, a very fundamental component. This allows engineers to create user interface elements such as lists, trees, graphs and diagrams without programming in a general purpose language, such as Java. This is another time saver because those components typically require repetitive coding. </p>
+		</div>
+	</div>
+
+</div>	
+
+<div class="clear"></div>
+<ng-include src="'angular/blocks/footer.html'"></ng-include>
+
+</body>
+</html>
