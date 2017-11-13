@@ -19,10 +19,14 @@ html,body,#body_wrapper {
 }
 
 body>#body_wrapper {
-	height: auto;
-	padding: 0 5px 30px 5px;
+		height: auto;
+		padding: 0 20px 30px 20px;
 }
-
+@media all and (min-width: 1000px){
+	body>#body_wrapper {
+		padding: 0 5px 30px 5px;
+	}
+}
 #body_wrapper,#header_wrapper,#footer_wrapper,#slider_wrapper,#brand_wrapper,.row
 	{
 	height: auto;
@@ -32,6 +36,7 @@ body>#body_wrapper {
 
 #header_wrapper,#body_wrapper,#footer_content,.row {
 	max-width: 995px;
+	width: 100%;
 	display: block;
 	position: relative;
 }
@@ -155,7 +160,7 @@ img, img:focus{
 	text-align: center;
 	font-weight: normal;
 	border-bottom: 1px solid #D3D3D3;
-	margin: 0 0 60px 0;
+	margin: 0 0 0px 0;
 }
 
 .margin_top {margin-top: 40px;}
@@ -400,9 +405,13 @@ img, img:focus{
 }
 
 section.highlight_banner {
-	padding: 100px;
+	padding: 10px;
 }
-
+@media all and (min-width: 768px){
+	section.highlight_banner {
+		padding: 100px;
+	}
+}
 .back1 {
     background-image: url("../images/banners/budapest-1.jpg");
 	height: 530px !important;
@@ -866,11 +875,23 @@ padding-right: 8px;
 
 /* ------- Resources Page ------*/
 
+@media all and (max-width: 999px){
+	body.sectioned > section{
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+}
 section {
 	width: 100%;
 	padding: 45px 0;
 }
-
+@media all and (max-width: 991px){
+	#solstice-footer section{
+		padding-top: 0;
+		padding-bottom: 0;
+		padding-right: 0;
+	}
+}
 section.first_item{
 	padding-top: 0;
  }
@@ -1560,6 +1581,41 @@ input[type="button"] {
 	margin-top: 5px;
 	margin-bottom: 65px;
 }
+.partners img.itemis{
+	width: 130px;
+}
+.partners img.incq{
+	width: 250px;
+}
+.partners img.yk{
+	width: 221px;
+}
+.partners img.muegyetem{
+	width: 187px;
+}
+@media all and (min-width: 768px) and (max-width: 1199px){
+	.partners img.itemis{
+		width: 104px;
+	}
+	.partners img.incq{
+		width: 200px;
+	}
+	.partners img.yk{
+		width: 177px;
+	}
+	.partners img.muegyetem{
+		width: 150px;
+	}
+
+}
+
+
+.partners .logo{
+	height: 55px;
+}
+.partners .logo a{
+	line-height: 50px;
+}
 
 footer#solstice-footer {
 	background: no-repeat center center #261e58;
@@ -1661,6 +1717,7 @@ footer#solstice-footer .logo-eclipse-white {
 
 .img-skew img{
 	max-width: 100%;
+	width: 100%;
 	height: auto;
 	border: 7px solid rgba(0,0,0,0.1);
 }
@@ -1692,4 +1749,50 @@ footer#solstice-footer .logo-eclipse-white {
 }
 .icon-user::before {
 	content: "\f007";
+}
+
+.news h2:not(.title){
+	font-size: 22px;
+	margin-top: 20px;
+}
+.news h2.title{
+	font-size: 36px;
+	text-align: left;
+}
+.news img{
+	display: block;
+	max-width: 100%;
+}
+
+.whyviatra p.text{
+	text-align: justify;
+}
+@media all and (max-width: 991px){
+	.whyviatra p.text{
+		margin-bottom: 50px;
+	}
+
+}
+.whyviatra h3{
+	min-height: 2.5em;
+}
+.whyviatra .col-md-4:nth-of-type(1) h3,
+.whyviatra .col-md-4:nth-of-type(3) h3{
+	line-height: 2.5em;
+}
+.videowrapper {
+    float: none;
+    clear: both;
+    width: 100%;
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 25px;
+    height: 0;
+}
+.videowrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }

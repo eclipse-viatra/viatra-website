@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Content-language" content="en">
+	<meta name="description" content="Graphical Editors for your DSL">
+	<meta name="MobileOptimized" content="width" />
+	<meta name="HandheldFriendly" content="true" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="js/googleAnalytics.js"></script>
+	<script type="text/javascript" src="js/magnific-popup.video.js"></script>
+	<script type="text/javascript" src="js/magnific-popup.min.js"></script>
+	<script type="text/javascript" src="js/functions.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+	<script src="angular/viatra.js"></script>
+
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
+	<title>Viatra - EMF-IncQuery</title>
+	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
+	<link type="text/css" rel="stylesheet" href="css/style.css" />
+	<link type="text/css" rel="stylesheet" href="css/media.css" />
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> 
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300italic,700,300' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://use.fontawesome.com/ef6567f233.css">
+</head>
+
+<body ng-app="viatra" ng-controller="main" class="cloak">
+<ng-include src="'angular/blocks/header.html'"></ng-include>
+
+<div class="clear"></div>
+<div id="body_wrapper">
+
+	<h1 class="page_title">EMF-IncQuery</h1>
+	<div style="float: left; padding-right: 60px;"><img src="images/logos/incquery_logo.png" border="0" align="middle"></div>
+	
+	<p>
+		<span style="white-space: nowrap;">EMF-IncQuery</span> is a framework for defining&nbsp;<em>declarative&nbsp;</em>graph
+		queries over&nbsp;<a href="http://www.eclipse.org/emf/">EMF</a>&nbsp;models,
+		and executing them efficiently&nbsp;<em>without manual coding</em> in
+		an imperative programming language such as Java.
+	</p>
+
+	<p>With EMF-IncQuery, you can:</p>
+
+	<ul>
+		<li><a href="http://incquery.net/incquery/documentation/ui">Define</a>
+			model queries using a high level yet powerful <a href="http://wiki.eclipse.org/VIATRA/Query/UserDocumentation/QueryLanguage">query
+				language</a> (supported by state-of-the-art Xtext-based development
+			tools)</li>
+		<li><a href="http://viatra.net/performance">Execute</a> the
+			queries efficiently and incrementally, with proven scalability for
+			complex queries over large instance models</li>
+		<li>Integrate queries into your applications using essential
+			feature APIs including <a href="http://wiki.eclipse.org/VIATRA/Query/UserDocumentation/IncQuery_Viewers">IncQuery
+				Viewers</a>, <a href="http://wiki.eclipse.org/VIATRA/Query/UserDocumentation/Databinding">Databinding</a>,
+			<a href="http://wiki.eclipse.org/VIATRA/Query/UserDocumentation/Validation">Validation</a>
+			and <a href="http://wiki.eclipse.org/VIATRA/Query/UserDocumentation/Query_Based_Features">Query-based
+				derived features with notifications</a>.
+		</li>
+	</ul>
+
+	<p>In February 2016, the EMF-IncQuery project was merged into VIATRA. This page contains information about accessing the previous versions of EMF-IncQuery. After version 1.2, the first combined release comes out (planned for April 2016), we recommend migrating to the new version. For details about downloading these version, please look at the <a href="downloads.html#incquery">VIATRA download page</a>.</p>
+
+
+</div>	
+
+<div class="clear"></div>
+<ng-include src="'angular/blocks/footer.html'"></ng-include>
+
+</body>
+</html>

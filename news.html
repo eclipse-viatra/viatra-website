@@ -30,17 +30,10 @@
 <ng-include src="'angular/blocks/header.html'"></ng-include>
 
 <div class="clear"></div>
-<div id="body_wrapper">
+<div id="body_wrapper" class="news">
 	<h1 class="page_title">NEWS</h1>
 
-	<div ng-controller="NewsCtrl">
-	    <div class="post" ng-repeat="post in news">
-	      <h2>{{post.title}}</h2>
-	      <div class="date">{{post.date}}</div>
-	      <div class="body" ng-bind-html="$sce.trustAsHtml(post.body)"></div>
-	      <div class="author"><i class="icon-user"></i>{{post.author}}</div>
-	    </div>
-	</div>
+	<ng-include src="'articles.html'"></ng-include>
 
 </div>	
 

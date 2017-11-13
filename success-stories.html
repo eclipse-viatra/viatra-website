@@ -26,40 +26,63 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/ef6567f233.css">
 </head>
 
-<body ng-app="viatra" ng-controller="main" class="cloak">
+<body ng-app="viatra" ng-controller="main" class="cloak sectioned">
 <ng-include src="'angular/blocks/header.html'"></ng-include>
 
 <div class="clear"></div>
-<div id="body_wrapper">
 
-	<h1 class="page_title">Success stories</h1>
+	<h1 class="page_title">Success stories<br>
+	<span style="font-size: 16px">VIATRA-based industrial applications</span>
+	</h1>
 
-	<div id="usecases">
-		<div class="usecase">
-				<h2>EMDW (model-to-model, code generation)</h2>
+		<section class="">
+			<div class="row">
+				<h3>IncA - INCremental program Analysis</h3>
+				<p>IncA is a program analysis framework. It comes with a DSL for the  definition 
+				of program analyses and the runtime system evaluates program 
+				analyses incrementally to achieve the performance that is needed
+				for real-time feedback in IDEs. When code gets changed, the IncA 
+				runtime system incrementally updates the results instead of a 
+				repeated recomputation from-scratch. IncA has been successfully 
+				applied to implement practically relevant static program analyses 
+				for DSLs and GPLs, including various data-flow analyses, 
+				well-formedness checks, and code validations. IncA uses the Viatra 
+				Queries framework under the hood for incrementalization. </p>
+			</div>
+		</section>
+		<section class="bg_light_gray " id="incquery">
+			<div class="row">
+				<h3>EMDW (model-to-model, code generation)</h3>
 				<p>The Ericsson Model Driven Workflow (EMDW) project used the incremental code generation aspect of VIATRA in order to optimize the turnaround time of large and complex code generation processes. </p>
 
 				<p>The EMDW code generator works with UML-like dynamic models and produces optimized C++ code. The challenge was to make sure the code generation process could run in an incremental way, meaning that the generator only updates the necessary C++ files in order to reduce the amount of work done by the compiler. As a result, the turnaround time was reduced from hours to minutes, proving to be a huge productivity gain for software engineers. </p>
-		</div>
-		<div class="usecase">
-				<h2>Papyrus (queries, derived features, live transformations)</h2>
-				<p>Papyrus is the Polarsys UML modeling tool used in a wide spectrum of domains. Papyrus also incorporates VIATRA incremental mode-code synchronization technology allows Papyrus to sync with Java. The VIATRA model indexer is also used to speed up model loading times and responsiveness of the user interface. </p>
-		</div>
-		<div class="usecase">
-				<h2>Capella (queries)</h2>
-				<p>Capella is an open source systems engineering tool by Thales. VIATRA powers an add-on that allows systems engineers and managers to perform ad-hoc queries in an easy-to-use and visual way. </p>
-		</div>
-		<div class="usecase">
-				<h2>Artop (model indexing)</h2>
+			</div>
+		</section>
+		<section class="">
+			<div class="row">
+				<h3>Artop (model indexing)</h3>
 				<p>Artop, the AUTOSAR implementation based on Eclipse Modeling technology uses the VIATRA indexer to speed up model management operations through the Sphinx framework.</p>
-		</div>
-		<div class="usecase">
-				<h2>IOT (complex event processing)</h2>
-				<p>Today, the Internet of Things is the one of the fastest growing and innovative territories, making basic, everyday technologies simple to use for the average person. Yet, IoT challenges exist. These include, but aren’t limited to, on-the-fly filtering and high-level sensor data fusion for smart home gateways or smart sporting equipment. Luckily, VIATRA can help assist by providing advanced complex event processing frameworks such as Drools Fusion or VIATRA-CEP. With VIATRA, stream processors can be augmented or even replaced. </p>
-		</div>
-	</div>
+			</div>
+		</section>
+		<section class="bg_light_gray " id="incquery">
+			<div class="row">
+				<h3>Papyrus (queries, derived features, live transformations)</h3>
+				<p>Papyrus is the Polarsys UML modeling tool used in a wide spectrum of domains. Papyrus also incorporates VIATRA incremental mode-code synchronization technology allows Papyrus to sync with Java. The VIATRA model indexer is also used to speed up model loading times and responsiveness of the user interface. </p>
+			</div>
+		</section>
+		<section class="">
+			<div class="row">
+				<h3>Capella (queries)</h3>
+				<p>Capella is an open source systems engineering tool by Thales. VIATRA powers an add-on that allows systems engineers and managers to perform ad-hoc queries in an easy-to-use and visual way. </p>
+			</div>
+		</section>
+		<section class="bg_light_gray " id="incquery">
+			<div class="row">
+				<h3>Massif</h3>
+				<p>Massif is a unique tool integration technology that acts as a bridge between Matlab SimuLink, and the Eclipse modeling worlds. Massif was born out of our collaboration with the Embraer airframer company. The original goal of Massif was to enable model-driven engineering workflows relying on a seamless interoperation of Matlab and Eclipse based tools. Massif provides an automated and bidirectional synchronization mechanism. It is able to convert models instantly between an Eclipse-based tool and a running Matlab instance.</p>
+			</div>
+		</section>
 
-</div>	
 
 <div class="clear"></div>
 <ng-include src="'angular/blocks/footer.html'"></ng-include>

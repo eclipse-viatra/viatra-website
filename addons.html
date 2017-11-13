@@ -21,41 +21,52 @@
 	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
 	<link type="text/css" rel="stylesheet" href="css/style.css" />
 	<link type="text/css" rel="stylesheet" href="css/media.css" />
-	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> 
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300italic,700,300' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="https://use.fontawesome.com/ef6567f233.css">
 </head>
 
-<body ng-app="viatra" ng-controller="main" class="cloak">
+<body ng-app="viatra" ng-controller="main" class="cloak sectioned">
 <ng-include src="'angular/blocks/header.html'"></ng-include>
 
 <div class="clear"></div>
-<div id="body_wrapper">
 
 	<h1 class="page_title">Add-ons<br>
-	<span style="font-size: 16px">VIATRA allows for many add-ons that enhance the open source experience even further. </span>
+	<span style="font-size: 16px">VIATRA provides various add-ons for a variaty of use cases</span>
 	</h1>
 
-	<div id="usecases">
-		<div class="usecase">
-				<h2>Model obfuscation </h2>
-				<p>Model obfuscation enables you to share information and collaborate in new ways. It ensures that only model elements that you want to share can be viewed by certain people. Read more at <a href="https://wiki.eclipse.org/VIATRA/ModelObfuscator" target="_blank">https://wiki.eclipse.org/VIATRA/ModelObfuscator</a></p>
-		</div>
-		<div class="usecase">
-				<h2>Design Space Exploration</h2>
-				<p>Design space exploration uses AI to aid creative engineering processes. With the top-notch resource of configuration generation, one can formulate a baseline, define self goals, and make any necessary design and space changes. <br>Read more at <a href="https://wiki.eclipse.org/VIATRA/DSE" target="_blank">https://wiki.eclipse.org/VIATRA/DSE</a> </p>
-		</div>
-		<div class="usecase">
-				<h2>Model Validation Framework</h2>
-				<p>Model Validation Framework allows you to define rules for well-formedness validation, which is an important development used to detect design flaws. This works in an incremental way, incorporating the Syntax driven modeling, guaranteeing the minimum amount of design flaws. Overall it’s a huge time saver.</p>
-		</div>
-		<div class="usecase">
-				<h2>Viewers Framework</h2>
-				<p>Viewers Framework is useful for view maintenance, a very fundamental component. This allows engineers to create user interface elements such as lists, trees, graphs and diagrams without programming in a general purpose language, such as Java. This is another time saver because those components typically require repetitive coding. </p>
-		</div>
-	</div>
+		<section class="">
+			<div class="row">
+					<h3>Model obfuscation </h3>
+					<p>Model obfuscation enables you to share information and collaborate in new ways. It ensures that only model elements that you want to share can be viewed by certain people. Read more at https://wiki.eclipse.org/VIATRA/ModelObfuscator  </p>
+			</div>
+		</section>
 
-</div>	
+		<section class="bg_light_gray " id="incquery">
+			<div class="row">
+					<h3>Design space exploration</h3>
+					<p>Design space exploration uses AI to aid creative engineering processes. With the top-notch resource of configuration generation, one can formulate a baseline, define self goals, and make any necessary design and space changes. <br>Read more at <a href="https://wiki.eclipse.org/VIATRA/DSE" target="_blank">https://wiki.eclipse.org/VIATRA/DSE</a> </p>
+			</div>
+		</section>
+		<section class="">
+			<div class="row">
+				<h3>IOT (complex event processing)</h3>
+				<p>Today, the Internet of Things is the one of the fastest growing and innovative territories, making basic, everyday technologies simple to use for the average person. Yet, IoT challenges exist. These include, but aren’t limited to, on-the-fly filtering and high-level sensor data fusion for smart home gateways or smart sporting equipment. Luckily, VIATRA can help assist by providing advanced complex event processing frameworks such as Drools Fusion or VIATRA-CEP. With VIATRA, stream processors can be augmented or even replaced. </p>
+			</div>
+		</section>
+		<section class="bg_light_gray " id="incquery">
+			<div class="row">
+				<h3>Model Validation Framework</h3>
+				<p>Model Validation Framework allows you to define rules for well-formedness validation, which is an important development used to detect design flaws. This works in an incremental way, incorporating the Syntax driven modeling, guaranteeing the minimum amount of design flaws. Overall it’s a huge time saver.</p>
+			</div>
+		</section>
+		<section class="">
+			<div class="row">
+				<h3>Viewers Framework</h3>
+				<p>Viewers Framework is useful for view maintenance, a very fundamental component. This allows engineers to create user interface elements such as lists, trees, graphs and diagrams without programming in a general purpose language, such as Java. This is another time saver because those components typically require repetitive coding. </p>
+			</div>
+		</section>
+
 
 <div class="clear"></div>
 <ng-include src="'angular/blocks/footer.html'"></ng-include>

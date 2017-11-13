@@ -26,49 +26,60 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/ef6567f233.css">
 </head>
 
-<body ng-app="viatra" ng-controller="main" class="cloak">
+<body ng-app="viatra" ng-controller="main" class="cloak sectioned">
 <ng-include src="'angular/blocks/header.html'"></ng-include>
 
 <div class="clear"></div>
-<div id="body_wrapper">
-
 	<h1 class="page_title">VIATRA Downloads</h1>
-		<p>VIATRA can be installed from Eclipse Marketplace. You
-			can simply drag the Marketplace button to an open Eclipse install to
-			start the installation.</p>
+	
+	<section class="bg_light_gray centered">
+		<div class="row">
+			
+		<p style="font-size: 22px;">VIATRA can be installed from Eclipse Marketplace. <br>You can simply drag the Marketplace button to an open Eclipse install to start the installation.</p>
 		<p>
-			<a href="http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=2292729" class="drag" title="Drag to your running Eclipse workspace to install VIATRA"><img class="img-responsive" src="https://marketplace.eclipse.org/sites/all/themes/solstice/public/images/marketplace/btn-install.png" alt="Drag to your running Eclipse workspace to install VIATRA" /></a>
+			<a style="display: inline-block;" href="http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=2292729" class="drag" title="Drag to your running Eclipse workspace to install VIATRA"><img class="img-responsive" src="https://marketplace.eclipse.org/sites/all/themes/solstice/public/images/marketplace/btn-install.png" alt="Drag to your running Eclipse workspace to install VIATRA" /></a>
 		</p>
+		</div>
+	</section>
 
-    <h4>Update sites</h4>
-		<p>The VIATRA project maintains different update sites to
-			download from. The various sites contains versions of different
-			stability and are subject of different amount of testing.</p>
-		<p>Generally, CI and integration builds can contain breaking
-			changes, while milestone and release builds should be stable for use.</p>
-		<p>As a general rule of thumb, you should use the release (or
-			maybe the milestone) update site, and resort to the integration
-			site only if you need bleeding edge features/improvements and/or you
-			need an 'extra feature' that is not available in a milestone build
-			yet.</p>
-		<p><strong>Warning!</strong> Release builds are retained undefinitely, but other builds will be periodically removed. Integration and milestone builds will be removed after the next version is released. In case of CI builds, only the latest build will be available.
-		</p>
-		<dl>
-			<dt>Release builds</dt>
-			<dd>
-				<code>http://download.eclipse.org/viatra/updates/release</code>
-			</dd>
-			<dt>Milestone builds</dt>
-			<dd>
-				<code>http://download.eclipse.org/viatra/updates/milestone</code>
-			</dd>
-			<dt>Integration builds</dt>
-			<dd>
-				<code>http://download.eclipse.org/viatra/updates/integration</code>
-			</dd>
-		</dl>
 
-		<h4>VIATRA and EMF-IncQuery</h4>
+
+
+	<section class="">
+		<div class="row">
+	    	<h3>Update sites</h3>
+			<p>The VIATRA project maintains different update sites to
+				download from. The various sites contains versions of different
+				stability and are subject of different amount of testing.</p>
+			<p>Generally, CI and integration builds can contain breaking
+				changes, while milestone and release builds should be stable for use.</p>
+			<p>As a general rule of thumb, you should use the release (or
+				maybe the milestone) update site, and resort to the integration
+				site only if you need bleeding edge features/improvements and/or you
+				need an 'extra feature' that is not available in a milestone build
+				yet.</p>
+			<p><strong>Warning!</strong> Release builds are retained undefinitely, but other builds will be periodically removed. Integration and milestone builds will be removed after the next version is released. In case of CI builds, only the latest build will be available.
+			</p>
+			<dl>
+				<dt>Release builds</dt>
+				<dd>
+					<code>http://download.eclipse.org/viatra/updates/release</code>
+				</dd>
+				<dt>Milestone builds</dt>
+				<dd>
+					<code>http://download.eclipse.org/viatra/updates/milestone</code>
+				</dd>
+				<dt>Integration builds</dt>
+				<dd>
+					<code>http://download.eclipse.org/viatra/updates/integration</code>
+				</dd>
+			</dl>
+		</div>
+	</section>
+
+	<section class="bg_light_gray " id="incquery">
+		<div class="row">
+		<h3>VIATRA and EMF-IncQuery</h3>
 		<p>The VIATRA project before version 1.2.0 depended on EMF-IncQuery; for each version of VIATRA the corresponding EMF-IncQuery version is to be used. Since version 1.2.0, EMF-IncQuery was merged, and although possible, it is highly recommended not to install EMF-IncQuery separately (or remove previously installed version before upgrading).</p>
 
 		<table>
@@ -101,125 +112,146 @@
 				</tr>
 			</tbody>
 		</table>
+		</div>
+	</section>
 
-    <h4>Zipped update sites</h4>
+	<section class="">
+		<div class="row">
+	    	<h3>Zipped update sites</h3>
 
-		<p>
-			For offline installations it is possible to download the release sites as a zip file. In this case, make sure you have the corresponding EMF-IncQuery (see below) and <a
-		href="http://www.eclipse.org/Xtext/download.html">Xtext</a> version installed.
-		</p>
+			<p>
+				For offline installations it is possible to download the release sites as a zip file. In this case, make sure you have the corresponding EMF-IncQuery (see below) and <a
+			href="http://www.eclipse.org/Xtext/download.html">Xtext</a> version installed.
+			</p>
 
-		<p>
-			To install such a version, download the zip file from below, and add
-			it as a local update site using the <em>Install new software...</em>
-			wizard from the Help menu.
+			<p>
+				To install such a version, download the zip file from below, and add
+				it as a local update site using the <em>Install new software...</em>
+				wizard from the Help menu.
+			<dl>
+
+	    	<ul>
+				<li>
+					<a href="http://www.eclipse.org/downloads/download.php?file=/viatra/updates/zipped/org.eclipse.viatra.update.1.6.1.zip">Release 1.6.1</a> (<a href="http://www.eclipse.org/downloads/download.php?file=/viatra/updates/zipped/javadoc.1.6.0.zip">Javadoc</a>)
+				</li>
+				<li>
+					<a href="http://www.eclipse.org/downloads/download.php?file=/viatra/updates/zipped/org.eclipse.viatra.update.1.5.3.zip">Release 1.5.3</a>
+				</li>
+				<li>
+					<a href="http://www.eclipse.org/downloads/download.php?file=/viatra/updates/zipped/org.eclipse.viatra.update.1.4.1.zip">Release 1.4.1</a>
+				</li>
+				<li>
+					<a href="http://www.eclipse.org/downloads/download.php?file=/viatra/updates/zipped/org.eclipse.viatra.update.1.3.0.zip">Release 1.3.0</a>
+				</li>
+				<li>
+					<a href="http://www.eclipse.org/downloads/download.php?file=/viatra/updates/zipped/org.eclipse.viatra.update.1.2.0.zip">Release 1.2.0</a>
+				</li>
+				<li>
+					<a href="http://www.eclipse.org/downloads/download.php?file=/viatra/updates/zipped/org.ecipse.viatra.update.0.8.0-incubation.zip">Release 0.8.0 (Incubation)</a>
+				</li>
+				<li>
+					<a href="http://www.eclipse.org/downloads/download.php?file=/viatra/updates/zipped/org.ecipse.viatra.update.0.7.0-incubation.zip">Release 0.7.0 (Incubation)</a>
+				</li>
+			</ul>
+		</div>
+	</section>
+
+	<section class="bg_light_gray centered">
+		<div class="row">
+			<h3 id="incquery">EMF-IncQuery releases</h3>
+
+			<p style="font-size: 22px;">EMF-IncQuery can be installed from the Eclipse Marketplace. <br>You can simply drag the Marketplace button to an open Eclipse install to	start the installation.</p>
+			<p>
+				<a style="display: inline-block;" href="http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=450505" class="drag" title="Drag to your running Eclipse workspace to install VIATRA"><img class="img-responsive" src="https://marketplace.eclipse.org/sites/all/themes/solstice/public/images/marketplace/btn-install.png" alt="Drag to your running Eclipse workspace to install VIATRA" /></a>
+			</p>
+		</div>
+	</section>
+	
+	<section class="">
+		<div class="row">
+		<h3>Update sites</h3>
+		<p>In addition to the core features the EMF-IncQuery project also
+			provides an additional update site with further, experimental
+			features. These features are managed together with the main update
+			site, but as they are less stable, they are not considered part of
+			the EMF-IncQuery releases. As the components stabilized, they were
+			integrated into the main repository.</p>
+
 		<dl>
+			<dt>Release builds</dt>
+			<dd>
+				<ul>
+					<li>Main site: <code>http://download.eclipse.org/viatra/incquery/updates/release</code></li>
+					<li>Extra site: <code>http://download.eclipse.org/viatra/incquery/updates-extra/release</code></li>
+				</ul>
+			</dd>
+			<dt>Milestone builds</dt>
+			<dd>
+				<ul>
+					<li>Main site: <code>http://download.eclipse.org/viatra/incquery/updates/milestone</code></li>
+					<li>Extra site: <code>http://download.eclipse.org/viatra/incquery/updates-extra/milestone</code></li>
+				</ul>
+			</dd>
+		</dl>
+		</div>
+	</section>
 
-    <ul>
-			<li>
-				<a href="http://www.eclipse.org/downloads/download.php?file=/viatra/updates/zipped/org.eclipse.viatra.update.1.6.1.zip">Release 1.6.1</a> (<a href="http://www.eclipse.org/downloads/download.php?file=/viatra/updates/zipped/javadoc.1.6.0.zip">Javadoc</a>)
-			</li>
-			<li>
-				<a href="http://www.eclipse.org/downloads/download.php?file=/viatra/updates/zipped/org.eclipse.viatra.update.1.5.3.zip">Release 1.5.3</a>
-			</li>
-			<li>
-				<a href="http://www.eclipse.org/downloads/download.php?file=/viatra/updates/zipped/org.eclipse.viatra.update.1.4.1.zip">Release 1.4.1</a>
-			</li>
-			<li>
-				<a href="http://www.eclipse.org/downloads/download.php?file=/viatra/updates/zipped/org.eclipse.viatra.update.1.3.0.zip">Release 1.3.0</a>
-			</li>
-			<li>
-				<a href="http://www.eclipse.org/downloads/download.php?file=/viatra/updates/zipped/org.eclipse.viatra.update.1.2.0.zip">Release 1.2.0</a>
-			</li>
-			<li>
-				<a href="http://www.eclipse.org/downloads/download.php?file=/viatra/updates/zipped/org.ecipse.viatra.update.0.8.0-incubation.zip">Release 0.8.0 (Incubation)</a>
-			</li>
-			<li>
-				<a href="http://www.eclipse.org/downloads/download.php?file=/viatra/updates/zipped/org.ecipse.viatra.update.0.7.0-incubation.zip">Release 0.7.0 (Incubation)</a>
-			</li>
-		</ul>
+	<section class="bg_light_gray ">
+		<div class="row">
+		<h3>Zipped update sites</h3>
+			<dt>0.7.0 (Xtext 2.4.0)</dt>
+			<dd>
+				<a
+					href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates/zipped/org.eclipse.incquery.update-0.7.0-incubation.zip">Main
+					site</a> - <a
+					href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates-extra/zipped/org.eclipse.incquery.update.extras-0.7.0-incubation.zip">Extra
+					Site</a>
+			</dd>
+			<dt>0.8.0 (Xtext 2.6.0)</dt>
+			<dd>
+				<a
+					href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates/zipped/org.eclipse.incquery.update-0.8.0-incubation.zip">Main
+					site</a> - <a
+					href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates-extra/zipped/org.eclipse.incquery.update.extras-0.8.0-incubation.zip">Extra
+					Site</a>
+			</dd>
+			<dt>0.8.1 (Xtext 2.6.0)</dt>
+			<dd>
+				<a
+					href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates/zipped/org.eclipse.incquery.update-0.8.1-incubation.zip">Main
+					site</a> - <a
+					href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates-extra/zipped/org.eclipse.incquery.update.extras-0.8.1-incubation.zip">Extra
+					Site</a>
+			</dd>
+						<dt>0.9.1 (Xtext 2.7.0)</dt>
+			<dd>
+				<a
+					href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates/zipped/org.eclipse.incquery.update-0.9.1-incubation.zip">Main
+					site</a> - <a
+					href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates-extra/zipped/org.eclipse.incquery.update.extras-0.9.1-incubation.zip">Extra
+					Site</a>
+			</dd>
+						<dt>1.0.0 (Xtext 2.8.0)</dt>
+			<dd>
+				<a
+					href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates/zipped/org.eclipse.incquery.update-1.0.0.zip">Main
+					site</a> - <a
+					href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates-extra/zipped/org.eclipse.incquery.update.extras-1.0.0-incubation.zip">Extra
+					Site (Contains incubating contents)</a>
+			</dd>
+		</dl>
+		</div>
+	</section>
 
-	<h3 id="incquery">EMF-IncQuery releases</h3>
 
-	<p>EMF-IncQuery can be installed from the Eclipse Marketplace. You
-		can simply drag the Marketplace button to an open Eclipse install to
-		start the installation.</p>
-	<p>
-		<a href="http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=450505" class="drag" title="Drag to your running Eclipse workspace to install VIATRA"><img class="img-responsive" src="https://marketplace.eclipse.org/sites/all/themes/solstice/public/images/marketplace/btn-install.png" alt="Drag to your running Eclipse workspace to install VIATRA" /></a>
-	</p>
-	<h4>Update sites</h4>
-	<p>In addition to the core features the EMF-IncQuery project also
-		provides an additional update site with further, experimental
-		features. These features are managed together with the main update
-		site, but as they are less stable, they are not considered part of
-		the EMF-IncQuery releases. As the components stabilized, they were
-		integrated into the main repository.</p>
-
-	<dl>
-		<dt>Release builds</dt>
-		<dd>
-			<ul>
-				<li>Main site: <code>http://download.eclipse.org/viatra/incquery/updates/release</code></li>
-				<li>Extra site: <code>http://download.eclipse.org/viatra/incquery/updates-extra/release</code></li>
-			</ul>
-		</dd>
-		<dt>Milestone builds</dt>
-		<dd>
-			<ul>
-				<li>Main site: <code>http://download.eclipse.org/viatra/incquery/updates/milestone</code></li>
-				<li>Extra site: <code>http://download.eclipse.org/viatra/incquery/updates-extra/milestone</code></li>
-			</ul>
-		</dd>
-	</dl>
-
-	<h4>Zipped update sites</h4>
-		<dt>0.7.0 (Xtext 2.4.0)</dt>
-		<dd>
-			<a
-				href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates/zipped/org.eclipse.incquery.update-0.7.0-incubation.zip">Main
-				site</a> - <a
-				href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates-extra/zipped/org.eclipse.incquery.update.extras-0.7.0-incubation.zip">Extra
-				Site</a>
-		</dd>
-		<dt>0.8.0 (Xtext 2.6.0)</dt>
-		<dd>
-			<a
-				href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates/zipped/org.eclipse.incquery.update-0.8.0-incubation.zip">Main
-				site</a> - <a
-				href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates-extra/zipped/org.eclipse.incquery.update.extras-0.8.0-incubation.zip">Extra
-				Site</a>
-		</dd>
-		<dt>0.8.1 (Xtext 2.6.0)</dt>
-		<dd>
-			<a
-				href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates/zipped/org.eclipse.incquery.update-0.8.1-incubation.zip">Main
-				site</a> - <a
-				href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates-extra/zipped/org.eclipse.incquery.update.extras-0.8.1-incubation.zip">Extra
-				Site</a>
-		</dd>
-					<dt>0.9.1 (Xtext 2.7.0)</dt>
-		<dd>
-			<a
-				href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates/zipped/org.eclipse.incquery.update-0.9.1-incubation.zip">Main
-				site</a> - <a
-				href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates-extra/zipped/org.eclipse.incquery.update.extras-0.9.1-incubation.zip">Extra
-				Site</a>
-		</dd>
-					<dt>1.0.0 (Xtext 2.8.0)</dt>
-		<dd>
-			<a
-				href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates/zipped/org.eclipse.incquery.update-1.0.0.zip">Main
-				site</a> - <a
-				href="http://www.eclipse.org/downloads/download.php?file=/viatra/incquery/updates-extra/zipped/org.eclipse.incquery.update.extras-1.0.0-incubation.zip">Extra
-				Site (Contains incubating contents)</a>
-		</dd>
-	</dl>
-
+	<section class=" ">
+		<div class="row">
 	<h3>Older VIATRA2 releases</h3>
 	<p>
         For information about previous releases, look at the <a href="/viatra/archive#downloads">VIATRA2 archive site</a>.</p>
 
-</div>	
+		</div>
+	</section>
 
 <div class="clear"></div>
 <ng-include src="'angular/blocks/footer.html'"></ng-include>

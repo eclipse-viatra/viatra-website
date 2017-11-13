@@ -36,7 +36,7 @@
 	}]);
 
 	app.controller('NewsCtrl', function($scope, $http, $sce) {
-	  $http.get('/viatra/json/news.json')
+	  $http.get('angular/news.json')
 		   .then(function(res){
 			  $scope.news = res.data;
 			  $scope.$sce = $sce;
