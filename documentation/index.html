@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Content-language" content="en">
+	<meta name="description" content="Scalable Reactive Model Transformations">
+	<meta name="MobileOptimized" content="width" />
+	<meta name="HandheldFriendly" content="true" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="/viatra/js/googleAnalytics.js"></script>
+	<script type="text/javascript" src="/viatra/js/magnific-popup.video.js"></script>
+	<script type="text/javascript" src="/viatra/js/magnific-popup.min.js"></script>
+	<script type="text/javascript" src="/viatra/js/functions.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+	<script src="/viatra/angular/viatra.js"></script>
+
+	<link rel="shortcut icon" type="image/x-icon" href="/viatra/favicon.ico" />
+	<title>Viatra - Scalable reactive model transformations</title>
+	<link type="text/css" rel="stylesheet" href="/viatra/css/bootstrap.min.css" />
+	<link type="text/css" rel="stylesheet" href="/viatra/css/style.css" />
+	<link type="text/css" rel="stylesheet" href="/viatra/css/media.css" />
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300italic,700,300' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://use.fontawesome.com/ef6567f233.css">
+</head>
+
+<body ng-app="viatra" ng-controller="main" class="cloak sectioned">
+<ng-include src="'/viatra/angular/blocks/header.html'"></ng-include>
+
+<div class="clear"></div>
+	<h1 class="page_title">Documentation</h1>
+
+	<section class="bg_light_gray">
+		<div class="row">
+        <h2>Getting Started Tutorial</h2>
+        <p>The getting started tutorial gives an overview of the query and transformation capabilities of VIATRA, including both the development tools and the runtime API as well.</p>
+        <ul>
+            <li><a href="tutorial.html">Query and transformation development tutorial</a></li>
+        </ul>
+		</div>
+	</section>
+
+	<section class="">
+		<div class="row">
+	    	<h2>VIATRA Query</h2>
+            <p>In order to execute model queries, VIATRA features a dedicated query language based on the graph pattern formalism. To ease integration of model queries into applications, a Java-based API is also available. </p>
+            <ul>
+                <li><a href="query-language.html">The VIATRA Query Language (VQL)</a></li>
+                <li><a href="query-api.html">The runtime API of VIATRA Query</a></li>
+            </ul>
+		</div>
+	</section>
+
+	<section class="bg_light_gray ">
+		<div class="row">
+		<h2>VIATRA Transformations</h2>
+        <p>The VIATRA project provides a reactive transformation engine called EVM</p>
+        <ul>
+            <li><a href="https://wiki.eclipse.org/VIATRA/Transformation/Transformation_API">The transformation DSL</a> (still in the VIATRA wiki)</li>
+            <li><a href="https://wiki.eclipse.org/index.php?title=VIATRA/Transformation/EventDrivenVM">The Event-driven virtual machine</a> (still in the VIATRA wiki)</li>
+        </ul>
+		</div>
+	</section>
+
+	<section class="">
+		<div class="row">
+		<h2>Release information</h2>
+		<p>For details about the new features in each release and information about migrating between various versions, have a look at the new and noteworthy documents for each version.</p>
+
+        <ul>
+            <li><a href="releases.html">Release history</a></li>
+        </ul>
+		
+		</div>
+	</section>
+
+	<section class="bg_light_gray ">
+		<div class="row">
+		<h2>Other sources of documentation</h2>
+        <p>VIATRA maintained a large amount of documentation in the Eclipse wiki. These pages are being reviewed and their contents updated and moved into these pages accordingly. The wiki will be kept for users of older releases, but they are not planned to be updated.</p>
+
+        <p>Starting with VIATRA 1.6 (and the Oxygen release), parts of the project documentation is also available in the Eclipse Help Center. In future versions, most information available from these pages should be available from there as well.</p>
+
+        <ul>
+            <li><a href="http://help.eclipse.org">Eclipse Help Center</a></li>
+            <li><a href="https://wiki.eclipse.org/VIATRA">VIATRA wiki</a></li>
+        </ul>
+		</div>
+	</section>
+
+<div class="clear"></div>
+<ng-include src="'/viatra/angular/blocks/footer.html'"></ng-include>
+
+</body>
+</html>

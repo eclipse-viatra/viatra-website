@@ -36,10 +36,45 @@
 
 <div class="clear"></div>
 <div id="body_wrapper">
-	<h1>The VIATRA Query Language</h1>
+<h1 class="page_title">The VIATRA Query Language</h1>
 	
 <div id="preamble">
 <div class="sectionbody">
+<div class="paragraph">
+<p>For the query language, we reuse the concepts of graph patterns (which is a key concept in many graph transformation tools) as a concise and easy way to specify complex structural model queries. These graph-based queries can capture interrelated constellations of EMF objects, with the following benefits:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the language is expressive and provides powerful features such as negation or counting,</p>
+</li>
+<li>
+<p>graph patterns are composable and reusable,</p>
+</li>
+<li>
+<p>queries can be evaluated with great freedom, i.e. input and output parameters can be selected at run-time,</p>
+</li>
+<li>
+<p>some frequently encountered shortcomings of EMFâ€™s interfaces are addressed:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>easy and efficient enumeration of all instances of a class regardless of location,</p>
+</li>
+<li>
+<p>simple backwards navigation along all kinds of references (even without eOpposite),</p>
+</li>
+<li>
+<p>finding objects based on attribute value.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The current version of the VIATRA Query Language (VQL) owes many of its syntax to the <a href="https://wiki.eclipse.org/VIATRA2/GettingStarted/Creating_Transformations">VTCL language</a> of model transformation framework VIATRA2. If you would like to read more on the foundations of the new language, we kindly point you to our <a href="http://www.inf.mit.bme.hu/en/research/publications/graph-query-language-emf-models">ICMT 2011</a> paper (important note: the most up-to-date VIATRA Query language syntax differs slightly from the examples of the ICMT paper).</p>
+</div>
 <div id="toc" class="toc">
 <div id="toctitle" class="title">Table of Contents</div>
 <ul class="sectlevel1">
@@ -68,41 +103,6 @@
 </li>
 <li><a href="#_known_limitations_v1_7">5. Known Limitations (v1.7)</a></li>
 </ul>
-</div>
-<div class="paragraph">
-<p>For the query language, we reuse the concepts of graph patterns (which is a key concept in many graph transformation tools) as a concise and easy way to specify complex structural model queries. These graph-based queries can capture interrelated constellations of EMF objects, with the following benefits:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>the language is expressive and provides powerful features such as negation or counting,</p>
-</li>
-<li>
-<p>graph patterns are composable and reusable,</p>
-</li>
-<li>
-<p>queries can be evaluated with great freedom, i.e. input and output parameters can be selected at run-time,</p>
-</li>
-<li>
-<p>some frequently encountered shortcomings of EMF’s interfaces are addressed:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>easy and efficient enumeration of all instances of a class regardless of location,</p>
-</li>
-<li>
-<p>simple backwards navigation along all kinds of references (even without eOpposite),</p>
-</li>
-<li>
-<p>finding objects based on attribute value.</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>The current version of the VIATRA Query Language (VQL) owes many of its syntax to the <a href="https://wiki.eclipse.org/VIATRA2/GettingStarted/Creating_Transformations">VTCL language</a> of model transformation framework VIATRA2. If you would like to read more on the foundations of the new language, we kindly point you to our <a href="http://www.inf.mit.bme.hu/en/research/publications/graph-query-language-emf-models">ICMT 2011</a> paper (important note: the most up-to-date VIATRA Query language syntax differs slightly from the examples of the ICMT paper).</p>
 </div>
 </div>
 </div>
@@ -215,7 +215,7 @@ As of some shortcomings of the EMF generator, the <code>org.eclipse.emf.ecore.ge
 </li>
 <li>
 <p>Since version 1.4, parameters can optionally be marked as incoming (<code>in</code>) or outgoing (<code>out</code>). Incoming parameters <strong>must</strong> be bound when the pattern matcher initializes, while outgoing parameters <strong>must not</strong>. Unmarked parameters are neither incoming nor outgoing: they might be either bound or unbound when called. These declarations are used as only hints; the pattern matcher might ignore them if necessary.
-* <code>pattern myPattern(in a, out b, c) {&#8230;&#8203;}</code></p>
+*Â <code>pattern myPattern(in a, out b, c) {&#8230;&#8203;}</code></p>
 </li>
 <li>
 <p>Since version 1.4, the evaluation backend can be specified as local search-only (<code>search</code>) or Rete-only (<code>incremental</code>), providing hints to the runtime what pattern matcher should be initialized for this pattern. If undefined, the default hints of the engine is used (by default, Rete).</p>
@@ -398,7 +398,7 @@ As of some shortcomings of the EMF generator, the <code>org.eclipse.emf.ecore.ge
 </ul>
 </div>
 <div class="paragraph">
-<p>Local variables with a single reference, such as <strong>quantified</strong> parameters, should be prefixed with an <code>_</code> (underscore) character to mark this. Furthermore, if you only use a variable once, it is OK not to name it at aéé; just use a single underscore instead of the variable reference. In fact, each occurrence of this anonymous variable will be treated as a separate, single-use variable that is distinguished from any other anonymous variable. (This should look self-evident to those who are familiar with Prolog.) Examples:</p>
+<p>Local variables with a single reference, such as <strong>quantified</strong> parameters, should be prefixed with an <code>_</code> (underscore) character to mark this. Furthermore, if you only use a variable once, it is OK not to name it at aÃ©Ã©; just use a single underscore instead of the variable reference. In fact, each occurrence of this anonymous variable will be treated as a separate, single-use variable that is distinguished from any other anonymous variable. (This should look self-evident to those who are familiar with Prolog.) Examples:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -441,7 +441,7 @@ As of some shortcomings of the EMF generator, the <code>org.eclipse.emf.ecore.ge
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Creating the actual EMap type: Create an EClass with the name <code>«Type1»To«Type2»Map</code> where <code>«Type1»</code> represents the key&#8217;s type and the <code>«Type2»</code> represents the value&#8217;s type.</p>
+<p>Creating the actual EMap type: Create an EClass with the name <code>Â«Type1Â»ToÂ«Type2Â»Map</code> where <code>Â«Type1Â»</code> represents the key&#8217;s type and the <code>Â«Type2Â»</code> represents the value&#8217;s type.</p>
 </li>
 <li>
 <p>Set the <code>Instance Type Name</code> property of the newly created EClass to <code>java.util.Map$Entry</code>.</p>
@@ -591,7 +591,7 @@ As of some shortcomings of the EMF generator, the <code>org.eclipse.emf.ecore.ge
 <p>Suppose that once in a while, people share secrets with each other. For the sake of the example, imagine that if a person is in a "talks to" relationship with another, then that person will also share his/her secret with the other person. The other person will eventually also share the previous person&#8217;s secrets with others, that is, the sharing of secrets is transitive. In our example, it is also possible that a person revokes a secret, and, by that, the secret will be/should be also forgotten by all people that heard about that secret.</p>
 </div>
 <div class="paragraph">
-<p>Given these assumptions, let’s model some real people and their secrets. Assume that we have four people Ann (A), Bill (B), Jane (J), and Mike (M), and we have the following talks to relationships: A &#8594; B, B &#8594; J, J &#8594; M, J &#8594; B. The four people also have some secrets, four numbers, these are respectively A - 1, B - 2, J - 3, and M - 4. In this initial setup, Ann does not know any secrets, but the others know everybody&#8217;s secrets (including Ann&#8217;s).</p>
+<p>Given these assumptions, letâ€™s model some real people and their secrets. Assume that we have four people Ann (A), Bill (B), Jane (J), and Mike (M), and we have the following talks to relationships: A &#8594; B, B &#8594; J, J &#8594; M, J &#8594; B. The four people also have some secrets, four numbers, these are respectively A - 1, B - 2, J - 3, and M - 4. In this initial setup, Ann does not know any secrets, but the others know everybody&#8217;s secrets (including Ann&#8217;s).</p>
 </div>
 <div class="paragraph">
 <p>We can encode the secret sharing with VIATRA Queries graph patterns as follows:</p>
