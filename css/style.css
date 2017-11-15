@@ -168,9 +168,9 @@ img, img:focus{
 /*--------- Header ---------------*/
 #header_wrapper {
 	background: transparent;
-	padding: 30px 0;
+	padding: 15px 0;
 	overflow: visible;
-	height: 145px;
+	height: 100px;
 }
 
 #logo {
@@ -180,6 +180,7 @@ img, img:focus{
 
 #logo img {
 	width: 190px;
+	padding: 20px;
 	height: auto;
 }
 
@@ -270,7 +271,7 @@ img, img:focus{
 	cursor: pointer;
 	display: block;
 }
-@media all and (min-width: 768px){
+@media all and (min-width: 790px){
 	.menu-icon {
 		display: none;
 	}
@@ -297,7 +298,7 @@ img, img:focus{
 #menu_wrapper a {
 	color: #383838;
 }
-@media all and (max-width: 767px){
+@media all and (max-width: 790px){
 	#menu_wrapper{
 		width: 100%;
 		top: 41px;
@@ -407,7 +408,7 @@ img, img:focus{
 section.highlight_banner {
 	padding: 10px;
 }
-@media all and (min-width: 768px){
+@media all and (min-width: 760px){
 	section.highlight_banner {
 		padding: 100px;
 	}
@@ -426,7 +427,7 @@ section.highlight_banner {
     height: 445px;
     position: relative;
 }
-@media all and (min-width: 768px){
+@media all and (min-width: 760px){
 	.back1 h2{
 		font-size: 56px;
 	}
@@ -1548,7 +1549,7 @@ input[type="button"] {
 }
 
 
-@media all and (min-width: 768px){
+@media all and (min-width: 760	px){
 	#usecases{
 		column-count: 2;
 		column-gap: 60px;
@@ -1567,7 +1568,7 @@ input[type="button"] {
 	padding-right: 20px;
 	padding-left: 20px;
 }
-@media all and (min-width: 768px){
+@media all and (min-width: 760px){
 	.col-sm-5-1{
 		width: 20%;
 		float: left;
@@ -1593,7 +1594,7 @@ input[type="button"] {
 .partners img.muegyetem{
 	width: 187px;
 }
-@media all and (min-width: 768px) and (max-width: 1199px){
+@media all and (min-width: 760px) and (max-width: 1199px){
 	.partners img.itemis{
 		width: 104px;
 	}
