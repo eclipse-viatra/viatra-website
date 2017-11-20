@@ -41,15 +41,81 @@
 
 <div id="preamble">
 <div class="sectionbody">
+<div class="paragraph">
+<p>This page includes detailed information about the various releases of VIATRA, including major new features and notes of migration between various versions.</p>
+</div>
 <div id="toc" class="toc">
 <div id="toctitle" class="title">Table of Contents</div>
 <ul class="sectlevel1">
+<li><a href="#viatra-17">VIATRA 1.7</a></li>
 <li><a href="#viatra-16">VIATRA 1.6</a></li>
 <li><a href="#viatra-15">VIATRA 1.5</a></li>
 <li><a href="#viatra-14">VIATRA 1.4</a></li>
 <li><a href="#viatra-13">VIATRA 1.3</a></li>
 <li><a href="#viatra-12">VIATRA 1.2</a></li>
 </ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="viatra-17"><a class="link" href="#viatra-17">VIATRA 1.7</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_optimizations_in_query_runtime"><a class="link" href="#_optimizations_in_query_runtime">Optimizations in Query Runtime</a></h3>
+<div class="paragraph">
+<p>The memory usage of the query engine was optimized in several ways during VIATRA 1.7, ensuring the new version requires up to 50% less stable memory to index its contents. This reduction was mainly achieved by using compact collections provided by the <a href="http://eclipse.org/collections">Eclipse Collections</a> framework and creating custom tuple implementations.</p>
+</div>
+<div class="paragraph">
+<p>Further changes also helped to reduce the temporary objects created during search-based pattern matching or provide faster responses in transformation by smarter preconditions checking.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updated_generated_code_structure"><a class="link" href="#_updated_generated_code_structure">Updated generated code structure</a></h3>
+<div class="paragraph">
+<p>Traditionally, VIATRA generates four different Java classes for each query: (1) a <em>query specification</em> class, (2) a <em>matcher</em> class, (3) a <em>match</em> class and (4) a <em>match processor</em> class, each into a separate file. In case of projects with many pattern definitions, generating these files can get expensive.</p>
+</div>
+<div class="paragraph">
+<p>In order to reduce the number of files generated, VIATRA 1.7 provides two new code generation option that creates only a single java file for each pattern:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Generate into nested classes</strong>: the match, matcher and match processor classes are generated as nested classes of the query specification; the query specification is renamed to have the same qualified name as the original pattern.</p>
+</li>
+<li>
+<p><strong>Do not generate match and matcher classes</strong>: no pattern-specific match, matcher and match processor classes are generated, but a generic implementation is reused. This mode is only recommended if the queries are not queried directly from code but used only in generic frameworks such as VIATRA Validation.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In VIATRA 1.7, for backward compatibility a third setting is used by default called <strong>Generate into separate classes</strong> that uses the previous structure. For VIATRA 2.0 it is planned to use nested classes as a default selection. This setting can be checked in the VIATRA Query Language compiler settings (available both as a global Eclipse Preference page or a Project Property page).</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/releases/17_viatra_compiler.png" alt="17 viatra compiler">
+</div>
+</div>
+<div class="paragraph">
+<p>Additionally, the generation of pattern-specific match processors can be disabled if they are not used. This turns off the generation regardless whether it is generated into nested or separate classes.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cps_demonstrator_application"><a class="link" href="#_cps_demonstrator_application">CPS Demonstrator Application</a></h3>
+<div class="paragraph">
+<p>VIATRA 1.7 includes a demonstrator application that can be used to see most features of the transformation framework in action. The application includes an example project and transformations included in editors.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_additional_issues"><a class="link" href="#_additional_issues">Additional issues</a></h3>
+<div class="paragraph">
+<p>For a complete list of fixed issues for VIATRA 1.7 consult <a href="https://projects.eclipse.org/projects/modeling.viatra/releases/1.7.0/bugs" class="bare">https://projects.eclipse.org/projects/modeling.viatra/releases/1.7.0/bugs</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_migrating_to_viatra_1_7"><a class="link" href="#_migrating_to_viatra_1_7">Migrating to VIATRA 1.7</a></h3>
+<div class="paragraph">
+<p>One of the reasons for the better memory usage are the compact collections provided by <a href="http://eclipse.org/collections">Eclipse Collections</a> framework. For this reason, all users of VIATRA has to have these classes available on the classpath. In case of dependencies managed via Maven or p2 this should require no additional steps, as this transitive dependency should be handled automatically.</p>
+</div>
 </div>
 </div>
 </div>
@@ -213,7 +279,7 @@ complexEvent addContainer2(cned:EObject, container1:EObject, container2:EObject)
 <p>Performance has been improved by a better backtracking mechanism: when an exploration strategy resets to an other trajectory for exploring other areas of the design space and if the new and the old trajectory start with the same rule applications, then it will only backtrack to their last common state.</p>
 </div>
 <div class="sect3">
-<h4 id="_additional_issues"><a class="link" href="#_additional_issues">Additional issues</a></h4>
+<h4 id="_additional_issues_2"><a class="link" href="#_additional_issues_2">Additional issues</a></h4>
 <div class="paragraph">
 <p>For a complete list of fixed issues for VIATRA 1.6 consult <a href="https://projects.eclipse.org/projects/modeling.viatra/releases/1.6.0/bugs" class="bare">https://projects.eclipse.org/projects/modeling.viatra/releases/1.6.0/bugs</a></p>
 </div>
@@ -1009,8 +1075,6 @@ pattern t4_fixed(n) {
 </div>
 </div>
 </div>
-</div>
-	<script>hljs.initHighlighting()</script>
 </div>	
 
 <div class="clear"></div>
