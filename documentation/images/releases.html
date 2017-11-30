@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Content-language" content="en">
+	<meta name="description" content="Scalable Reactive Model Transformations">
+	<meta name="MobileOptimized" content="width" />
+	<meta name="HandheldFriendly" content="true" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="/viatra/js/googleAnalytics.js"></script>
+	<script type="text/javascript" src="/viatra/js/magnific-popup.video.js"></script>
+	<script type="text/javascript" src="/viatra/js/magnific-popup.min.js"></script>
+	<script type="text/javascript" src="/viatra/js/functions.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+	<script src="/viatra/angular/viatra.js"></script>
+	<script src="/viatra/highlight.js/highlight.min.js"></script>
+
+	<link rel="shortcut icon" type="image/x-icon" href="/viatra/favicon.ico" />
+	<title>Viatra - Scalable reactive model transformations</title>
+	<link type="text/css" rel="stylesheet" href="/viatra/css/bootstrap.min.css" />
+	<link type="text/css" rel="stylesheet" href="/viatra/css/style.css" />
+	<link type="text/css" rel="stylesheet" href="/viatra/css/media.css" />
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> 
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300italic,700,300' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://use.fontawesome.com/ef6567f233.css">
+
+	<link rel="stylesheet" href="/viatra/highlight.js/styles/foundation.min.css">
+	<link rel="stylesheet" type="text/css" href="/viatra/css/asciidoctor.css"/>
+
+</head>
+
+<body ng-app="viatra" ng-controller="main" class="cloak">
+<ng-include src="'/viatra/angular/blocks/header.html'"></ng-include>
+
+<div class="clear"></div>
+<div id="body_wrapper">
+<h1 class="page_title">New and Noteworthy</h1>
+
+
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>This page includes detailed information about the various releases of VIATRA, including major new features and notes of migration between various versions.</p>
+</div>
+<div id="toc" class="toc">
+<div id="toctitle" class="title">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#viatra-17">VIATRA 1.7</a></li>
+<li><a href="#viatra-16">VIATRA 1.6</a></li>
+<li><a href="#viatra-15">VIATRA 1.5</a></li>
+<li><a href="#viatra-14">VIATRA 1.4</a></li>
+<li><a href="#viatra-13">VIATRA 1.3</a></li>
+<li><a href="#viatra-12">VIATRA 1.2</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="viatra-17"><a class="link" href="#viatra-17">VIATRA 1.7</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_optimizations_in_query_runtime"><a class="link" href="#_optimizations_in_query_runtime">Optimizations in Query Runtime</a></h3>
+<div class="paragraph">
+<p>The memory usage of the query engine was optimized in several ways during VIATRA 1.7, ensuring the new version requires up to 50% less stable memory to index its contents. This reduction was mainly achieved by using compact collections provided by the <a href="http://eclipse.org/collections">Eclipse Collections</a> framework and creating custom tuple implementations.</p>
+</div>
+<div class="paragraph">
+<p>Further changes also helped to reduce the temporary objects created during search-based pattern matching or provide faster responses in transformation by smarter preconditions checking.</p>
+</div>
+<div class="paragraph">
+<p><strong>TODO</strong> Execute and include a full performance measurement</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updated_generated_code_structure"><a class="link" href="#_updated_generated_code_structure">Updated generated code structure</a></h3>
+<div class="paragraph">
+<p>Traditionally, VIATRA generates four different Java classes for each query: (1) a <em>query specification</em> class, (2) a <em>matcher</em> class, (3) a <em>match</em> class and (4) a <em>match processor</em> class, each into a separate file. In case of projects with many pattern definitions, generating these files can get expensive.</p>
+</div>
+<div class="paragraph">
+<p>In order to reduce the number of files generated, VIATRA 1.7 provides two new code generation option that creates only a single java file for each pattern:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Generate into nested classes</strong>: the match, matcher and match processor classes are generated as nested classes of the query specification; the query specification is renamed to have the same qualified name as the original pattern.</p>
+</li>
+<li>
+<p><strong>Do not generate match and matcher classes</strong>: no pattern-specific match, matcher and match processor classes are generated, but a generic implementation is reused. This mode is only recommended if the queries are not queried directly from code but used only in generic frameworks such as VIATRA Validation.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In VIATRA 1.7, for backward compatibility a third setting is used by default called <strong>Generate into separate classes</strong> that uses the previous structure. For VIATRA 2.0 it is planned to use nested classes as a default selection. This setting can be checked in the VIATRA Query Language compiler settings (available both as a global Eclipse Preference page or a Project Property page).</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/releases/17_viatra_compiler.png" alt="17 viatra compiler">
+</div>
+</div>
+<div class="paragraph">
+<p>Additionally, the generation of pattern-specific match processors can be disabled if they are not used. This turns off the generation regardless whether it is generated into nested or separate classes.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cps_demonstrator_application"><a class="link" href="#_cps_demonstrator_application">CPS Demonstrator Application</a></h3>
+<div class="paragraph">
+<p>VIATRA 1.7 includes a demonstrator application that can be used to see most features of the transformation framework in action. The application includes an example project and transformations included in editors. For more details about the transformation, have a look at the <a href="../cps/CPS-Application.html">corresponding documentation</a>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>TODO</strong> Provide download links</p>
+</li>
+<li>
+<p><strong>TODO</strong> Add a few screenshots here</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_additional_issues"><a class="link" href="#_additional_issues">Additional issues</a></h3>
+<div class="paragraph">
+<p>For a complete list of fixed issues for VIATRA 1.7 consult <a href="https://projects.eclipse.org/projects/modeling.viatra/releases/1.7.0/bugs" class="bare">https://projects.eclipse.org/projects/modeling.viatra/releases/1.7.0/bugs</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_migrating_to_viatra_1_7"><a class="link" href="#_migrating_to_viatra_1_7">Migrating to VIATRA 1.7</a></h3>
+<div class="paragraph">
+<p>One of the reasons for the better memory usage are the compact collections provided by <a href="http://eclipse.org/collections">Eclipse Collections</a> framework. For this reason, all users of VIATRA has to have these classes available on the classpath. In case of dependencies managed via Maven or p2 this should require no additional steps, as this transitive dependency should be handled automatically.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="viatra-16"><a class="link" href="#viatra-16">VIATRA 1.6</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_model_query_evaluation"><a class="link" href="#_model_query_evaluation">Model Query Evaluation</a></h3>
+<div class="paragraph">
+<p>VIATRA 1.6 provides a few new features that aim for better compatibility in a wider range of use cases. In general, VIATRA should work out of the box the same way it worked before, but there are some settings that allow a more finely tuned behaviour for certain situations.</p>
+</div>
+<div class="paragraph">
+<p>Custom implementations of the EMF API (e.g. when generated code is manually modified) may violate EMF API contracts, and send <strong>incorrect notifications</strong> (e.g. duplicate model deletion events); similar situations can arise e.g. if there are custom EMF adapters that throw exceptions. In previous versions of VIATRA, this resulted in strange exceptions being thrown from the query backend. In version 1.6, the model indexer identifies most of these cases and provides a more precise error message describing what happens. It is also possible to tell the indexer to ignore (more specifically, log only) these incorrect notifications by turning the <strong>strict notification mode</strong> off, as shown below.</p>
+</div>
+<div id="v16-strictnotifications" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">BaseIndexOptions options = new BaseIndexOptions().withStrictNotificationMode(false);
+ResourceSet rSet = new ResourceSetImpl();
+EMFScope scope = new EMFScope(rSet, options);
+ViatraQueryEngine engine = ViatraQueryEngine.on(scope);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In case of the query scope is set to a subset of the entire model (e.g only one EMF resource within the resource set), model elements within the scope of the engine may have references pointing to elements outside the scope; these are called <strong>dangling edges</strong>. Previous versions of VIATRA made the assumption that the model is self-contained and free of dangling edges; the behavior of the query engine was unspecified (potentially incorrect match sets) if the model did not have this property. In VIATRA 1.6, this behavior was cleaned up by adding a new indexer mode that drops this assumption, and (with a minor cost to performance) always checks both ends of all indexed edges to be in-scope. For backward compatibility, the old behavior is used by default, but you can manually change this using the corresponding base index option as below. For new code we suggest to use the option to drop the dangling-free assumption, as it provides more consistent and intuitive results in a lot of cases; in a future VIATRA release this will be the new default.</p>
+</div>
+<div id="v16-danglingfree" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">BaseIndexOptions options = new BaseIndexOptions().withDanglingFreeAssumption(false);
+ResourceSet rSet = new ResourceSetImpl();
+EMFScope scope = new EMFScope(rSet, options);
+ViatraQueryEngine engine = ViatraQueryEngine.on(scope);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The advanced query API now includes a feature that lets users temporarily "turn off" query result maintenance in the incremental query backend. During such a code block, only the base model indexer is updated, query results remain stale until the end of the block. The advantage is that it is possible to save significant execution time when changing the model in a way that partially undoes itself, e.g. a large part of the model is removed and then re-added.</p>
+</div>
+<div id="v16-delay" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">AdvancedViatraQueryEngine engine = ...
+engine.delayUpdatePropagation(new Callable&lt;Void&gt;() {
+    @Override
+    public Void call() throws Exception {
+        // perform extensive changes in model that largely cancel each other out
+        return null;
+    }
+});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, VIATRA 1.6 includes the <a href="http://dl.acm.org/citation.cfm?id=170066">Delete and REDerive (DRed)</a> algorithm as an experimental opt-in choice for evaluating recursive queries. Formerly, recursive queries were only fully supported under the condition that there can be circular dependencies between VQL patterns (or a pattern and itself), but not between individual matches of these patterns. Such circularity could lead to incorrect result maintenance after changes, even if all involved pattern calls are positive (simple <code>find</code> constraints). This restriction can now be relaxed by enabling DRed. With a small penalty in execution time, DRed guarantees correct result maintenance for arbitrary recursive pattern structures as long as all recursive calls are positive (i.e. no negation or aggregation along cycles of recursion). Note that for the very common special case of transitive closures, the dedicated language element (transitive pattern call) is still likely to be more efficient. DRed is still in an experimental phase, and is turned off by default; it can be manually enabled using the query evaluation hint <code>ReteHintOptions.deleteRederiveEvaluation</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_code_generator_updates"><a class="link" href="#_code_generator_updates">Code generator updates</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="./images/releases/16_query_codegen_options.png" alt="16 query codegen options">
+</div>
+</div>
+<div class="paragraph">
+<p>For users targeting other environment than Eclipse plug-ins, it is now possible to disallow the <strong>updating of MANIFEST.MF and plugin.xml</strong> files. The bundle manifest is updated to ensure all packages that contain query specifications are exported, while plugin.xml files are used by the query specification registry to load all patterns during runtimes.</p>
+</div>
+<div class="paragraph">
+<p>This setting is available as a workspace-level preference or a per-project setting. By default, these settings are turned on (so both files are updated on each build), maintaining compatibility with previous releases.</p>
+</div>
+<div class="paragraph">
+<p>The other major change relates to <strong>the handling of private patterns</strong>. Given private patterns are not expected to be used outside calling them from patterns in the same vql file, the generated code does not need all the type-safe wrappers generated. However, to make private patterns testable using the query test API, the generated QuerySpecification classes were moved to a dedicated package were they could be made public without exporting them to all users of the query bundles.</p>
+</div>
+<div class="paragraph">
+<p>In complex metamodels described in Ecore and genmodel files there are often <strong>cross-references between files</strong> with absolute or workspace-relative urls. When compiling VIATRA queries using the maven compiler, these urls cannot be resolved automatically. EMF uses URI converters to define a mapping between such source and target model elements. Starting with VIATRA 1.6, you can now specify the location of metamodels referred to via <code>platform:/resource</code> URIs with the <code>uriMappings</code> configuration element. See <a href="http://wiki.eclipse.org/VIATRA/UserDocumentation/Build#viatra-maven-plugin">this wiki page</a> for more details.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_query_test_framework_updates"><a class="link" href="#_query_test_framework_updates">Query Test Framework updates</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="./images/releases/16_query_coverage_report.png" alt="16 query coverage report">
+</div>
+</div>
+<div class="paragraph">
+<p>The query testing capabilities of VIATRA were extended to support a wider range of models and queries. This required new customization options for the test definition DSL, including support for non-default EMF resources as models and using more generic Java types in the query result snapshots. For a more detailed definitions of these features look <a href="http://wiki.eclipse.org/VIATRA/Query/UserDocumentation/QueryTestFramework">at the documentation</a>.</p>
+</div>
+<div class="paragraph">
+<p>When testing your patterns, you can measure their <strong>test coverage</strong> (similar to what EclEmma does to Java code). This means you can see which constraints described in the patterns were used during the evaluation of the queries. The coverage can be reported as an HTML file which immediately shows which patterns need more testing. See <a href="http://wiki.eclipse.org/VIATRA/Query/UserDocumentation/QueryTestFramework#Coverage_analysis_and_reporting">the feature&#8217;s documentation</a> for details.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_documentation_updates"><a class="link" href="#_documentation_updates">Documentation updates</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="./images/releases/16_query_explain_message.png" alt="16 query explain message">
+</div>
+</div>
+<div class="paragraph">
+<p>To make it easier to get started with VIATRA, a <a href="http://www.eclipse.org/viatra/documentation/tutorial.html">tutorial</a> is added that presents an example for query and transformation development. In order to make the tutorial available for even more users, this documentation is also included in the platform help.</p>
+</div>
+<div class="paragraph">
+<p>A few <strong>error messages</strong> in the query editor related to enumerable and non-enumerable references had been reported to hard to understand. In this version the error messages have been updated, and a quick fix was also added that updates a detailed explanation for the message. In future versions we plan to extend this support to make other error messages more understandable.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_gef5_based_visualization"><a class="link" href="#_gef5_based_visualization">GEF5-based visualization</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="./images/releases/16_rete_visualizer.png" alt="16 rete visualizer">
+</div>
+</div>
+<div class="paragraph">
+<p>The graph-based components, specifically the <a href="http://wiki.eclipse.org/VIATRA/Query/UserDocumentation/RETE_Visualizer">Rete visualizer</a>, <a href="http://wiki.eclipse.org/VIATRA/Query/UserDocumentation/LocalSearch_DebuggerTooling">Local search debugger</a> and the <a href="http://wiki.eclipse.org/VIATRA/Addon/VIATRA_Viewers">graph visualization support of Viewers</a>, were updated to rely on the latest GEF version 5.0 (available with Eclipse Oxygen). This results in an updated, JavaFX based display and further bugfixes available for these components by default.</p>
+</div>
+<div class="paragraph">
+<p>Following the dependencies of GEF5 to use these features in the future, JavaFX (available from Java 8) and e(fx)clipse is required to be installed.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_complex_event_processing"><a class="link" href="#_complex_event_processing">Complex Event Processing</a></h3>
+<div class="paragraph">
+<p>VIATRA CEP has previously supported <strong>event parameters</strong> for atomic events only. From now on, complex events can also be parameterized, with full support for event composition. Furthermore, query events are parameterized as well, the parameters being directly derived from the parameters of the referenced query.</p>
+</div>
+<div class="paragraph">
+<p>For example, see these sample events <a href="https://github.com/viatra/viatra-cep-examples/tree/master/minimal-samples/QueryEvent">from here</a>. Given the following query:</p>
+</div>
+<div id="v16-cep-parameters" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">pattern hasContainer(contained: EClass, container: EClass) = {
+	EClass.eStructuralFeatures(container, ref);
+	EReference.containment(ref, true);
+	EReference.eType(ref, contained);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can define a parameterized query event and compose it into a parameterized complex event:</p>
+</div>
+<div id="v16-parameterizedevent" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">queryEvent addContainer(contained:EObject, container:EObject)
+	as hasContainer(contained, container) found
+
+complexEvent addContainer2(cned:EObject, container1:EObject, container2:EObject) {
+	as (addContainer(cned, container1) -&gt; addContainer(cned, container2))
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_design_space_exploration"><a class="link" href="#_design_space_exploration">Design Space Exploration</a></h3>
+<div class="paragraph">
+<p>VIATRA-DSE got a few incremental updates and bug fixes.</p>
+</div>
+<div class="paragraph">
+<p>A new exploration algorithm called <strong>best-first search</strong> has been added that will eventually explore the whole design space (if it is finite of course) always continuing with the best possible choice. It can be instantiated with <code>Strategies.createBestFirstStrategy(int maxDepth)</code>. It also has two configuration possibilities: <code>continueIfHardObjectivesFulfilled()</code> (so it won&#8217;t backtrack if a solution is found) and <code>goOnOnlyIfFitnessIsBetter()</code> (so it won&#8217;t explore equally good states immediately, only better ones). Currently it is implemented without multithreading.</p>
+</div>
+<div class="paragraph">
+<p>The utility function <code>DesignSpaceExplorer.saveModels()</code> will save all solutions as EMF models. See API doc for details.</p>
+</div>
+<div class="paragraph">
+<p><code>DepthHardObjective</code> has been introduced that provides minimum and maximum depth criteria for solutions. Can be instantiated with <code>Objectives.createDepthHardObjective()</code>.</p>
+</div>
+<div class="paragraph">
+<p>Performance has been improved by a better backtracking mechanism: when an exploration strategy resets to an other trajectory for exploring other areas of the design space and if the new and the old trajectory start with the same rule applications, then it will only backtrack to their last common state.</p>
+</div>
+<div class="sect3">
+<h4 id="_additional_issues_2"><a class="link" href="#_additional_issues_2">Additional issues</a></h4>
+<div class="paragraph">
+<p>For a complete list of fixed issues for VIATRA 1.6 consult <a href="https://projects.eclipse.org/projects/modeling.viatra/releases/1.6.0/bugs" class="bare">https://projects.eclipse.org/projects/modeling.viatra/releases/1.6.0/bugs</a></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_migrating_to_viatra_1_6"><a class="link" href="#_migrating_to_viatra_1_6">Migrating to VIATRA 1.6</a></h3>
+<div class="sect3">
+<h4 id="_recommended_new_indexing_option_for_handling_dangling_edges"><a class="link" href="#_recommended_new_indexing_option_for_handling_dangling_edges">Recommended new indexing option for handling dangling edges</a></h4>
+<div class="paragraph">
+<p>A a new filter option was introduced in this release regarding dangling edges (i.e. references pointing to objects outside the scope of the query engine). The old version made the assumptions that there are no such dangling edges whatsoever, and thus did not apply a filter to reject query matches that would involve such a dangling edge. This led to surprising results in some cases. For more predictable results and more straightforward semantics, we now allow the user to turn off this assumption, so that the appropriate checks will be performed (at a slight cost in performance).</p>
+</div>
+<div class="paragraph">
+<p>For new code, and for any existing users that experienced problems with the unpredictability of dangling edges, we suggest to use the newly introduced option to drop the dangling-free assumption. In a future VIATRA release this will be the new default.</p>
+</div>
+<div id="v16-dangling-migration" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">BaseIndexOptions options = new BaseIndexOptions().withDanglingFreeAssumption(false);
+ResourceSet rSet = new ResourceSetImpl();
+EMFScope scope = new EMFScope(rSet, options);
+ViatraQueryEngine engine = ViatraQueryEngine.on(scope);</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_api_break_in_transitive_closure_library"><a class="link" href="#_api_break_in_transitive_closure_library">API break in Transitive Closure Library</a></h4>
+<div class="paragraph">
+<p>This API breaking change affects users of the org.eclipse.viatra.query.runtime.base.itc Java library for incremental transitive closure computation over custom graph data sources.</p>
+</div>
+<div class="paragraph">
+<p><strong>Not affected</strong>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>users of the transitive closure language element in vql.</p>
+</li>
+<li>
+<p>users of <code>TransitiveClosureHelper</code> providing transitive closure of EMF references.</p>
+</li>
+<li>
+<p>users of the graph representation <code>org.eclipse.viatra.query.runtime.base.itc.graphimpl.Graph</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Details</strong>:
+We have changed the way how the multiset of incoming/outgoing graph edges is represented in interfaces <code>IGraphDataSource</code> and <code>IBiDirectionalGraphDataSource</code>. The old interface used a <code>java.util.List</code> of vertices (parallel edges represented as multiple entries in the list), while the new interface uses <code>java.util.Map</code> with vertices as keys, and positive integers representing the count of parallel edges as values. The graph observer interface is unchanged.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_dependency_changes_related_to_guava"><a class="link" href="#_dependency_changes_related_to_guava">Dependency changes related to Guava</a></h4>
+<div class="paragraph">
+<p>In the Oxygen release train, multiple versions of Guava are available. In order to ensure VIATRA uses a single Guava version, all framework projects now import Guava with package imports, and set the corresponding ''uses'' constraints for all packages where Guava packages are exported.</p>
+</div>
+<div class="paragraph">
+<p>For projects using the VIATRA framework everything should work as before. However, if there are issues with multiple Guava versions colliding, check whether any of your classes have Guava types on its API (e.g. check superclasses, parameter and return types; most common candidates are Predicate and Function instances). If any such case is available, the following steps are required to ensure the single Guava version:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Replace required bundle declarations of <code>com.google.guava</code> with appropriate package imports declarations.</p>
+</li>
+<li>
+<p>For each package export declaration that includes Guava classes on its API, add a uses constraints as follows: <code>org.eclipse.viatra.query.runtime.emf;
+uses:="com.google.common.collect",</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For more details about the issue, and uses constraint violations in general, look at <a href="http://blog.springsource.com/2008/10/20/understanding-the-osgi-uses-directive/" class="bare">http://blog.springsource.com/2008/10/20/understanding-the-osgi-uses-directive/</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="viatra-15"><a class="link" href="#viatra-15">VIATRA 1.5</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_support_for_more_number_literals_in_query_language"><a class="link" href="#_support_for_more_number_literals_in_query_language">Support for more number literals in query language</a></h3>
+<div class="paragraph">
+<p>All number literals supported by Xtend (see <a href="https://eclipse.org/xtend/documentation/203_xtend_expressions.html#number-literals">documentation</a> for details) are now directly supported by the VIATRA Query language.</p>
+</div>
+<div id="v15-literals" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">pattern circleConstantDiameter1(c : Circle) {
+  Circle.diameter(c, 3l);
+  Circle.area(c, 9.42f);
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_performance_improvements"><a class="link" href="#_performance_improvements">Performance improvements</a></h3>
+<div class="sect3">
+<h4 id="_performance_tuning_with_functional_dependencies"><a class="link" href="#_performance_tuning_with_functional_dependencies">Performance tuning with functional dependencies</a></h4>
+<div class="paragraph">
+<p>Version 1.5 introduces greatly improved inference of functional dependencies among pattern variables, which may significantly influence query evaluation performance.</p>
+</div>
+<div class="paragraph">
+<p>One can now also use the <code>@FunctionalDependency</code> annotation to manually specify additional dependency rules, in order to express domain-specific insight. See below for examples of the syntax:</p>
+</div>
+<div id="v15-functionaldependencies" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">// Here the first annotation is superfluous, as it is inferred automatically anyway
+// The second annotation expresses valuable domain knowledge though
+@FunctionalDependency(forEach = house, unique = street, unique = houseNumber)
+@FunctionalDependency(forEach = street, forEach = houseNumber, unique = house)
+pattern address(house: House, street: Street, houseNumber: java Integer) {
+	Street.houses(street, house);
+	House.number(house, houseNumber);
+}
+
+// Houses are either on a Street or on a Road, but not both at the same time;
+//  however Viatra is not smart enough (yet) to figure that out.
+// In disjunctive patterns, all dependencies have to be specified manually!
+@FunctionalDependency(forEach = house, unique = location)
+pattern locatedOnThoroughfare(house: House, location: Thoroughfare) {
+	Street.houses(location, house);
+} or {
+	Road.houses(location, house);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>More details available <a href="http://wiki.eclipse.org/VIATRA/Query/UserDocumentation/AdvancedPatterns#Functional_dependencies">here</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_further_optimizations_in_the_incremental_query_evaluator"><a class="link" href="#_further_optimizations_in_the_incremental_query_evaluator">Further optimizations in the incremental query evaluator</a></h4>
+<div class="paragraph">
+<p>Constant values (more precisely constant-value filtering) within patterns are now handled more efficiently in many cases. In a proprietary code base, specifically for entire query packages where this feature is heavily used, we have observed a reduction between 15-30% in the memory footprint of Rete.</p>
+</div>
+<div class="paragraph">
+<p>As an additional minor memory improvement, the results of eval/check expressions are no longer cached in Rete by default. In case some such expressions involve particularly expensive computations, one can restore the original caching behaviour either globally or on a per-pattern basis using the appropriate hint option introduced into the <code>ReteHints</code> class.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_remote_debugging_support_added_to_the_viatra_model_transformation_debugger"><a class="link" href="#_remote_debugging_support_added_to_the_viatra_model_transformation_debugger">Remote debugging support added to the VIATRA model transformation debugger</a></h3>
+<div class="paragraph">
+<p>The VIATRA model transformation debugger (introduced in VIATRA 1.3.0) has undergone a series of architectural  and backend-related changes. The current, 0.15.0 version of the debugger now enables the user to connect to remote VIATRA model transformations, while maintaining the user experience introduced in the previous version. This way, model transformations running on remote JVM instances can be analysed much more straightforward way.</p>
+</div>
+<div class="videoblock">
+<div class="content">
+<iframe src="https://www.youtube.com/embed/TaLvKgfxQNg#?rel=0" frameborder="0" allowfullscreen></iframe>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_using_project_dependencies_in_query_maven_plugin"><a class="link" href="#_using_project_dependencies_in_query_maven_plugin">Using project dependencies in Query Maven plugin</a></h3>
+<div class="paragraph">
+<p>You can now use ''useProjectDependencies'' in your configuration instead of adding metamodels as Maven dependencies. This is especially useful when the metamodels are not available as Maven artifacts.</p>
+</div>
+<div id="v15-maven" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;source lang="xml"&gt;
+&lt;configuration&gt;
+  &lt;!-- in addition to existing configuration --&gt;
+  &lt;useProjectDependencies&gt;true&lt;/useProjectDependencies&gt;
+&lt;configuration&gt;
+&lt;/source&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For more details, see the following <a href="http://wiki.eclipse.org/VIATRA/UserDocumentation/Build#viatra-maven-plugin">wiki page</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_migration_to_viatra_1_5"><a class="link" href="#_migration_to_viatra_1_5">Migration to VIATRA 1.5</a></h3>
+<div class="sect3">
+<h4 id="_internal_api_changes"><a class="link" href="#_internal_api_changes">Internal API changes</a></h4>
+<div class="sect4">
+<h5 id="_vql_abstract_syntax"><a class="link" href="#_vql_abstract_syntax">VQL abstract syntax</a></h5>
+<div class="paragraph">
+<p>The <code>IntValue</code> and <code>DoubleValue</code> EClasses were removed from the patternlanguage metamodel. Its functionality is provided by the new <code>NumberValue</code> EClass that references Xbase number literals.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_hint_system_compatibility_break"><a class="link" href="#_hint_system_compatibility_break">Hint system compatibility break</a></h5>
+<div class="paragraph">
+<p>The hint system was changed again in version 1.5. If you only used hints through the LocalSearchHints convenience class and the QueryEvaluationHint instances created by that class, then your existing code should remain compatible with version 1.5.</p>
+</div>
+<div class="paragraph">
+<p>The main change is that query evaluation hints options are no longer identified by Strings, but rather by static instances of the type-safe QueryHintOption. Such hint options can be defined by query evaluator backends (see ReteHintOptions and LocalSearchOptions), and there can be options shared by multiple backends in the future.</p>
+</div>
+<div class="paragraph">
+<p>Along with the change, the following previously deprecated methods and fields have been entirely removed:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>LocalSearchRuntimeBasedStrategy.plan(PBody, Logger, Set, IQueryMetaContext, IQueryRuntimeContext, Map)</code></p>
+</li>
+<li>
+<p><code>IQueryBackendHintProvider.getHints(PQuery)</code></p>
+</li>
+<li>
+<p><code>IQueryBackendHintProvider.DEFAULT</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Furthermore, the following classes and methods have been newly deprecated:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>LocalSearchHintKeys</code></p>
+</li>
+<li>
+<p><code>QueryEvaluationHint(IQueryBackendFactory, Map)</code></p>
+</li>
+<li>
+<p><code>QueryEvaluationHint.getBackendHints()</code></p>
+</li>
+<li>
+<p><code>QueryPerformanceTest.getQueryBackendFactory()</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="viatra-14"><a class="link" href="#viatra-14">VIATRA 1.4</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_local_search_support_during_query_evaluation"><a class="link" href="#_local_search_support_during_query_evaluation">Local search support during query evaluation</a></h3>
+<div class="paragraph">
+<p>In version 1.4 the previously introduced local search support was greatly enhanced: several bugs and performance issues were fixed, while better integration is provided with the rest of VIATRA Query. In version 1.4 the planner and runtime is considered ready for production use, while future enhancements are still planned for future versions.</p>
+</div>
+<div class="paragraph">
+<p>For this version, we already have performance benchmark that shows that local search based pattern matching can provide comparable performance during model transformation to Rete while requiring much less memory.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/releases/14_benchmark_ls_time.png" alt="14 benchmark ls time">
+</div>
+</div>
+<div class="paragraph">
+<p>For more detailed documentation see <a href="http://wiki.eclipse.org/VIATRA/Query/UserDocumentation/API/LocalSearch" class="bare">http://wiki.eclipse.org/VIATRA/Query/UserDocumentation/API/LocalSearch</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_query_language_improvements"><a class="link" href="#_query_language_improvements">Query language improvements</a></h3>
+<div class="sect3">
+<h4 id="_java_type_references"><a class="link" href="#_java_type_references">Java type references</a></h4>
+<div class="paragraph">
+<p>The query language now allows <em>Java type constraints</em>, both as parameter types and as variable type constraints in pattern bodies. The recommended use case is that query parameters that are a result of (a) an <code>eval()</code> or (b) aggregation expression should be annotated with their Java types. Java type names can be referenced by prefixing them with the keyword <code>java</code>, and of course namespace imports are available. So, for example, a query parameter may be typed as follows: <code>no: java Integer</code>.  Usage basics are explained in the <a href="https://wiki.eclipse.org/VIATRA/Query/UserDocumentation/QueryLanguage#Pattern_Structure">query language syntax guide</a>.</p>
+</div>
+<div id="v14-javatype" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">pattern cpus(hi : HostInstance, no : java Integer) {
+	HostInstance.availableCpu(hi, no);
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_aggregators"><a class="link" href="#_aggregators">Aggregators</a></h4>
+<div class="paragraph">
+<p>In addition to the previously supported <code>count</code> keyword, there are now several new <strong>aggregators</strong> available (including <code>sum</code>, <code>min</code> and <code>max</code>, as well as an API for user-defined aggregators) to compute an aggregated value from matches of a called pattern. Usage basics are explained in the <a href="https://wiki.eclipse.org/VIATRA/Query/UserDocumentation/QueryLanguage#Advanced_Pattern_Constraints">query language syntax guide</a>.</p>
+</div>
+<div id="v14-aggregator" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">pattern sumCPUs(s : java Integer) {
+	s == sum find cpus(_hi2, #_);
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_parameter_direction_support"><a class="link" href="#_parameter_direction_support">Parameter direction support</a></h4>
+<div class="paragraph">
+<p>Parameters can optionally be marked as incoming (<code>in</code>), outgoing (<code>out</code>). Incoming parameters <strong>must</strong> be bound when the pattern matcher initializes, while outgoing parameters <strong>must not</strong>. For backwards compatibility, unmarked parameters are neither incoming nor outgoing: they might be either bound or unbound when called. In version 1.4, parameter directions are ignored by the Rete engine, but used by the local search engine to decide the set of plans to create during matcher preparation.</p>
+</div>
+<div id="v14-parameterdir" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">pattern cpus(in hi : HostInstance, out no : java Integer) {
+	HostInstance.availableCpu(hi, no);
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_search_engine_declaration"><a class="link" href="#_search_engine_declaration">Search engine declaration</a></h4>
+<div class="paragraph">
+<p>Patterns can optionally be declared either local search-only (<code>search</code>) or Rete-only (<code>incremental</code>), providing hints to the runtime what pattern matcher should be initialized for this pattern. If undefined, the default hints of the engine is used (by default, Rete); and can be redefined using the advanced query engine API.</p>
+</div>
+<div class="paragraph">
+<p>It is important to note that the Query Engine may override these declarations, e.g. if they cannot be executed.</p>
+</div>
+<div id="v14-backend" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">search pattern minCPUs(n : java Integer) {
+	n == min find cpus(_hi1, #_);
+}
+
+incremental pattern sumCPUs(s : java Integer) {
+	s == sum find cpus(_hi2, #_);
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_query_development_environment_improvements"><a class="link" href="#_query_development_environment_improvements">Query development environment improvements</a></h3>
+<div class="paragraph">
+<p>We have graduated the completely new query development views that replace the Query Explorer. These views were introduced as part of VIATRA 1.3 (<a href="http://viatra.net/news/2016/7/viatra-13-released">blog post with video</a>) together with the Transformation Development perspective. For this release, we aimed to include all important features in the new views that were only available through the Query Explorer before (<a href="http://bugs.eclipse.org/499995">bug 499995</a> lists the relevant issues). If you already have the perspective opened, we recommend resetting it (right click on the perspective icon and select "Reset") as we have moved the views around to make more sense.</p>
+</div>
+<div id="File:VIATRA-Query-UI-Registry-Results-Model-Engine_details.png" class="paragraph">
+<p>The most important new features are as follows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Show location works for queries, matchers, matches and parameter values</p>
+</li>
+<li>
+<p>Improved labeling in the tree (reuse domain specific icons for EMF model elements)</p>
+</li>
+<li>
+<p>Match set filtering is possible through the Properties view
+<span class="image"><img src="./images/releases/14_query-ui-matcher_filter.png" alt="14 query ui matcher filter"></span></p>
+</li>
+<li>
+<p>Drag-and-drop and double click for loading from Query Registry into Query Results</p>
+</li>
+<li>
+<p>HiDPI icons for high-resolution, scaled displays.</p>
+</li>
+<li>
+<p>Load existing managed query engines into the Query Results view
+<span class="image"><img src="./images/releases/14_query-ui-open_managed_engine.png" alt="14 query ui open managed engine"></span></p>
+</li>
+<li>
+<p>Tree view for engine details including the model, engine options, base index options
+<span class="image"><img src="./images/releases/14_managed_engine_selection.png" alt="14 managed engine selection"></span></p>
+</li>
+<li>
+<p>Remove individual matchers from Query Results</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_base_indexer_enhancements"><a class="link" href="#_base_indexer_enhancements">Base indexer enhancements</a></h3>
+<div class="paragraph">
+<p>In version 1.4, the <a href="http://wiki.eclipse.org/VIATRA/Query/UserDocumentation/API/BaseIndexer">Base Indexer</a> was enhanced in a few ways:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Wildcard mode can be set up later than construction: an existing base indexer can now be asked to index everything in the model</p>
+</li>
+<li>
+<p>Statistical indexing: instead of indexing model instances, Base can now only store model statistics. This is highly beneficial for local search, as for plan generation these statistics are very useful, but require less memory.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These enhancements are mostly useful in the query runtime (and were motivated by the requirements of local search), but are available for external uses as well.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_design_space_explorer_enhancements"><a class="link" href="#_design_space_explorer_enhancements">Design Space Explorer enhancements</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Method for setting the logging level: <code>OFF</code>, <code>WARN</code>, <code>BASIC</code>, <code>VERBOSE_STRATEGY</code> and <code>VERBOSE_FULL</code></p>
+</li>
+<li>
+<p>If the exploration is started asynchronously, it can be stopped by these methods: stopExploration(), stopExplorationAsync(), waitForTerminaition().</p>
+</li>
+<li>
+<p>The evolutionary exploration strategy now can run on with multiple threads.</p>
+</li>
+<li>
+<p>Depth first search strategy can continue exploration from a solution.</p>
+</li>
+<li>
+<p>Minor performance enhancements.</p>
+</li>
+<li>
+<p>Updated documentation on the wiki and also in the code: <a href="https://wiki.eclipse.org/VIATRA/DSE/UserGuide/API" class="bare">https://wiki.eclipse.org/VIATRA/DSE/UserGuide/API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_other_issues"><a class="link" href="#_other_issues">Other issues</a></h3>
+<div class="paragraph">
+<p>Version 1.4 also features a large number of under-the-hood changes, the most important is an updated hint system to enable fine-grained parametrization of the query engines. Usually, this change should be invisible for existing users; for possible migration issues see the Migration Guide below.</p>
+</div>
+<div class="paragraph">
+<p>In total more, than 70 issues were fixed in this release, see <a href="https://projects.eclipse.org/projects/modeling.viatra/releases/1.4.0/bugs" class="bare">https://projects.eclipse.org/projects/modeling.viatra/releases/1.4.0/bugs</a> for details.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_migrating_to_viatra_1_4"><a class="link" href="#_migrating_to_viatra_1_4">Migrating to VIATRA 1.4</a></h3>
+<div class="sect3">
+<h4 id="_language_updates"><a class="link" href="#_language_updates">Language updates</a></h4>
+<div class="paragraph">
+<p>The query language introduced some new keywords, namely <code>in</code>, <code>out</code>, <code>search</code> and <code>incremental</code>. Variables and types with this name has to be escaped using the ^ symbol. On the opposite side, <code>count</code> is not a keyword anymore, so for future versions its references does not need to be escaped.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_user_interface_updates"><a class="link" href="#_user_interface_updates">User interface updates</a></h4>
+<div class="paragraph">
+<p>The query development UI is greatly updated. It might be worth checking out the new VIATRA perspective; for existing users of the perspective it may make sense to reset the perspective as it has been redesigned in version 1.4.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_internal_engine_api_changes"><a class="link" href="#_internal_engine_api_changes">Internal engine API changes</a></h4>
+<div class="sect4">
+<h5 id="_localsearch_internal_api_changes"><a class="link" href="#_localsearch_internal_api_changes">LocalSearch internal API changes</a></h5>
+<div class="paragraph">
+<p>The method <code>LocalSearchPlanner.initializePlanner(PQueryFlattener, Logger, IQueryMetaContext, IQueryRuntimeContext, PBodyNormalizer, LocalSearchRuntimeBasedStrategy, POperationCompiler, Map&lt;String,Object&gt;)</code> has been removed. The initialization is performed by the constructor, which has the following signature: <code>LocalSearchPlanner(LocalSearchBackend, Logger, PlannerConfiguration)</code>.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_hint_system_refactor"><a class="link" href="#_hint_system_refactor">Hint system refactor</a></h5>
+<div class="paragraph">
+<p>In VIATRA 0.9 a preliminary hint system was introduced, where it was possible to provide hints for query evaluation. In version 1.4, this hint system was extended; however, VIATRA 1.4 cannot handle hints for queries generated with older versions of VIATRA. Please, regenerate your queries with 1.4 if you want to use hints.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_updated_runtime_context_api"><a class="link" href="#_updated_runtime_context_api">Updated runtime context API</a></h5>
+<div class="paragraph">
+<p>The <code>IQueryRuntimeContext</code> interface was extended with a few new methods, related to the usage of Base indexer. For the future, it is recommended that implementors do not implement this class directly, but rely on the new <code>AbstractQueryRuntimeContext</code> base class instead.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_dse_api_breaks"><a class="link" href="#_dse_api_breaks">DSE API breaks</a></h5>
+<div class="paragraph">
+<p>The three DSE plug-ins (<code>dse.api</code>, <code>dse.base</code>, <code>dse.designspace</code>) has been restructured to a single plug-in: <code>org.eclipse.viatra.dse</code>. Manifest files should be updated accordingly.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="viatra-13"><a class="link" href="#viatra-13">VIATRA 1.3</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_neon_compatibility"><a class="link" href="#_neon_compatibility">Neon compatibility</a></h3>
+<div class="paragraph">
+<p>Previous versions of VIATRA were not 100% compatible the Eclipse Neon release for multiple reasons:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>VIATRA 1.3 is the first version to be compatible with Xtext 2.10.</p>
+</li>
+<li>
+<p>JFace data binding in Neon requires Java 1.8. However, in order to be compatible with older releases as well, VIATRA is compiled with older versions, but is ensured it is compatible with the current release.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>However, VIATRA is still compatible with older platform versions up to the Indigo release.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_query_development_environment_update"><a class="link" href="#_query_development_environment_update">Query development environment update</a></h3>
+<div class="paragraph">
+<p>We have introduced a <strong>Transformation Development</strong> perspective to make it easier for VIATRA users to focus on developing queries and transformations. The perspective opens and lays out the most important views and contains view and new wizard shortcuts for all VIATRA related functionality.</p>
+</div>
+<div class="paragraph">
+<p>We are also working on a new approach for query development that will replace the monolithic functionality of the current Query Explorer.
+You can install the separate feature <strong>VIATRA Query Browser</strong> (Incubation) to try out the new <em>Query Registry</em> and <em>Query Results</em> views.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Both views are connected with the Properties view to provide additional information about selected elements.</p>
+</li>
+<li>
+<p>The Query Registry view shows all registered and workspace queries without the need to load them from the pattern editor directly.</p>
+</li>
+<li>
+<p>Models and queries can be loaded into the Query Results view similarly to the Query Explorer.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_query_by_example_create_queries_based_on_selected_model_elements"><a class="link" href="#_query_by_example_create_queries_based_on_selected_model_elements">Query by Example: create queries based on selected model elements</a></h3>
+<div class="paragraph">
+<p>Query by Example (QBE), a new feature to ease query development, was included in this version. This new tool is primarily aimed at users who want to define queries, but are only familiar with the concrete syntax of a modeling language (i.e. the view presented through a graphical or textual editor), not the intricate details of its abstract syntax (metamodel, EPackgage).</p>
+</div>
+<div class="paragraph">
+<p>Instead of manually writing .vql files, QBE allows the user to specify a query using an ''example'' - a selection of EMF instance objects highlighted in a model editor or viewer (both EMF tree editors and graphical editors are supported). The QBE tool will discover how the selected elements are related to each other in the model, and generate a .vql query that will find groups of model elements that are arranged similarly.</p>
+</div>
+<div class="paragraph">
+<p>The newly introduced <strong>Query by Example</strong> view allows the user to control the process of (a) identifying elements selected in an open model file as the example, (b) fine-tuning the options of interpreting the example, and (c) exporting the resulting query to .vql code. The exported query can be loaded into the Query Explorer (or the new Query Results view) for evaluation and testing; if necessary, adjustments can still be made in the Query by Example view (e.g. adding or removing additional constraints).</p>
+</div>
+<div class="paragraph">
+<p>The feature can be installed by selecting the <em>VIATRA Query-by-Example</em> (Incubation) addon from the VIATRA repository. For further details, check the paper from CMSEBA'14 <a href="https://www.cs.york.ac.uk/es/cmseba/papers/Bergmann.pdf">Graph Query by Example</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_model_transformation_debugger_prototype"><a class="link" href="#_model_transformation_debugger_prototype">Model transformation debugger prototype</a></h3>
+<div class="paragraph">
+<p>VIATRA 1.3.0 now features the first prototype of a <strong>Model Transformation Debugger</strong>, which aims at helping the development and debugging of VIATRA-based model transformations. The debugger supports the following main features:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Allows the transformation developer to observe the inner state of the given VIATRA transformation and the associated model instances.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Displays the model instances associated with the transformation in a tree view with Properties support.</p>
+</li>
+<li>
+<p>Displays the active activations of the model transformation using a contemporary Eclipse view.</p>
+</li>
+<li>
+<p>Displays the precondition parameters of the next activation to be executed using the Eclipse Variables view.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Allows the transformation developer to control the execution of the VIATRA model transformation.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Supports the definition of various VIATRA transformation specific breakpoints, which integrate with the Eclipse Debug framework.</p>
+</li>
+<li>
+<p>The user can control the execution of the transformation via the standard Eclipse Debugging controls (Step over (F6), Resume (F8)).</p>
+</li>
+<li>
+<p>The user can define which transformation rule activaton should be executed next, overriding the default decision bade by the transformation.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Integrates with the Eclipse Debug framework.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>It should be noted, in its current state, the debugger only handles VIATRA transformations that run in the same JVM as the debugger itself. Inter-JVM communication will be introduced in future versions.</p>
+</div>
+<div class="paragraph">
+<p>A detailed user&#8217;s guide is part of the main VIATRA documentation and can be accessed via the following link: <a href="http://static.incquerylabs.com/projects/viatra/viatra-docs/ViatraDocs.html#_viatra_debugger" class="bare">http://static.incquerylabs.com/projects/viatra/viatra-docs/ViatraDocs.html#_viatra_debugger</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_other_issues_2"><a class="link" href="#_other_issues_2">Other issues</a></h3>
+<div class="paragraph">
+<p>Version 1.3 also features a large number of under-the-hood changes, the most important is a rewritten <em>type inferrer</em> that works largely the same, but provides more precise error messages. Usually, this change should be invisible for existing users; for possible migration issues see the Migration Guide below.</p>
+</div>
+<div class="paragraph">
+<p>Another important area of such changes are enhancements for local search. A number of issues were fixed related to incorrect planning or plan execution in various areas; and for the next version further enhancements are planned in this area.</p>
+</div>
+<div class="paragraph">
+<p>In total more, than 70 issues were fixed in this release, see <a href="https://projects.eclipse.org/projects/modeling.viatra/releases/1.3.0/bugs" class="bare">https://projects.eclipse.org/projects/modeling.viatra/releases/1.3.0/bugs</a> for details.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_migrating_to_viatra_1_3"><a class="link" href="#_migrating_to_viatra_1_3">Migrating to VIATRA 1.3</a></h3>
+<div class="sect3">
+<h4 id="_query_specification_registry"><a class="link" href="#_query_specification_registry">Query specification registry</a></h4>
+<div class="paragraph">
+<p>We have introduced a completely new Query Specification Registry and deprecated the old version.
+Users of the <code>org.eclipse.viatra.query.runtime.extensibility.QuerySpecificationRegistry</code> class should read the JavaDoc for details on how to migrate to the new <code>org.eclipse.viatra.query.runtime.registry.QuerySpecificationRegistry</code> implementation.</p>
+</div>
+<div class="paragraph">
+<p>Read <a href="http://wiki.eclipse.org/VIATRA/Query/UserDocumentation/API/Advanced#Query_specification_registry" class="bare">http://wiki.eclipse.org/VIATRA/Query/UserDocumentation/API/Advanced#Query_specification_registry</a> for details on the new registry.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_type_inferrer_in_pattern_language"><a class="link" href="#_type_inferrer_in_pattern_language">Type inferrer in pattern language</a></h4>
+<div class="paragraph">
+<p>The type inferrer of the VIATRA Query Language was rewritten; in most cases, it should behave exactly the same as the previous version, with the following differences:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If some data types, such as strings or integers, are returned, sometimes the old inferrer calculated Object as its return type. The new version calculates now the correct type. This behavior is presented by the calculation <a href="http://git.eclipse.org/c/viatra/org.eclipse.viatra.git/tree/integration/plugins/org.eclipse.viatra.integration.uml/src/org/eclipse/viatra/integration/uml/derivedfeatures/DerivedFeatures.vql#n1197">QualifiedName derived feature of UML Classifiers</a>: in version 1.2, the name parameter returned Object, while in 1.3 it is correctly calculated as String.</p>
+</li>
+<li>
+<p>The variables of patterns are required to have a single, identifiable type during type inference. If required, the closest common supertype is calculated, however, if that is not unique for a parameter, an error is thrown. The old inferrer implementation in case of complex inheritance hierarchies sometimes did not detect that this closest common supertype is not unique, but selected one. In such cases, the new inferrer throws an error, requiring the parameter type to be declared manually. For these cases, a quick fix is available to insert any of the possible types manually.</p>
+</li>
+<li>
+<p><strong>Known issue</strong>: in case of patterns with multiple check and eval expressions, the type inferrer is sometimes incapable of inferring the return types of eval expressions correctly inside other expressions. The error messages are a bit misleading, as the it is perfectly legit to enter an Object into a check expression, so only by an incorrectly typed expression is the issue detected.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The problem can be worked around using a typecast in the expression. See the following (artificial) example:</p>
+</div>
+<div id="v13-typeinferrer" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">pattern t4_erroneous(n) {
+  check(n &gt; 2); //Error 1: '&gt; cannot be resolved'; Error 2: 'Check expression must return boolean'
+  n == eval(2);
+}
+
+pattern t4_fixed(n) {
+  check((n as Integer)&gt; 2);
+  n == eval(2);
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="viatra-12"><a class="link" href="#viatra-12">VIATRA 1.2</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_combined_emf_incquery_and_viatra"><a class="link" href="#_combined_emf_incquery_and_viatra">Combined EMF-IncQuery and VIATRA</a></h3>
+<div class="paragraph">
+<p>VIATRA 1.2 includes both the high-performance query engine of EMF-IncQuery and includes an event-driven transformation engine. This shared stack supports the development of various tasks, including batch and event-driven transformations, complex event processing and design space exploration concepts.</p>
+</div>
+<div class="paragraph">
+<p>Having all elements in a single project allows a very tight integration between the various components, providing a better user experience.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_graduation_of_the_transformation_engine"><a class="link" href="#_graduation_of_the_transformation_engine">Graduation of the transformation engine</a></h3>
+<div class="paragraph">
+<p>In VIATRA 1.2 the transformation API supporting both batch and event-driven transformations have graduated: the API has been stabilized, usage documentation was added. For details, see <a href="https://wiki.eclipse.org/VIATRA/Transformation" class="bare">https://wiki.eclipse.org/VIATRA/Transformation</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_other_issues_3"><a class="link" href="#_other_issues_3">Other issues</a></h3>
+<div class="paragraph">
+<p>Not counting the merge of EMF-IncQuery, VIATRA 1.2 is mainly a bugfix release, with <a href="https://projects.eclipse.org/projects/modeling.viatra/releases/1.2.0/bugs">80+ different issues fixed</a>, resulting a more stable environment to write model queries and transformations.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_migrating_from_emf_incquery_1_1_to_viatra_1_2"><a class="link" href="#_migrating_from_emf_incquery_1_1_to_viatra_1_2">Migrating from EMF-IncQuery 1.1 to VIATRA 1.2</a></h3>
+<div class="paragraph">
+<p>From version 1.2 EMF-IncQuery is merged into the Viatra project as Viatra Query. The merge involves the complete removal of org.eclipse.incquery namespace, thus making all code depending on EMF-IncQuery incompatible with Viatra Query API. Furthermore, during the merging the existing codebase was cleaned up, removing all existing deprecated code, and a few classes were renamed to be consistent with the new naming conventions.</p>
+</div>
+<div class="sect3">
+<h4 id="_the_migrator_tool"><a class="link" href="#_the_migrator_tool">The migrator tool</a></h4>
+<div class="paragraph">
+<p>To ease the migration process, a migrator tool is included in Viatra 1.2 to reduce manual refactoring as much as possible.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_usage"><a class="link" href="#_usage">Usage</a></h4>
+<div class="paragraph">
+<p>The tool can be accessed in the 'Configure' context menu on Java/EMF-IncQuery projects where it is applicable.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>Update Viatra Query Project</em>: Migration of query projects (EMF-IncQuery 0.8.0-1.1.0)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Updates project dependencies</p>
+</li>
+<li>
+<p>Updates query description files</p>
+</li>
+<li>
+<p>Updates query specification extensions</p>
+</li>
+<li>
+<p>Updates usage of EMF-IncQuery API</p>
+</li>
+<li>
+<p><strong>Important</strong>: this item is not available in projects that are already VIATRA Query projects</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Replace EMF-IncQuery API Usage</em>: Migration of Java and Xtend projects</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Updates usage of EMF-IncQuery API</p>
+</li>
+<li>
+<p>Safe to be called multiple times</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_remaining_manual_tasks_after_migration"><a class="link" href="#_remaining_manual_tasks_after_migration">Remaining manual tasks after migration</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Maven builds are not migrated.</p>
+</li>
+<li>
+<p>Deprecated API <a href="https://www.eclipse.org/viatra/javadoc/releases/incquery-1.1.0/deprecated-list.html">in EMF-IncQuery 1.1.0</a> are removed in 1.2.0. These API usages have to be migrated manually; look for the version 1.1 javadoc for hints on updating.</p>
+</li>
+<li>
+<p>Deprecated pattern annotations and annotation parameters were removed from the language; they need either to be updated or removed manually from query definitions.</p>
+</li>
+<li>
+<p>Generated plugin extensions other than query specifications are regenerated, but the old ones are not removed. These shall be removed manually.</p>
+</li>
+<li>
+<p>The class name of static method calls and enum literals shall be renamed manually, e.g. <code>AdvancedIncQueryEngine.createUnmanagedEngine()</code> &#8594; <code>AdvancedViatraQueryEngine.createUnmanagedEngine()</code> or <code>IncQueryActivationStateEnum.UPDATED</code> &#8594; <code>CRUDActivationStateEnum.UPDATED</code></p>
+</li>
+<li>
+<p>Renamed methods and fields are not migrated by the tool: (incomplete list; in general references to IncQuery were changed; in case of compile errors look for similarly named methods in content assist)</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Schedulers.getIQEngineSchedulerFactory</code> &#8594; `Schedulers.getQueryEngineSchedulerFactory^</p>
+</li>
+<li>
+<p><code>ExecutionSchemas.createIncQueryExecutionSchema</code> &#8594; <code>ExecutionSchemas.createViatraQueryExecutionSchema</code></p>
+</li>
+<li>
+<p><code>IncQueryActivationStateEnum.APPEARED</code> &#8594; <code>CRUDActivationStateEnum.CREATED</code></p>
+</li>
+<li>
+<p><code>IncQueryActivationStateEnum.DISAPPEARED</code> &#8594; <code>CRUDActivationStateEnum.DELETED</code></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_a_detailed_list_of_changes"><a class="link" href="#_a_detailed_list_of_changes">A detailed list of changes</a></h4>
+<div class="paragraph">
+<p>The changes done during the merging are <a href="https://docs.google.com/spreadsheets/d/1gvu-iWx57z5wCd0HBTdidhuYUmBqfTgEIDIRwuW_vaE/edit?usp=sharing">documented in a spreadsheet</a>; here we describe the main changes.</p>
+</div>
+<div class="sect4">
+<h5 id="_project_renaming"><a class="link" href="#_project_renaming">Project renaming</a></h5>
+<div class="paragraph">
+<p>Projects from EMF-IncQuery projects were (a) moved from the <code>org.eclipse.incquery</code> to the <code>org.eclipse.viatra</code> namespace; and (b) subcomponents were introduced to split up into the new components of the VIATRA project to make it easier to understand. Projects with bold names in the spreadsheet had some non-trivial renames.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_class_renaming"><a class="link" href="#_class_renaming">Class renaming</a></h5>
+<div class="paragraph">
+<p>In addition to moving all projects into the org.eclipse.viatra namespace, a few classes were also renamed for several reasons:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>All occurrences of EMF-IncQuery or IncQuery were renamed to meet the new project name.</p>
+</li>
+<li>
+<p>Some classes in EVM related to match events were generalized into a CRUD-style event model. The semantic is the same as in previous versions, they were renamed only to suggest they can be reused in other domains.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_pattern_language_updates"><a class="link" href="#_pattern_language_updates">Pattern language updates</a></h5>
+<div class="paragraph">
+<p>The file extensions used by languages were updated from <code>eiq</code> to <code>vql</code> (VIATRA Query Language), and <code>eiqgen</code> to 'vqgen'. The migrator tool updates these file extensions automatically. Furthermore, a few deprecated annotations and annotation parameters were removed:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The <code>@PatternUI</code> annotation is removed, use <code>@QueryExplorer</code> instead.</p>
+</li>
+<li>
+<p>Instead of the <code>display</code> parameter of the <code>@QueryExplorer</code> annotation only the <code>checked</code> parameter is available.</p>
+</li>
+<li>
+<p>The <code>location</code> parameter of the <code>@Constraint</code> annotation is replaced with the <code>key</code> parameter.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_viatra_databinding_addon"><a class="link" href="#_viatra_databinding_addon">VIATRA Databinding Addon</a></h5>
+<div class="paragraph">
+<p>As detailed in the following <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=489228">bug</a>, DatabindingAdapter and GenericDatabindingAdapter classes have been removed. Their functionality has been replaced by the <a href="http://git.eclipse.org/c/viatra/org.eclipse.viatra.git/tree/addon/plugins/org.eclipse.viatra.addon.databinding.runtime/src/org/eclipse/viatra/addon/databinding/runtime/adapter/MatcherProperties.java">MatcherProperties</a> class. It has a set of static methods that enable the creation of observable values and value properties based on a query specification.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>	
+
+<div class="clear"></div>
+<ng-include src="'/viatra/angular/blocks/footer.html'"></ng-include>
+
+</body>
+</html>
