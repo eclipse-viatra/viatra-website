@@ -77,6 +77,7 @@
 <ul class="sectlevel2">
 <li><a href="#_batch_transformations">4.1. Batch Transformations</a></li>
 <li><a href="#_event_driven_transformations">4.2. Event-driven Transformations</a></li>
+<li><a href="#_debugging_model_transformations">4.3. Debugging model transformations</a></li>
 </ul>
 </li>
 </ul>
@@ -218,8 +219,8 @@ import "http://org.eclipse.viatra/model/cps"
 
 // Pattern declaration
 pattern hostIpAddress(host: HostInstance, ip : java String) {
-	// Type constraint stating that variables 'host' and 'ip' are connected via a 'nodeIp' attribute
-	HostInstance.nodeIp(host,ip);
+    // Type constraint stating that variables 'host' and 'ip' are connected via a 'nodeIp' attribute
+    HostInstance.nodeIp(host,ip);
 }</code></pre>
 </div>
 </div>
@@ -304,7 +305,7 @@ If the 'Load model from active editor' button is not enabled, it either means, t
 <div id="vql-emptyipaddress" class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">pattern emptyIpAddress(host: HostInstance) {
-	HostInstance.nodeIp(host, "");
+    HostInstance.nodeIp(host, "");
 }</code></pre>
 </div>
 </div>
@@ -321,9 +322,9 @@ If the 'Load model from active editor' button is not enabled, it either means, t
 <div id="vql-sameipaddress" class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">pattern sameIpAddress(host1 : HostInstance, host2 : HostInstance, commonIp : java String) {
-	HostInstance.nodeIp(host1, commonIp);
-	HostInstance.nodeIp(host2, commonIp);
-	host1!=host2;
+    HostInstance.nodeIp(host1, commonIp);
+    HostInstance.nodeIp(host2, commonIp);
+    host1!=host2;
 }</code></pre>
 </div>
 </div>
@@ -343,10 +344,10 @@ If the 'Load model from active editor' button is not enabled, it either means, t
 <div id="vql-ipformatinvalid" class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">pattern ipFormatInvalid(host : HostInstance, ip : java String) {
-	HostInstance.nodeIp(host,ip);
-	check (
-		!ip.matches("^[\\d\\.]+")
-	);
+    HostInstance.nodeIp(host,ip);
+    check (
+        !ip.matches("^[\\d\\.]+")
+    );
 }</code></pre>
 </div>
 </div>
@@ -366,9 +367,9 @@ If the 'Load model from active editor' button is not enabled, it either means, t
 <div id="vql-connectedto" class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">pattern connectedTo(state: State, other: State){
-	// There exists a transition from `state` to `other`
-	State.outgoingTransitions(state, transition);
-	Transition.targetState(transition, other);
+    // There exists a transition from `state` to `other`
+    State.outgoingTransitions(state, transition);
+    Transition.targetState(transition, other);
 }</code></pre>
 </div>
 </div>
@@ -391,12 +392,12 @@ If the 'Load model from active editor' button is not enabled, it either means, t
 <div id="vql-badhost" class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">pattern badHost(host : HostInstance, ip : java String) {
-	find sameIpAddress(host, _other, ip);
+    find sameIpAddress(host, _other, ip);
 } or {
-	HostInstance.nodeIp(host, ip);
-	find emptyIpAddress(host);
+    HostInstance.nodeIp(host, ip);
+    find emptyIpAddress(host);
 } or {
-	find ipFormatInvalid(host, ip);
+    find ipFormatInvalid(host, ip);
 }</code></pre>
 </div>
 </div>
@@ -416,8 +417,8 @@ If the 'Load model from active editor' button is not enabled, it either means, t
 <div id="vql-goodhost" class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">pattern goodHost(host : HostInstance, ip : java String) {
-	HostInstance.nodeIp(host, ip);
-	neg find badHost(host, _);
+    HostInstance.nodeIp(host, ip);
+    neg find badHost(host, _);
 }</code></pre>
 </div>
 </div>
@@ -437,11 +438,11 @@ If the 'Load model from active editor' button is not enabled, it either means, t
 <div id="vql-countapplications" class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">private pattern applications(host : HostInstance, app : ApplicationInstance) {
-	HostInstance.applications(host, app);
+    HostInstance.applications(host, app);
 }
 
 pattern countApplications(host : HostInstance, m : java Integer) {
-	m == count find applications(host, _);
+    m == count find applications(host, _);
 }</code></pre>
 </div>
 </div>
@@ -458,14 +459,14 @@ pattern countApplications(host : HostInstance, m : java Integer) {
 <div id="vql-reachablestate" class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">pattern reachableState(sm :StateMachine, state: State){
-	// The initial state of the statemachine is reachable
-	StateMachine.initial(sm, state);
+    // The initial state of the statemachine is reachable
+    StateMachine.initial(sm, state);
 } or {
-	StateMachine.initial(sm, initial);
-	// Ensure the state is indeed included in the state machine; unnecessary in a well-formed model
-	StateMachine.states(sm, state);
-	// The + symbol after the pattern name represents transitive closure
-	find connectedTo+(initial, state);
+    StateMachine.initial(sm, initial);
+    // Ensure the state is indeed included in the state machine; unnecessary in a well-formed model
+    StateMachine.states(sm, state);
+    // The + symbol after the pattern name represents transitive closure
+    find connectedTo+(initial, state);
 }</code></pre>
 </div>
 </div>
@@ -482,10 +483,7 @@ pattern countApplications(host : HostInstance, m : java Integer) {
 <p>VIATRA provides facilities to create validation rules based on the pattern language of the framework. These rules can be evaluated on various EMF instance models and upon violations of constraints, markers are automatically created in the Eclipse Problems View.</p>
 </div>
 <div class="paragraph">
-<p>The <strong>@Constraint</strong> annotation can be used to mark a pattern as a validation rule. If the framework finds at least one pattern with such annotation.</p>
-</div>
-<div class="paragraph">
-<p>Annotation parameters:</p>
+<p>The <strong>@Constraint</strong> annotation can be used to derive a validation rule from a graph pattern as a validation rule. The pattern of the rule identifies the erroneous model elements, while the annotation parameters provides information about how to present the results in the user interface. The annotation uses the following parameters:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -499,12 +497,21 @@ pattern countApplications(host : HostInstance, m : java Integer) {
 <p><em>severity:</em> "warning" or "error"</p>
 </li>
 <li>
-<p><em>targetEditorId:</em> An Eclipse editor ID where the validation framework should register itself to the context menu. Use "*" as a wildcard if the constraint should be used always when validation is started.</p>
+<p><em>targetEditorId:</em> An Eclipse editor ID where the validation framework should register itself to the context menu. Use ` * ` as a wildcard if the constraint should be used always when validation is started.</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>To find a specific editor id, we can use the <em>Plug-in Selection Spy</em> tool with a <span class="keyseq"><kbd>Shift</kbd>+<kbd>Alt</kbd>+<kbd>F1</kbd></span> shortcut.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+To find a specific editor id, we can use the <em>Plug-in Selection Spy</em> tool with a <span class="keyseq"><kbd>Shift</kbd>+<kbd>Alt</kbd>+<kbd>F1</kbd></span> shortcut. For a few generic editors, such as the <strong>Sample Reflective Ecore Editor</strong>, the framework by default provides such a registration option, no manual registration is necessary.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>For example:</p>
@@ -512,15 +519,18 @@ pattern countApplications(host : HostInstance, m : java Integer) {
 <div id="vql-constraint" class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">@Constraint(targetEditorId = "org.eclipse.viatra.examples.cps.cyberPhysicalSystem.presentation.CyberPhysicalSystemEditorID",
-			severity = "error",
-			message = "The ip address is not unique",
-			key = {host1})
+            severity = "error",
+            message = "The ip address is not unique",
+            key = {host1})
 pattern sameIpAddress(host1: HostInstance, host2: HostInstance, commonIp : java String) {
-	HostInstance.nodeIp(host1, commonIp);
-	HostInstance.nodeIp(host2, commonIp);
-	host1!=host2;
+    HostInstance.nodeIp(host1, commonIp);
+    HostInstance.nodeIp(host2, commonIp);
+    host1!=host2;
 }</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>When adding such a constraint annotation to a graph pattern, the code generator initializes a validation project that includes and registers the rules derived from the patterns for the framework. These rules can be tried out by opening a new, runtime Eclipse instance, opening an erroneous instance model in the model editor (the same one added to the <code>targetEditorId</code> parameter), and starting the validation from the popup menu items under <strong>VIATRA Validation</strong>.</p>
 </div>
 </div>
 <div class="sect3">
@@ -531,10 +541,10 @@ pattern sameIpAddress(host1: HostInstance, host2: HostInstance, commonIp : java 
 <p><a href="query-language.html">Pattern Language</a></p>
 </li>
 <li>
-<p>Validation Framework: <a href="https://wiki.eclipse.org/VIATRA/Addons/UserDocumentation/Validation" class="bare">https://wiki.eclipse.org/VIATRA/Addons/UserDocumentation/Validation</a></p>
+<p><a href="addons.html#viatra-validation">Validation Framework</a></p>
 </li>
 <li>
-<p>Query Based Features: <a href="https://wiki.eclipse.org/VIATRA/Addons/UserDocumentation/Query_Based_Features" class="bare">https://wiki.eclipse.org/VIATRA/Addons/UserDocumentation/Query_Based_Features</a></p>
+<p><a href="addons.html#viatra-qbf">Query Based Features</a></p>
 </li>
 </ul>
 </div>
@@ -572,10 +582,10 @@ pattern sameIpAddress(host1: HostInstance, host2: HostInstance, commonIp : java 
 <div id="query-runtime-app-extension" class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">  &lt;extension id="queryrunner" point="org.eclipse.core.runtime.applications"&gt;
-	&lt;application cardinality="singleton-global" thread="main" visible="true"&gt;
-		&lt;run class="org.eclipse.viatra.examples.cps.queries.runner.QueryRunner"/&gt;
-	&lt;/application&gt;
-	&lt;/extension&gt;</code></pre>
+    &lt;application cardinality="singleton-global" thread="main" visible="true"&gt;
+      &lt;run class="org.eclipse.viatra.examples.cps.queries.runner.QueryRunner"/&gt;
+    &lt;/application&gt;
+  &lt;/extension&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -587,13 +597,13 @@ pattern sameIpAddress(host1: HostInstance, host2: HostInstance, commonIp : java 
 
 	@Override
 	public Object start(IApplicationContext context) throws Exception {
-		// Return value 0 is considered as a successful execution on Unix systems
+        // Return value 0 is considered as a successful execution on Unix systems
 		return 0;
 	}
 
 	@Override
 	public void stop() {
-		// Headless applications do not require specific stop steps
+        // Headless applications do not require specific stop steps
 	}
 
 }</code></pre>
@@ -620,7 +630,7 @@ pattern sameIpAddress(host1: HostInstance, host2: HostInstance, commonIp : java 
 	ResourceSet rs = new ResourceSetImpl();
 	Resource res = rs.createResource(URI.createPlatformPluginURI("org.eclipse.viatra.examples.cps.queries/example.cyberphysicalsystem", false));
 	res.load(new HashMap&lt;&gt;());
-	return new EMFScope(rs);
+    return new EMFScope(rs);
 }</code></pre>
 </div>
 </div>
@@ -634,9 +644,9 @@ pattern sameIpAddress(host1: HostInstance, host2: HostInstance, commonIp : java 
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private ViatraQueryEngine prepareQueryEngine(EMFScope scope) throws ViatraQueryException {
 	// Access managed query engine
-	ViatraQueryEngine engine = ViatraQueryEngine.on(scope);
+    ViatraQueryEngine engine = ViatraQueryEngine.on(scope);
 
-	// Initialize all queries on engine
+    // Initialize all queries on engine
 	CPSQueries.instance().prepare(engine);
 
 	return engine;
@@ -664,13 +674,13 @@ If multiple query groups are to be loaded, either create a generic pattern group
 <div id="query-runtime-printallmatches" class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private void printAllMatches(ViatraQueryEngine engine) throws ViatraQueryException {
-	// Access pattern matcher
-	HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
-	// Get and iterate over all matches
-	for (HostIpAddressMatch match : matcher.getAllMatches()) {
-		// Print all the matches to the standard output
-		System.out.println(match.getHost());
-	}
+    // Access pattern matcher
+    HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
+    // Get and iterate over all matches
+    for (HostIpAddressMatch match : matcher.getAllMatches()) {
+        // Print all the matches to the standard output
+        System.out.println(match.getHost());
+    }
 }</code></pre>
 </div>
 </div>
@@ -692,14 +702,14 @@ It is safe to ask for the same matcher multiple times using the <code><code>on</
 <div id="query-runtime-printallmatches2" class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private void printAllMatches2(ViatraQueryEngine engine) throws ViatraQueryException {
-	HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
-	matcher.forEachMatch(new HostIpAddressProcessor() {
+    HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
+    matcher.forEachMatch(new HostIpAddressProcessor() {
 
-		@Override
-		public void process(HostInstance pHost, String pIp) {
-			System.out.println(pHost);
-		}
-	});
+        @Override
+        public void process(HostInstance pHost, String pIp) {
+            System.out.println(pHost);
+        }
+    });
 }</code></pre>
 </div>
 </div>
@@ -709,11 +719,11 @@ It is safe to ask for the same matcher multiple times using the <code><code>on</
 <div id="query-runtime-printallmatches3" class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private void printAllMatches3(ViatraQueryEngine engine) throws ViatraQueryException {
-	HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
-	// The lambda method implements IMatchProcessor&lt;HostIpAddressMatch&gt;
-	matcher.forEachMatch((match) -&gt; {
-			System.out.println(match.getHost());
-		});
+    HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
+    // The lambda method implements IMatchProcessor&lt;HostIpAddressMatch&gt;
+    matcher.forEachMatch((match) -&gt; {
+            System.out.println(match.getHost());
+        });
 }</code></pre>
 </div>
 </div>
@@ -723,8 +733,8 @@ It is safe to ask for the same matcher multiple times using the <code><code>on</
 <div id="query-runtime-printonematch" class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private void printOneMatch(ViatraQueryEngine engine) throws ViatraQueryException {
-	HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
-	System.out.println(matcher.getOneArbitraryMatch());
+    HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
+    System.out.println(matcher.getOneArbitraryMatch());
 }</code></pre>
 </div>
 </div>
@@ -746,10 +756,10 @@ The match returned by the <code><code>getOneArbitraryMatch</code></code> is neit
 <div id="query-runtime-printalladdresses" class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private void printAllAddresses(ViatraQueryEngine engine) throws ViatraQueryException {
-	HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
-	for (String ip : matcher.getAllValuesOfip()) {
-		System.out.println(ip);
-	}
+    HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
+    for (String ip : matcher.getAllValuesOfip()) {
+        System.out.println(ip);
+    }
 }</code></pre>
 </div>
 </div>
@@ -771,10 +781,10 @@ If there are multiple hosts that have the same IP address, the <code><code>getAl
 <div id="query-runtime-printfilteredmatches" class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private void printFilteredMatches(ViatraQueryEngine engine) throws ViatraQueryException {
-	HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
-	for (HostIpAddressMatch match : matcher.getAllMatches(null, "152.66.102.2")) {
-		System.out.println(match.prettyPrint());
-	}
+    HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
+    for (HostIpAddressMatch match : matcher.getAllMatches(null, "152.66.102.2")) {
+        System.out.println(match.prettyPrint());
+    }
 }</code></pre>
 </div>
 </div>
@@ -796,12 +806,12 @@ Regardless of input values receiving null values, the <code><code>getAllmatches<
 <div id="query-runtime-printfilteredmatches2" class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private void printFilteredMatches2(ViatraQueryEngine engine) throws ViatraQueryException {
-	HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
-	HostIpAddressMatch filterMatch = HostIpAddressMatch.newEmptyMatch();
+    HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
+    HostIpAddressMatch filterMatch = HostIpAddressMatch.newEmptyMatch();
 	filterMatch.setIp("152.66.102.3");
-	for (HostIpAddressMatch match : matcher.getAllMatches(filterMatch)) {
-		System.out.println(match.prettyPrint());
-	}
+    for (HostIpAddressMatch match : matcher.getAllMatches(filterMatch)) {
+        System.out.println(match.prettyPrint());
+    }
 }</code></pre>
 </div>
 </div>
@@ -811,11 +821,11 @@ Regardless of input values receiving null values, the <code><code>getAllmatches<
 <div id="query-runtime-countmatches" class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private void countMatches(ViatraQueryEngine engine) throws ViatraQueryException {
-	HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
-	System.out.printf("Count matches: %d %n", matcher.countMatches());
-	System.out.printf("Has matches: %b %n", matcher.hasMatch(HostIpAddressMatch.newEmptyMatch()));
-	System.out.printf("Count matches with ip 152.66.102.3: %d %n", matcher.countMatches(null, "152.66.102.3"));
-	System.out.printf("Has matches with ip 152.66.102.13: %b %n", matcher.hasMatch(null, "152.66.102.13"));
+    HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
+    System.out.printf("Count matches: %d %n", matcher.countMatches());
+    System.out.printf("Has matches: %b %n", matcher.hasMatch(HostIpAddressMatch.newEmptyMatch()));
+    System.out.printf("Count matches with ip 152.66.102.3: %d %n", matcher.countMatches(null, "152.66.102.3"));
+    System.out.printf("Has matches with ip 152.66.102.13: %b %n", matcher.hasMatch(null, "152.66.102.13"));
 }</code></pre>
 </div>
 </div>
@@ -840,12 +850,12 @@ If asking for the has/count calls is immediately followed by the processing of t
 <div id="query-runtime-prepareadvanced" class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private AdvancedViatraQueryEngine prepareAdvancedQueryEngine(EMFScope scope) throws ViatraQueryException {
-	AdvancedViatraQueryEngine engine = AdvancedViatraQueryEngine.createUnmanagedEngine(scope);
+    AdvancedViatraQueryEngine engine = AdvancedViatraQueryEngine.createUnmanagedEngine(scope);
 
-	// Initialize all queries on engine
-	CPSQueries.instance().prepare(engine);
+    // Initialize all queries on engine
+    CPSQueries.instance().prepare(engine);
 
-	return engine;
+    return engine;
 }</code></pre>
 </div>
 </div>
@@ -870,30 +880,30 @@ Do not forget to dispose unmanaged engine manually using the <code><code>Advance
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">IMatchUpdateListener&lt;HostIpAddressMatch&gt; listener = new IMatchUpdateListener&lt;HostIpAddressMatch&gt;() {
 
-	@Override
-	public void notifyAppearance(HostIpAddressMatch match) {
-		System.out.printf("[ADD] %s %n", match.prettyPrint());
-	}
+    @Override
+    public void notifyAppearance(HostIpAddressMatch match) {
+        System.out.printf("[ADD] %s %n", match.prettyPrint());
+    }
 
-	@Override
-	public void notifyDisappearance(HostIpAddressMatch match) {
-		System.out.printf("[REM] %s %n", match.prettyPrint());
+    @Override
+    public void notifyDisappearance(HostIpAddressMatch match) {
+        System.out.printf("[REM] %s %n", match.prettyPrint());
 
-	}
+    }
 };
 
 private void addChangeListener(AdvancedViatraQueryEngine engine) throws ViatraQueryException {
-	HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
+    HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
 
-	try {
-		// fireNow = true parameter means all current matches are sent to the listener
-		engine.addMatchUpdateListener(matcher, listener, true);
-		// execute model manipulations
-		matcher.getOneArbitraryMatch().getHost().setNodeIp("123.123.123.123");
-	} finally {
-		// Don't forget to remove listeners if not required anymore
-		engine.removeMatchUpdateListener(matcher, listener);
-	}
+    try {
+        // fireNow = true parameter means all current matches are sent to the listener
+        engine.addMatchUpdateListener(matcher, listener, true);
+        // execute model manipulations
+        matcher.getOneArbitraryMatch().getHost().setNodeIp("123.123.123.123");
+    } finally {
+        // Don't forget to remove listeners if not required anymore
+        engine.removeMatchUpdateListener(matcher, listener);
+    }
 }</code></pre>
 </div>
 </div>
@@ -936,12 +946,12 @@ Be very careful when using match update listeners, as sometimes they are called 
 <div id="query-runtime-localsearch" class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private void queryWithLocalSearch(AdvancedViatraQueryEngine engine) throws ViatraQueryException {
-	QueryEvaluationHint hint = LocalSearchHints.getDefault().build();
-	HostIpAddressMatcher matcher = engine.getMatcher(HostIpAddressQuerySpecification.instance(), hint);
+    QueryEvaluationHint hint = LocalSearchHints.getDefault().build();
+    HostIpAddressMatcher matcher = engine.getMatcher(HostIpAddressQuerySpecification.instance(), hint);
 
-	for (HostIpAddressMatch match : matcher.getAllMatches()) {
-		System.out.println(match.prettyPrint());
-	}
+    for (HostIpAddressMatch match : matcher.getAllMatches()) {
+        System.out.println(match.prettyPrint());
+    }
 }</code></pre>
 </div>
 </div>
@@ -1019,29 +1029,29 @@ import "http://org.eclipse.viatra/model/deployment"
 import "http://org.eclipse.viatra/model/cps-traceability"
 
 pattern hostInstance(hostInstance : HostInstance) {
-	HostInstance(hostInstance);
+    HostInstance(hostInstance);
 }
 
 pattern applicationInstance(
-	appType : ApplicationType,
-	appInstance : ApplicationInstance
+    appType : ApplicationType,
+    appInstance : ApplicationInstance
 ) {
-	HostInstance.applications(_, appInstance);
-	ApplicationType.instances(appType, appInstance);
+    HostInstance.applications(_, appInstance);
+    ApplicationType.instances(appType, appInstance);
 }
 
 /**
-	* Traceability link access
-	*/
+ * Traceability link access
+ */
 pattern cps2depTrace(
-	cps2dep : CPSToDeployment,
-	trace : CPS2DeploymentTrace,
-	cpsElement : Identifiable,
-	depElement : DeploymentElement
+    cps2dep : CPSToDeployment,
+    trace : CPS2DeploymentTrace,
+    cpsElement : Identifiable,
+    depElement : DeploymentElement
 ) {
-	CPSToDeployment.traces(cps2dep, trace);
-	CPS2DeploymentTrace.cpsElements(trace, cpsElement);
-	CPS2DeploymentTrace.deploymentElements(trace, depElement);
+    CPSToDeployment.traces(cps2dep, trace);
+    CPS2DeploymentTrace.cpsElements(trace, cpsElement);
+    CPS2DeploymentTrace.deploymentElements(trace, depElement);
 }</code></pre>
 </div>
 </div>
@@ -1112,11 +1122,11 @@ val extension TraceabilityPackage trPackage = TraceabilityPackage.eINSTANCE</cod
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">val CPSToDeployment cps2dep
 
 new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
-	this.cps2dep = cps2dep
-	resource = cps2dep.deployment.eResource
-	this.engine = engine
-	prepare(engine)
-	createTransformation
+    this.cps2dep = cps2dep
+    resource = cps2dep.deployment.eResource
+    this.engine = engine
+    prepare(engine)
+    createTransformation
 }</code></pre>
 </div>
 </div>
@@ -1150,22 +1160,22 @@ new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 <div id="bmt-hostrule" class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">val hostRule = createRule.precondition(HostInstanceMatcher.querySpecification).action[
-	val cpsHostInstance = it.hostInstance
-	val nodeIp = cpsHostInstance.nodeIp
-	println('''Mapping host with IP: «nodeIp»''')
+    val cpsHostInstance = it.hostInstance
+    val nodeIp = cpsHostInstance.nodeIp
+    println('''Mapping host with IP: «nodeIp»''')
 
-	/** Create &amp; initialize DeploymentHost in output model **/
-	val depHost = cps2dep.deployment.createChild(deployment_Hosts, deploymentHost) =&gt; [
-		set(deploymentHost_Ip, nodeIp)
-	]
+    /** Create &amp; initialize DeploymentHost in output model **/
+    val depHost = cps2dep.deployment.createChild(deployment_Hosts, deploymentHost) =&gt; [
+        set(deploymentHost_Ip, nodeIp)
+    ]
 
-	/** Create trace element in trace model **/
-	cps2dep.createChild(CPSToDeployment_Traces, CPS2DeploymentTrace) =&gt; [
-		addTo(CPS2DeploymentTrace_CpsElements, cpsHostInstance)
-		addTo(CPS2DeploymentTrace_DeploymentElements, depHost)
-	]
+    /** Create trace element in trace model **/
+    cps2dep.createChild(CPSToDeployment_Traces, CPS2DeploymentTrace) =&gt; [
+        addTo(CPS2DeploymentTrace_CpsElements, cpsHostInstance)
+        addTo(CPS2DeploymentTrace_DeploymentElements, depHost)
+    ]
 
-	println('''Mapped with IP: «nodeIp»''')
+    println('''Mapped with IP: «nodeIp»''')
 ].build</code></pre>
 </div>
 </div>
@@ -1175,25 +1185,25 @@ new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 <div id="bmt-apprule" class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">val applicationRule = createRule.precondition(ApplicationInstanceMatcher.querySpecification).action[
-	val cpsApplicationInstance = it.appInstance
-	val appId = cpsApplicationInstance.identifier
-	println('''Mapping application with ID: «appId»''')
+    val cpsApplicationInstance = it.appInstance
+    val appId = cpsApplicationInstance.identifier
+    println('''Mapping application with ID: «appId»''')
 
-	/* Find the DeploymentHost created from the HostInstance to which the source ApplicationInstance is allocated */
-	val cpsHostInstance = cpsApplicationInstance.allocatedTo
-	val depHost = engine.cps2depTrace.getAllValuesOfdepElement(null, null, cpsHostInstance).filter(DeploymentHost).head
-	/* Create &amp; initialize DeploymentApplication in this DeploymentHost */
-	val deploymentApplication = depHost.createChild(deploymentHost_Applications, deploymentApplication) =&gt; [
-		set(deploymentApplication_Id, appId)
-	]
+    /* Find the DeploymentHost created from the HostInstance to which the source ApplicationInstance is allocated */
+    val cpsHostInstance = cpsApplicationInstance.allocatedTo
+    val depHost = engine.cps2depTrace.getAllValuesOfdepElement(null, null, cpsHostInstance).filter(DeploymentHost).head
+    /* Create &amp; initialize DeploymentApplication in this DeploymentHost */
+    val deploymentApplication = depHost.createChild(deploymentHost_Applications, deploymentApplication) =&gt; [
+        set(deploymentApplication_Id, appId)
+    ]
 
-	/* Create trace element in trace model */
-	cps2dep.createChild(CPSToDeployment_Traces, CPS2DeploymentTrace) =&gt; [
-		addTo(CPS2DeploymentTrace_CpsElements, cpsApplicationInstance)
-		addTo(CPS2DeploymentTrace_DeploymentElements, deploymentApplication)
-	]
+    /* Create trace element in trace model */
+    cps2dep.createChild(CPSToDeployment_Traces, CPS2DeploymentTrace) =&gt; [
+        addTo(CPS2DeploymentTrace_CpsElements, cpsApplicationInstance)
+        addTo(CPS2DeploymentTrace_DeploymentElements, deploymentApplication)
+    ]
 
-	println('''Mapped application with ID: «appId»''')
+    println('''Mapped application with ID: «appId»''')
 ].build</code></pre>
 </div>
 </div>
@@ -1210,13 +1220,13 @@ new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 <div id="bme-execute" class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">def execute() {
-	println('''Executing transformation on: Cyber-physical system: «cps2dep.cps.identifier»''')
-	/* Clear output &amp; trace model for batch transformation**/
-	cps2dep.deployment.hosts.clear
-	cps2dep.traces.clear
-	/* Fire transformation rules**/
-	hostRule.fireAllCurrent
-	applicationRule.fireAllCurrent
+    println('''Executing transformation on: Cyber-physical system: «cps2dep.cps.identifier»''')
+    /* Clear output &amp; trace model for batch transformation**/
+    cps2dep.deployment.hosts.clear
+    cps2dep.traces.clear
+    /* Fire transformation rules**/
+    hostRule.fireAllCurrent
+    applicationRule.fireAllCurrent
 }</code></pre>
 </div>
 </div>
@@ -1249,32 +1259,32 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class TransformHandler extends AbstractHandler implements IHandler {
 
-	ViatraQueryEngine engine;
-	CPS2DeploymentTransformationViatra transformation;
+    ViatraQueryEngine engine;
+    CPS2DeploymentTransformationViatra transformation;
 
-	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		IStructuredSelection selection =
-			(IStructuredSelection) HandlerUtil.getCurrentSelection(event);
+    @Override
+    public Object execute(ExecutionEvent event) throws ExecutionException {
+        IStructuredSelection selection =
+            (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
 
-		CPSToDeployment tracemodel =
-			(CPSToDeployment) selection.getFirstElement();
+        CPSToDeployment tracemodel =
+            (CPSToDeployment) selection.getFirstElement();
 
-		if (engine == null){
-			try {
-				engine = ViatraQueryEngine.on(
-							new EMFScope(
-								tracemodel.eResource().getResourceSet()));
-				transformation = new CPS2DeploymentTransformationViatra(tracemodel,
-																engine);
-			} catch (ViatraQueryException e) {
-				throw new ExecutionException(e.getMessage(), e);
-			}
-		}
-		transformation.execute();
+        if (engine == null){
+            try {
+                engine = ViatraQueryEngine.on(
+                            new EMFScope(
+                                tracemodel.eResource().getResourceSet()));
+                transformation = new CPS2DeploymentTransformationViatra(tracemodel,
+                                                                engine);
+            } catch (ViatraQueryException e) {
+                throw new ExecutionException(e.getMessage(), e);
+            }
+        }
+        transformation.execute();
 
-		return null;
-	}
+        return null;
+    }
 
 }</code></pre>
 </div>
@@ -1285,29 +1295,29 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <div id="bmt-command" class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;extension point="org.eclipse.ui.commands"&gt;
-	&lt;command
-		defaultHandler="com.incquerylabs.course.cps.viatra.batch.ui.TransformHandler"
-		id="com.incquerylabs.course.cps.viatra.batch.ui.command"
-		name="Transform"&gt;
-	&lt;/command&gt;
+    &lt;command
+        defaultHandler="com.incquerylabs.course.cps.viatra.batch.ui.TransformHandler"
+        id="com.incquerylabs.course.cps.viatra.batch.ui.command"
+        name="Transform"&gt;
+    &lt;/command&gt;
 &lt;/extension&gt;
 &lt;extension point="org.eclipse.ui.menus"&gt;
-	&lt;menuContribution allPopups="false"
-			locationURI="popup:org.eclipse.ui.popup.any?after=additions"&gt;
-		&lt;command commandId="com.incquerylabs.course.cps.viatra.batch.ui.command"
-				style="push"&gt;
-			&lt;visibleWhen checkEnabled="false"&gt;
-				&lt;with variable="selection"&gt;
-					&lt;count value="1"&gt;
-					&lt;/count&gt;
-					&lt;iterate&gt;
-						&lt;adapt type="org.eclipse.viatra.examples.cps.traceability.CPSToDeployment"&gt;
-						&lt;/adapt&gt;
-					&lt;/iterate&gt;
-				&lt;/with&gt;
-			&lt;/visibleWhen&gt;
-		&lt;/command&gt;
-	&lt;/menuContribution&gt;
+    &lt;menuContribution allPopups="false"
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions"&gt;
+        &lt;command commandId="com.incquerylabs.course.cps.viatra.batch.ui.command"
+                style="push"&gt;
+            &lt;visibleWhen checkEnabled="false"&gt;
+                &lt;with variable="selection"&gt;
+                    &lt;count value="1"&gt;
+                    &lt;/count&gt;
+                    &lt;iterate&gt;
+                        &lt;adapt type="org.eclipse.viatra.examples.cps.traceability.CPSToDeployment"&gt;
+                        &lt;/adapt&gt;
+                    &lt;/iterate&gt;
+                &lt;/with&gt;
+            &lt;/visibleWhen&gt;
+        &lt;/command&gt;
+    &lt;/menuContribution&gt;
 &lt;/extension&gt;</code></pre>
 </div>
 </div>
@@ -1404,7 +1414,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>VIATRA Transformation API: <a href="https://wiki.eclipse.org/VIATRA/Transformation/Transformation_API" class="bare">https://wiki.eclipse.org/VIATRA/Transformation/Transformation_API</a></p>
+<p>VIATRA Transformation API: <a href="transformations.html" class="bare">transformations.html</a></p>
 </li>
 <li>
 <p>Further transformation examples: <a href="https://wiki.eclipse.org/VIATRA/Transformation/Examples" class="bare">https://wiki.eclipse.org/VIATRA/Transformation/Examples</a></p>
@@ -1434,22 +1444,22 @@ import "http://org.eclipse.viatra/model/deployment"
 import "http://org.eclipse.viatra/model/cps-traceability"
 
 pattern hostInstance(hostInstance) {
-	HostInstance(hostInstance);
+    HostInstance(hostInstance);
 }
 
 pattern applicationInstance(appType, appInstance){
-	HostInstance.applications(_, appInstance);
-	ApplicationType.instances(appType, appInstance);
+    HostInstance.applications(_, appInstance);
+    ApplicationType.instances(appType, appInstance);
 }
 
 pattern allocatedDeploymentApplication(depHost, depApp) {
-	DeploymentHost.applications(depHost, depApp);
+    DeploymentHost.applications(depHost, depApp);
 }
 
 pattern cps2depTrace(cps2dep, trace, cpsElement, depElement) {
-	CPSToDeployment.traces(cps2dep, trace);
-	CPS2DeploymentTrace.cpsElements(trace, cpsElement);
-	CPS2DeploymentTrace.deploymentElements(trace, depElement);
+    CPSToDeployment.traces(cps2dep, trace);
+    CPS2DeploymentTrace.cpsElements(trace, cpsElement);
+    CPS2DeploymentTrace.deploymentElements(trace, depElement);
 }</code></pre>
 </div>
 </div>
@@ -1498,13 +1508,13 @@ pattern cps2depTrace(cps2dep, trace, cpsElement, depElement) {
 <div id="emt-extensions" class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">/*
-	* VIATRA Query group
-	*/
+ * VIATRA Query group
+ */
 val extension CpsXformM2M cpsXformM2M = CpsXformM2M.instance
 
 /*
-	* EMF metamodels
-	*/
+ * EMF metamodels
+ */
 val extension DeploymentPackage depPackage = DeploymentPackage::eINSTANCE
 val extension TraceabilityPackage trPackage = TraceabilityPackage::eINSTANCE</code></pre>
 </div>
@@ -1524,11 +1534,11 @@ val extension TraceabilityPackage trPackage = TraceabilityPackage::eINSTANCE</co
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">val CPSToDeployment cps2dep
 
 new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
-	this.cps2dep = cps2dep
-	this.resource = cps2dep.deployment.eResource
-	this.engine = engine
-	prepare(engine)
-	createTransformation
+    this.cps2dep = cps2dep
+    this.resource = cps2dep.deployment.eResource
+    this.engine = engine
+    prepare(engine)
+    createTransformation
 }</code></pre>
 </div>
 </div>
@@ -1566,18 +1576,18 @@ new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 <div id="emt-hostrule" class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">.action(CRUDActivationStateEnum.CREATED) [
-	val hostinstance = hostInstance
-	val nodeIp = hostInstance.nodeIp
-	println('''Mapping host with IP: «nodeIp»''')
-	/* Create new DeploymentHost element in output model */
-	val host = cps2dep.deployment.createChild(deployment_Hosts, deploymentHost) =&gt; [
-		set(deploymentHost_Ip, nodeIp)
-	]
-	/* Create trace entry */
-	cps2dep.createChild(CPSToDeployment_Traces, CPS2DeploymentTrace) =&gt; [
-		addTo(CPS2DeploymentTrace_CpsElements, hostinstance)
-		addTo(CPS2DeploymentTrace_DeploymentElements, host)
-	]
+    val hostinstance = hostInstance
+    val nodeIp = hostInstance.nodeIp
+    println('''Mapping host with IP: «nodeIp»''')
+    /* Create new DeploymentHost element in output model */
+    val host = cps2dep.deployment.createChild(deployment_Hosts, deploymentHost) =&gt; [
+        set(deploymentHost_Ip, nodeIp)
+    ]
+    /* Create trace entry */
+    cps2dep.createChild(CPSToDeployment_Traces, CPS2DeploymentTrace) =&gt; [
+        addTo(CPS2DeploymentTrace_CpsElements, hostinstance)
+        addTo(CPS2DeploymentTrace_DeploymentElements, host)
+    ]
 ]</code></pre>
 </div>
 </div>
@@ -1587,16 +1597,16 @@ new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 <div id="emt-hostupdated" class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">.action(CRUDActivationStateEnum.UPDATED) [
-	/* find associated DeploymentHost element */
-	val depHost = engine.cps2depTrace
-						.getOneArbitraryMatch(cps2dep, null, hostInstance, null)
-						.depElement as DeploymentHost
-	val hostIp = depHost.ip
-	println('''Updating mapped host with IP: «hostIp»''')
-	/* update IP attribute */
-	val nodeIp = hostInstance.nodeIp
-	depHost.set(deploymentHost_Ip, nodeIp)
-	println('''Updated mapped host with IP: «nodeIp»''')
+    /* find associated DeploymentHost element */
+    val depHost = engine.cps2depTrace
+                        .getOneArbitraryMatch(cps2dep, null, hostInstance, null)
+                        .depElement as DeploymentHost
+    val hostIp = depHost.ip
+    println('''Updating mapped host with IP: «hostIp»''')
+    /* update IP attribute */
+    val nodeIp = hostInstance.nodeIp
+    depHost.set(deploymentHost_Ip, nodeIp)
+    println('''Updated mapped host with IP: «nodeIp»''')
 ]</code></pre>
 </div>
 </div>
@@ -1606,16 +1616,16 @@ new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 <div id="emt-hostdeleted" class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">.action(CRUDActivationStateEnum.DELETED) [
-	/* Find trace element */
-	val traceMatch = engine.cps2depTrace
-						.getOneArbitraryMatch(cps2dep, null, hostInstance, null)
-	val hostIp = hostInstance.nodeIp
-	println('''Removing host with IP: «hostIp»''')
-	/* Remove DeploymentHost element */
-	cps2dep.deployment.remove(deployment_Hosts, traceMatch.depElement)
-	/* Remove trace */
-	cps2dep.remove(CPSToDeployment_Traces, traceMatch.trace)
-	println('''Removed host with IP: «hostIp»''')
+    /* Find trace element */
+    val traceMatch = engine.cps2depTrace
+                        .getOneArbitraryMatch(cps2dep, null, hostInstance, null)
+    val hostIp = hostInstance.nodeIp
+    println('''Removing host with IP: «hostIp»''')
+    /* Remove DeploymentHost element */
+    cps2dep.deployment.remove(deployment_Hosts, traceMatch.depElement)
+    /* Remove trace */
+    cps2dep.remove(CPSToDeployment_Traces, traceMatch.trace)
+    println('''Removed host with IP: «hostIp»''')
 ]</code></pre>
 </div>
 </div>
@@ -1644,37 +1654,37 @@ new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">val applicationRule = createRule.precondition(ApplicationInstanceMatcher.querySpecification)
 .action(CRUDActivationStateEnum.CREATED) [
-	/* Find associated DeploymentHost for the HostInstance this application is allocated to */
-	val depHost = engine.cps2depTrace.getAllValuesOfdepElement(null, null, appInstance.allocatedTo).filter(
-		DeploymentHost).head
-	val appinstance = appInstance
-	val appId = appInstance.identifier
-	println('''Mapping application with ID: «appId»''')
-	/* Create DeploymentApplication application in host */
-	val app = depHost.createChild(deploymentHost_Applications, deploymentApplication) =&gt; [
-		set(deploymentApplication_Id, appId)
-	]
-	/* create trace entry */
-	cps2dep.createChild(CPSToDeployment_Traces, CPS2DeploymentTrace) =&gt; [
-		addTo(CPS2DeploymentTrace_CpsElements, appinstance)
-		addTo(CPS2DeploymentTrace_DeploymentElements, app)
-	]
-	println('''Mapped application with ID: «appId»''')
+    /* Find associated DeploymentHost for the HostInstance this application is allocated to */
+    val depHost = engine.cps2depTrace.getAllValuesOfdepElement(null, null, appInstance.allocatedTo).filter(
+        DeploymentHost).head
+    val appinstance = appInstance
+    val appId = appInstance.identifier
+    println('''Mapping application with ID: «appId»''')
+    /* Create DeploymentApplication application in host */
+    val app = depHost.createChild(deploymentHost_Applications, deploymentApplication) =&gt; [
+        set(deploymentApplication_Id, appId)
+    ]
+    /* create trace entry */
+    cps2dep.createChild(CPSToDeployment_Traces, CPS2DeploymentTrace) =&gt; [
+        addTo(CPS2DeploymentTrace_CpsElements, appinstance)
+        addTo(CPS2DeploymentTrace_DeploymentElements, app)
+    ]
+    println('''Mapped application with ID: «appId»''')
 ].action(CRUDActivationStateEnum.UPDATED) [
-	/* find associated DeploymentApplication */
-	val depApp = engine.cps2depTrace.getOneArbitraryMatch(cps2dep, null, appInstance, null).
-		depElement as DeploymentApplication
-	/* Update ID */
-	if (depApp.id != appInstance.identifier)
-		depApp.set(deploymentApplication_Id, appInstance.identifier)
+    /* find associated DeploymentApplication */
+    val depApp = engine.cps2depTrace.getOneArbitraryMatch(cps2dep, null, appInstance, null).
+        depElement as DeploymentApplication
+    /* Update ID */
+    if (depApp.id != appInstance.identifier)
+        depApp.set(deploymentApplication_Id, appInstance.identifier)
 ].action(CRUDActivationStateEnum.DELETED) [
-	/* find associated DeploymentApplication */
-	val trace = engine.cps2depTrace.getAllValuesOftrace(null, appInstance, null).head as CPS2DeploymentTrace
-	val depApp = trace.deploymentElements.head as DeploymentApplication
-	/* Remove application from host */
-	engine.allocatedDeploymentApplication.getAllValuesOfdepHost(depApp).head.remove(deploymentHost_Applications, depApp)
-	/* Remove traces */
-	cps2dep.remove(CPSToDeployment_Traces, trace)
+    /* find associated DeploymentApplication */
+    val trace = engine.cps2depTrace.getAllValuesOftrace(null, appInstance, null).head as CPS2DeploymentTrace
+    val depApp = trace.deploymentElements.head as DeploymentApplication
+    /* Remove application from host */
+    engine.allocatedDeploymentApplication.getAllValuesOfdepHost(depApp).head.remove(deploymentHost_Applications, depApp)
+    /* Remove traces */
+    cps2dep.remove(CPSToDeployment_Traces, trace)
 ].addLifeCycle(Lifecycles.getDefault(true, true)).build</code></pre>
 </div>
 </div>
@@ -1691,19 +1701,19 @@ new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 <div id="emt-create" class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private def createTransformation() {
-	//Initialize model manipulation API
-	this.manipulation = new SimpleModelManipulations(engine)
+    //Initialize model manipulation API
+    this.manipulation = new SimpleModelManipulations(engine)
 
-	//Initialize event-driven transformation
-	val fixedPriorityResolver = new InvertedDisappearancePriorityConflictResolver
-	fixedPriorityResolver.setPriority(hostRule.ruleSpecification, 1)
-	fixedPriorityResolver.setPriority(applicationRule.ruleSpecification, 2)
+    //Initialize event-driven transformation
+    val fixedPriorityResolver = new InvertedDisappearancePriorityConflictResolver
+    fixedPriorityResolver.setPriority(hostRule.ruleSpecification, 1)
+    fixedPriorityResolver.setPriority(applicationRule.ruleSpecification, 2)
 
-	transformation = EventDrivenTransformation.forEngine(engine)
-		.setConflictResolver(fixedPriorityResolver)
-		.addRule(hostRule)
-		.addRule(applicationRule)
-		.build
+    transformation = EventDrivenTransformation.forEngine(engine)
+        .setConflictResolver(fixedPriorityResolver)
+        .addRule(hostRule)
+        .addRule(applicationRule)
+        .build
 }</code></pre>
 </div>
 </div>
@@ -1740,41 +1750,41 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class ToggleTransformationHandler extends AbstractHandler implements IHandler {
 
-	ViatraQueryEngine engine;
-	CPS2DeploymentTransformationViatra transformation;
+    ViatraQueryEngine engine;
+    CPS2DeploymentTransformationViatra transformation;
 
 
-	/* (non-Javadoc)
-		* @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
-		*/
-	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		IStructuredSelection selection =
-			(IStructuredSelection) HandlerUtil.getCurrentSelection(event);
+    /* (non-Javadoc)
+     * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
+     */
+    @Override
+    public Object execute(ExecutionEvent event) throws ExecutionException {
+        IStructuredSelection selection =
+            (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
 
-		CPSToDeployment tracemodel =
-			(CPSToDeployment) selection.getFirstElement();
+        CPSToDeployment tracemodel =
+            (CPSToDeployment) selection.getFirstElement();
 
-		if(transformation == null) {
-			if(engine == null) {
-				try {
-					engine = ViatraQueryEngine.on(
-								new EMFScope(
-									tracemodel.eResource()
-												.getResourceSet()));
-					transformation =
-						new CPS2DeploymentTransformationViatra(tracemodel,
-																engine);
-				} catch (ViatraQueryException e) {
-					throw new ExecutionException(e.getMessage(), e);
-				}
-			}
-		} else {
-			transformation.dispose();
-		}
+        if(transformation == null) {
+            if(engine == null) {
+                try {
+                    engine = ViatraQueryEngine.on(
+                                new EMFScope(
+                                    tracemodel.eResource()
+                                                .getResourceSet()));
+                    transformation =
+                        new CPS2DeploymentTransformationViatra(tracemodel,
+                                                                engine);
+                } catch (ViatraQueryException e) {
+                    throw new ExecutionException(e.getMessage(), e);
+                }
+            }
+        } else {
+            transformation.dispose();
+        }
 
-		return null;
-	}
+        return null;
+    }
 
 }</code></pre>
 </div>
@@ -1786,29 +1796,29 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <div class="title">plugin.xml</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;extension point="org.eclipse.ui.commands"&gt;
-	&lt;command defaultHandler="com.incquerylabs.course.cps.viatra.incr.ui.ToggleTransformationHandler"
-			id="com.incquerylabs.course.cps.viatra.incr.ui.command"
-			name="Toggle Transformation"&gt;
-	&lt;/command&gt;
+    &lt;command defaultHandler="com.incquerylabs.course.cps.viatra.incr.ui.ToggleTransformationHandler"
+            id="com.incquerylabs.course.cps.viatra.incr.ui.command"
+            name="Toggle Transformation"&gt;
+    &lt;/command&gt;
 &lt;/extension&gt;
 &lt;extension point="org.eclipse.ui.menus"&gt;
-	&lt;menuContribution allPopups="false"
-			locationURI="popup:org.eclipse.ui.popup.any?after=additions"&gt;
-		&lt;command commandId="com.incquerylabs.course.cps.viatra.incr.ui.command"
-				label="Toggle Incremental Transformation"
-				style="push"&gt;
-			&lt;visibleWhen checkEnabled="false"&gt;
-				&lt;with variable="selection"&gt;
-					&lt;count value="1"&gt;
-					&lt;/count&gt;
-					&lt;iterate&gt;
-						&lt;adapt type="org.eclipse.viatra.examples.cps.traceability.CPSToDeployment"&gt;
-						&lt;/adapt&gt;
-					&lt;/iterate&gt;
-				&lt;/with&gt;
-			&lt;/visibleWhen&gt;
-		&lt;/command&gt;
-	&lt;/menuContribution&gt;
+    &lt;menuContribution allPopups="false"
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions"&gt;
+        &lt;command commandId="com.incquerylabs.course.cps.viatra.incr.ui.command"
+                label="Toggle Incremental Transformation"
+                style="push"&gt;
+            &lt;visibleWhen checkEnabled="false"&gt;
+                &lt;with variable="selection"&gt;
+                    &lt;count value="1"&gt;
+                    &lt;/count&gt;
+                    &lt;iterate&gt;
+                        &lt;adapt type="org.eclipse.viatra.examples.cps.traceability.CPSToDeployment"&gt;
+                        &lt;/adapt&gt;
+                    &lt;/iterate&gt;
+                &lt;/with&gt;
+            &lt;/visibleWhen&gt;
+        &lt;/command&gt;
+    &lt;/menuContribution&gt;
 &lt;/extension&gt;</code></pre>
 </div>
 </div>
@@ -1905,17 +1915,454 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>VIATRA Transformation API: <a href="https://wiki.eclipse.org/VIATRA/Transformation/Transformation_API" class="bare">https://wiki.eclipse.org/VIATRA/Transformation/Transformation_API</a></p>
+<p>VIATRA Transformation API: <a href="transformations.html" class="bare">transformations.html</a></p>
 </li>
 <li>
 <p>Further transformation examples: <a href="https://wiki.eclipse.org/VIATRA/Transformation/Examples" class="bare">https://wiki.eclipse.org/VIATRA/Transformation/Examples</a></p>
 </li>
 </ul>
 </div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_debugging_model_transformations"><a class="link" href="#_debugging_model_transformations">4.3. Debugging model transformations</a></h3>
+<div class="paragraph">
+<p>The development and debugging of  model transformations is not a trivial exercise, the basic concepts of software debugging however can be mapped to this field as well. Debuggers can be used for detecting bugs, as well as better understanding the structure and behavior of programs. Direct control over a program allows the programmer to follow the flow of execution or stop the program at any desired point. Then it is possible to inspect its current state and verify the correctness of the software. These properties are very desirable in the field of model transformations too.
+The VIATRA framework incorporates a debugger framework that supports the following features:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Display the state of remote VIATRA transformations.</p>
+</li>
+<li>
+<p>Allow the user to control the execution of VIATRA transformations, via standard debugger commands ("Step over", "Continue") or by selecting the next activation to be executed.</p>
+</li>
+<li>
+<p>Display the model instances associated with the transformation under debugging.</p>
+</li>
+<li>
+<p>Allow the user to define various transformation breakpoints.</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_setting_up_the_transformation_under_debugging"><a class="link" href="#_setting_up_the_transformation_under_debugging">4.3.1. Setting Up the Transformation Under Debugging</a></h4>
+<div class="paragraph">
+<p>In order to support debugging, the model transformation definition needs minor modifications. These can be done in two different ways:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If the transformation is being newly developed, it is highly advised to use the VIATRA model transformation creation wizard. As shown on the figure below, the user can select the "VIATRA debugger support" checkbox, this way the generated code will incorporate the appropriate setup.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Use the <em>VIATRA Debugger Session Name</em> optional parameter to define a textual identifier for the transformation. Usage of this identifier helps the transformation developer to  differentiate between different model transformation sessions, while using the transformation debugger.
+</td>
+</tr>
+</table>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/transformation/screenshots/wizard_selection.png" alt="Wizard selection">
+</div>
+<div class="title">Figure 25. Opening the Wizard</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/transformation/screenshots/wizard_debugging.png" alt="Wizard debug">
+</div>
+<div class="title">Figure 26. Selecting debugger support</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>In case of an already-existing transformation, the model transformation definition needs to be modified manually. This involves adding the VIATRA debug configuration to the VIATRA transformation builder. The following example snippet shows how this is achieved in the example.</p>
+</li>
+</ul>
+</div>
+<div id="Transformation-setup" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-Java hljs" data-lang="Java">private def createTransformation() {
+    import org.eclipse.viatra.transformation.debug.configuration.TransformationDebuggerConfiguration
+    ...
+    transformation = BatchTransformation.forEngine(engine).addAdapterConfiguration(new TransformationDebuggerConfiguration("TestTransformation")).build
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As the VIATRA transformation debugger is a <em>Remote Debugging</em>-style debugger, the example transformation needs to be started manually. This is especially true in case of batch transformations, since event-driven transformations typically run continuously. The example uses a simple command and handler to run the model transformation on a predefined test model.</p>
+</div>
+<div id="Transformation-handler" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-Java hljs" data-lang="Java">public class BatchTestHandler extends AbstractHandler {
+    @Override
+    public Object execute(ExecutionEvent event) throws ExecutionException {
+        final Job job = new Job(JOB_NAME) {
+            protected IStatus run(IProgressMonitor monitor) {
+                // Load the CPS model
+                CPSModelInitializer init = new CPSModelInitializer();
+                CPSToDeployment cps2dep = init.loadModel(SOURCE_MODEL_URI);
+                // Initialize CPS to Deployment Transformation
+                CPSTransformation transformation = new CPSBatchTransformation(cps2dep);
+                // Execute the transformation and observe the effects of the selected adapter
+                transformation.execute();
+                transformation.dispose();
+                return Status.OK_STATUS;
+            }
+        };
+        job.schedule();
+        return null;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In order to properly initiate the VIATRA debugger runtime agent, the target Eclipse instance should be launched via using the following command line arguments:</p>
+</div>
+<div id="Transformation-vmargs" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-Java hljs" data-lang="Java">-Dcom.sun.management.jmxremote.port="port to be used, typically 1099"
+-Dcom.sun.management.jmxremote.authenticate=false
+-Dcom.sun.management.jmxremote.ssl=false</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_using_the_debugger_ui"><a class="link" href="#_using_the_debugger_ui">4.3.2. Using the Debugger UI</a></h4>
+<div class="paragraph">
+<p>The following section describes how to use the VIATRA transformation debugger UI elements once the debugging infrastructure is set up. This section of the guide assumes that a target Eclipse instance is running.</p>
+</div>
+<div class="sect4">
+<h5 id="_connecting_to_the_transformation_under_debugging"><a class="link" href="#_connecting_to_the_transformation_under_debugging">4.3.2.1. Connecting to the transformation under debugging</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p>If the VIATRA debugger feature is installed, the Debugger UI Elements are contained by the Eclipse Debug perspective, once this perspective is selected, the related VIATRA debug views are displayed.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/transformation/screenshots/debug_persp_empty.png" alt="Debug perspective">
+</div>
+<div class="title">Figure 27. Debug perspective with debugger views</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The debugger can be initialized via launching a <em>VIATRA Transformation Remote Debugging</em> debug configuration. The debug configuration can be specified similarly to any other Eclipse launch configuration. As the figure below shows, firstly, the target port needs to be specified. This value needs to be equal to the port value specified in the target Eclipse launch configuration (typically its 1099).</p>
+</li>
+<li>
+<p>Next the port needs to be queried, via using the button located next to the port text field.</p>
+</li>
+<li>
+<p>After the querying is completed, the user can select from a set of transformation instances that are present on that port.</p>
+</li>
+<li>
+<p>Finally, a class file present in the workspace needs to be selected, as the breakpoints associated with the transformation will be bound to the resource of this file.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/transformation/screenshots/debug_newlaunch.png" alt="Class selection">
+</div>
+<div class="title">Figure 28. Editing launch configuration</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/transformation/screenshots/newtransf_classsel.png" alt="Class selection">
+</div>
+<div class="title">Figure 29. Selecting a class</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>These launch configurations are saved, once the user defines a configuration for a target transformation, it can be reused without any required modifications (Assuming that the user did not modify the ID of the transformation session).</p>
+</li>
+<li>
+<p>After launching the debug configuration, the debug session is initialized allowing the user to observe and control the execution of the selected transformation. Here the transformation debugging session is displayed in the Eclipse debug view. There are however additional contemporary views that display the details of the selected debug session.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/transformation/screenshots/debug_persp.png" alt="Debug perspective">
+</div>
+<div class="title">Figure 30. Debugger in its initialized state</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_browsing_the_transformation_state"><a class="link" href="#_browsing_the_transformation_state">4.3.2.2. Browsing the transformation state</a></h5>
+<div class="paragraph">
+<p>One of the main use-cases of the VIATRA transformation debugger, is to enable the transformation developer to observe the state of a VIATRA transformation at certain point in its execution sequence. The debugger allows the transformation developer to observe the following transformation elements:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Active transformation rule activations</p>
+</li>
+<li>
+<p>Input and output model instances</p>
+</li>
+<li>
+<p>The input parameters of the next Activation</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+In order to use the debugger UI elements, select the Debug Stack trace representing the transformation:
+</td>
+</tr>
+</table>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/transformation/screenshots/selectthread.png" alt="Select transformation stack frame">
+</div>
+<div class="title">Figure 31. Selecting the transformation stack frame</div>
+</div>
+<div class="paragraph">
+<p>The <em>Transformation Browser</em> view is responsible for observing the internal state of the transformation. It allows the user to observe the current transformation rule activations, and it supports the definition of various transformation breakpoints.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/transformation/screenshots/transformation_rules.png" alt="TB rules">
+</div>
+<div class="title">Figure 32. Transformation Browser ordered by transformation rules</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/transformation/screenshots/conflict_set.png" alt="TB conflict set">
+</div>
+<div class="title">Figure 33. Transformation Browser ordered by EVM Conflict Set state</div>
+</div>
+<div class="paragraph">
+<p>The <em>Transformation Model Instance Viewer</em> enables the transformation developer to observe the state of the source and target model instances related to the model transformation selected in the <em>Adaptable Transformation Browser</em> view. This view displays the model instances in a multi-tabbed tree view with properties view support.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/transformation/screenshots/model_browser.png" alt="VTB view">
+</div>
+<div class="title">Figure 34. VIATRA model instance browser view</div>
+</div>
+<div class="paragraph">
+<p>The parameters of the next activation to be executed can be observed via the <em>Variables</em> Eclipse Debug View. After selecting the given debug stack frame (representing a transformation rule activation), the parameters of the transformation rule precondition are displayed as variables.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/transformation/screenshots/variables_view.png" alt="Variables view">
+</div>
+<div class="title">Figure 35. VIATRA transformation preconditions as Variables</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_controlling_the_transformation_execution_sequence"><a class="link" href="#_controlling_the_transformation_execution_sequence">4.3.2.3. Controlling the transformation execution sequence</a></h5>
+<div class="paragraph">
+<p>The VIATRA transformation debugger enables the transformation developer to control the execution sequence of the transformation under debugging. This can be done in the following ways.</p>
+</div>
+<div class="sect5">
+<h6 id="_using_breakpoints_and_standard_debug_commands"><a class="link" href="#_using_breakpoints_and_standard_debug_commands">Using Breakpoints and standard debug commands</a></h6>
+<div class="paragraph">
+<p>The Transformation debugger supports the following breakpoints:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>Activation breakpoint</em>: Activation breakpoints can be toggled via selecting a rule activation and using the appropriate command on the <em>Transformation Browser</em> view.</p>
+</li>
+<li>
+<p><em>Rule Breakpoint</em>: Rule breakpoints can be created via selecting a model transformation instance and using the appropriate UI element. Once this is done, the following dialog opens, on which the transformation developer can specify the name of the transformation rule. Once an activation is about to be executed, the debugger checks if the activation derives from the rule associated with the specified name. If this condition is true, the execution is halted.</p>
+</li>
+<li>
+<p><em>Conditional breakpoint</em>: These breakpoints allow the user to define VIATRA Query based conditions to halt the execution of the transformation. In order to create a conditional breakpoint, select a model transformation instance in the <em>Transformation Browser</em> view, and use the appropriate command on the view&#8217;s command bar. Afterwards, a dialog window opens which allows the user to define VIATRA query patterns. The execution of the transformation is halted once the match set of the pattern changes.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/transformation/screenshots/rule_breakpoint.png" alt="Rule breakpoint definition">
+</div>
+<div class="title">Figure 36. Rule breakpoint definition dialog</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/transformation/screenshots/conditional_breakpoint.png" alt="Conditional breakpoint definition">
+</div>
+<div class="title">Figure 37. Conditional breakpoint definition dialog</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+This editor reuses the standard Xtext based VIATRA query editor, however in this case, package definitions should be omitted (as there is no enclosed Eclipse resource to the file). Furthermore, the definition can contain only one public pattern at this point, this restriction, however, does not apply to private patterns.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+The Debugger runtime component reuses the VIATRA Query language parser infrastructure to parse the patterns contained in <em>conditional breakpoints</em>. The debugger runtime component explicitly does not require classes of the parser infrastructure to be loaded (in order to minimize the dependencies of said runtime component). Make sure however, if <em>conditional breakpoints</em> are used, the target platform on which the transformation under debugging is running should contain the VIATRA Query Tooling UI elements, and they should be initialized as well. If these required steps are omitted, the debugger produces the following error message:
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The rule and conditional breakpoints are persisted between individual transformation debugging sessions. The breakpoints are contained in a common breakpoint pool managed by the Eclipse Breakpoint Manager.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The breakpoints added are displayed in the <em>Breakpoints</em> Eclipse Debug view. Which can be used to disable and remove these breakpoints.
+</td>
+</tr>
+</table>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/transformation/screenshots/conditional_breakpoint_parseerror.png" alt="Conditional breakpoint parsing error">
+</div>
+<div class="title">Figure 38. Conditional breakpoint error dialog</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/transformation/screenshots/breakpoints_view.png" alt="Eclipse Breakpoints view">
+</div>
+<div class="title">Figure 39. Transformation breakpoints in the Eclipse Breakpoints view</div>
+</div>
+<div class="paragraph">
+<p>The debugger supports the following Eclipse debug commands:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Step Over (F6)</dt>
+<dd>
+<p>If the transformation execution is halted, use this command the execute the next activation, and stop the execution again.</p>
+</dd>
+<dt class="hdlist1">Resume (F8)</dt>
+<dd>
+<p>If the transformation execution is halted, use this command to continue the execution of the transformation until a breakpoint is hit.</p>
+</dd>
+<dt class="hdlist1">Terminate (Ctrl+F2)</dt>
+<dd>
+<p>The transformation is resumed and the debugger agent is disconnected from the target transformation. The transformation debugging session is terminated.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>A few debug commands are not supported for now, including <em>Step Return</em>, <em>Step Into</em>, <em>Suspend</em> and <em>Disconnect</em>.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_directly_selecting_the_next_transformation_activation_to_be_fired"><a class="link" href="#_directly_selecting_the_next_transformation_activation_to_be_fired">Directly selecting the next transformation activation to be fired</a></h6>
+<div class="paragraph">
+<p>The transformation debugger allows the user to define which activation should be executed next. In order to do this, select an activation and use the appropriate command to set it as the next activation to be executed.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+The changes made this ways could produce unpredictable behavior in the model transformation (Overriding the defined priority could result in inconsistent model states). Use this feature cautiously.
+</td>
+</tr>
+</table>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/transformation/screenshots/select_next.png" alt="Select next activation">
+</div>
+<div class="title">Figure 40. Selecting the next activation</div>
+</div>
+<div class="paragraph">
+<p>Once the next activation is selected, notice that the red rectangle representing, the next activation to be fired, is moved to the desired activation. At this point, if the transformation is resumed, it will continue its execution from the selected activation.</p>
 </div>
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_common_issues"><a class="link" href="#_common_issues">4.3.3. Common issues</a></h4>
+<div class="sect4">
+<h5 id="_trying_to_connect_to_an_unreachable_viatra_transformation_instance"><a class="link" href="#_trying_to_connect_to_an_unreachable_viatra_transformation_instance">4.3.3.1. Trying to connect to an unreachable VIATRA transformation instance</a></h5>
+<div class="paragraph">
+<p>If the VIATRA transformation instance specified in the debugger launch configuration does not exist, the debugger tooling will inform the user, that the debugging session could not be initialized and terminate the newly created session as well.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/transformation/screenshots/connection_error.png" alt="Debugger Connection Error">
+</div>
+<div class="title">Figure 41. Debugger Connection Error</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_transformation_under_debugging_terminated_abruptly"><a class="link" href="#_transformation_under_debugging_terminated_abruptly">4.3.3.2. Transformation under debugging terminated abruptly.</a></h5>
+<div class="paragraph">
+<p>If the eclipse instance in which the target transformation is running is terminated, or the connection is severed between the host and target components, the debugger tooling will terminate the respective VIATRA debugger launch automatically.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/transformation/screenshots/automatic_termination.png" alt="Automatic termination">
+</div>
+<div class="title">Figure 42. Automatic termination</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_trying_to_add_a_conditional_breakpoint_but_the_xtext_parser_infrastructure_is_not_initialized"><a class="link" href="#_trying_to_add_a_conditional_breakpoint_but_the_xtext_parser_infrastructure_is_not_initialized">4.3.3.3. Trying to add a conditional breakpoint, but the Xtext parser infrastructure is not initialized.</a></h5>
+<div class="paragraph">
+<p>In order to ensure that the conditional breakpoint patterns are parsed properly in the runtime Eclipse instance, the Xtext parser infrastructure needs to be initialized. If the debugger tooling produces the following exception, open a VIATRA query view (e.g.: VIATRA Query Explorer) to manually initialize the parser tooling. These manual steps are needed, as Xtext-based parser tooling components are loaded lazily.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/transformation/screenshots/conditional_breakpoint_parseerror.png" alt="Conditional breakpoint parsing error">
+</div>
+<div class="title">Figure 43. Conditional breakpoint error dialog</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
 	<script>hljs.initHighlighting()</script>
 </div>	
 
