@@ -68,9 +68,6 @@
 <div class="paragraph">
 <p>Further changes also helped to reduce the temporary objects created during search-based pattern matching or provide faster responses in transformation by smarter preconditions checking.</p>
 </div>
-<div class="paragraph">
-<p><strong>TODO</strong> Execute and include a full performance measurement</p>
-</div>
 </div>
 <div class="sect2">
 <h3 id="_updated_generated_code_structure"><a class="link" href="#_updated_generated_code_structure">Updated generated code structure</a></h3>
@@ -105,15 +102,12 @@
 <div class="sect2">
 <h3 id="_cps_demonstrator_application"><a class="link" href="#_cps_demonstrator_application">CPS Demonstrator Application</a></h3>
 <div class="paragraph">
-<p>VIATRA 1.7 includes a demonstrator application that can be used to see most features of the transformation framework in action. The application includes an example project and transformations included in editors. For more details about the transformation, have a look at the <a href="../cps/CPS-Application.html">corresponding documentation</a>.</p>
+<p>VIATRA 1.7 includes a demonstrator application that can be used to see most features of the transformation framework in action. The application includes an example project and transformations included in editors.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>TODO</strong> Provide download links</p>
-</li>
-<li>
-<p><strong>TODO</strong> Add a few screenshots here</p>
+<p>The application can be downloaded for multiple platforms: <a href="http://download.eclipse.org/viatra/examples/cps/application/org.eclipse.viatra.examples.cps.application.product-win32.win32.x86_64.zip">Windows (64 bit)</a>, <a href="http://download.eclipse.org/viatra/examples/cps/application/org.eclipse.viatra.examples.cps.application.product-macosx.cocoa.x86_64.zip">macOS</a>, <a href="http://download.eclipse.org/viatra/examples/cps/application/org.eclipse.viatra.examples.cps.application.product-linux.gtk.x86_64.zip">Linux (GTK 64 bit)</a></p>
 </li>
 </ul>
 </div>
@@ -145,7 +139,7 @@
 </div>
 <div id="v16-strictnotifications" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">BaseIndexOptions options = new BaseIndexOptions().withStrictNotificationMode(false);
+<pre class="highlight"><code class="language-java" data-lang="java">BaseIndexOptions options = new BaseIndexOptions().withStrictNotificationMode(false);
 ResourceSet rSet = new ResourceSetImpl();
 EMFScope scope = new EMFScope(rSet, options);
 ViatraQueryEngine engine = ViatraQueryEngine.on(scope);</code></pre>
@@ -156,7 +150,7 @@ ViatraQueryEngine engine = ViatraQueryEngine.on(scope);</code></pre>
 </div>
 <div id="v16-danglingfree" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">BaseIndexOptions options = new BaseIndexOptions().withDanglingFreeAssumption(false);
+<pre class="highlight"><code class="language-java" data-lang="java">BaseIndexOptions options = new BaseIndexOptions().withDanglingFreeAssumption(false);
 ResourceSet rSet = new ResourceSetImpl();
 EMFScope scope = new EMFScope(rSet, options);
 ViatraQueryEngine engine = ViatraQueryEngine.on(scope);</code></pre>
@@ -167,7 +161,7 @@ ViatraQueryEngine engine = ViatraQueryEngine.on(scope);</code></pre>
 </div>
 <div id="v16-delay" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">AdvancedViatraQueryEngine engine = ...
+<pre class="highlight"><code class="language-java" data-lang="java">AdvancedViatraQueryEngine engine = ...
 engine.delayUpdatePropagation(new Callable&lt;Void&gt;() {
     @Override
     public Void call() throws Exception {
@@ -253,7 +247,7 @@ engine.delayUpdatePropagation(new Callable&lt;Void&gt;() {
 </div>
 <div id="v16-cep-parameters" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">pattern hasContainer(contained: EClass, container: EClass) = {
+<pre class="highlight"><code class="language-vql" data-lang="vql">pattern hasContainer(contained: EClass, container: EClass) = {
 	EClass.eStructuralFeatures(container, ref);
 	EReference.containment(ref, true);
 	EReference.eType(ref, contained);
@@ -265,7 +259,7 @@ engine.delayUpdatePropagation(new Callable&lt;Void&gt;() {
 </div>
 <div id="v16-parameterizedevent" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">queryEvent addContainer(contained:EObject, container:EObject)
+<pre class="highlight"><code class="language-vql" data-lang="vql">queryEvent addContainer(contained:EObject, container:EObject)
 	as hasContainer(contained, container) found
 
 complexEvent addContainer2(cned:EObject, container1:EObject, container2:EObject) {
@@ -310,7 +304,7 @@ complexEvent addContainer2(cned:EObject, container1:EObject, container2:EObject)
 </div>
 <div id="v16-dangling-migration" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">BaseIndexOptions options = new BaseIndexOptions().withDanglingFreeAssumption(false);
+<pre class="highlight"><code class="language-vql" data-lang="vql">BaseIndexOptions options = new BaseIndexOptions().withDanglingFreeAssumption(false);
 ResourceSet rSet = new ResourceSetImpl();
 EMFScope scope = new EMFScope(rSet, options);
 ViatraQueryEngine engine = ViatraQueryEngine.on(scope);</code></pre>
@@ -379,7 +373,7 @@ uses:="com.google.common.collect",</code></p>
 </div>
 <div id="v15-literals" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">pattern circleConstantDiameter1(c : Circle) {
+<pre class="highlight"><code class="language-vql" data-lang="vql">pattern circleConstantDiameter1(c : Circle) {
   Circle.diameter(c, 3l);
   Circle.area(c, 9.42f);
 }</code></pre>
@@ -398,7 +392,7 @@ uses:="com.google.common.collect",</code></p>
 </div>
 <div id="v15-functionaldependencies" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">// Here the first annotation is superfluous, as it is inferred automatically anyway
+<pre class="highlight"><code class="language-vql" data-lang="vql">// Here the first annotation is superfluous, as it is inferred automatically anyway
 // The second annotation expresses valuable domain knowledge though
 @FunctionalDependency(forEach = house, unique = street, unique = houseNumber)
 @FunctionalDependency(forEach = street, forEach = houseNumber, unique = house)
@@ -450,7 +444,7 @@ pattern locatedOnThoroughfare(house: House, location: Thoroughfare) {
 </div>
 <div id="v15-maven" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;source lang="xml"&gt;
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;source lang="xml"&gt;
 &lt;configuration&gt;
   &lt;!-- in addition to existing configuration --&gt;
   &lt;useProjectDependencies&gt;true&lt;/useProjectDependencies&gt;
@@ -549,7 +543,7 @@ pattern locatedOnThoroughfare(house: House, location: Thoroughfare) {
 </div>
 <div id="v14-javatype" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">pattern cpus(hi : HostInstance, no : java Integer) {
+<pre class="highlight"><code class="language-vql" data-lang="vql">pattern cpus(hi : HostInstance, no : java Integer) {
 	HostInstance.availableCpu(hi, no);
 }</code></pre>
 </div>
@@ -562,7 +556,7 @@ pattern locatedOnThoroughfare(house: House, location: Thoroughfare) {
 </div>
 <div id="v14-aggregator" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">pattern sumCPUs(s : java Integer) {
+<pre class="highlight"><code class="language-vql" data-lang="vql">pattern sumCPUs(s : java Integer) {
 	s == sum find cpus(_hi2, #_);
 }</code></pre>
 </div>
@@ -575,7 +569,7 @@ pattern locatedOnThoroughfare(house: House, location: Thoroughfare) {
 </div>
 <div id="v14-parameterdir" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">pattern cpus(in hi : HostInstance, out no : java Integer) {
+<pre class="highlight"><code class="language-vql" data-lang="vql">pattern cpus(in hi : HostInstance, out no : java Integer) {
 	HostInstance.availableCpu(hi, no);
 }</code></pre>
 </div>
@@ -591,7 +585,7 @@ pattern locatedOnThoroughfare(house: House, location: Thoroughfare) {
 </div>
 <div id="v14-backend" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">search pattern minCPUs(n : java Integer) {
+<pre class="highlight"><code class="language-vql" data-lang="vql">search pattern minCPUs(n : java Integer) {
 	n == min find cpus(_hi1, #_);
 }
 
@@ -897,7 +891,7 @@ Users of the <code>org.eclipse.viatra.query.runtime.extensibility.QuerySpecifica
 </div>
 <div id="v13-typeinferrer" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">pattern t4_erroneous(n) {
+<pre class="highlight"><code class="language-vql" data-lang="vql">pattern t4_erroneous(n) {
   check(n &gt; 2); //Error 1: '&gt; cannot be resolved'; Error 2: 'Check expression must return boolean'
   n == eval(2);
 }
@@ -1088,7 +1082,7 @@ pattern t4_fixed(n) {
 </div>
 </div>
 </div>
-</div>	
+</div>
 
 <div class="clear"></div>
 <ng-include src="'/viatra/angular/blocks/footer.html'"></ng-include>
