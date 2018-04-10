@@ -48,75 +48,69 @@
 		<p>To install the latest version of VIATRA, it is recommended to use the Marketplace client. For manual installation, use the version-specific p2 repository depicted in the list below, and provide its URL in the <em>Install new software ...</em> wizard (accessible from the Help menu).</p>
 
 		<p>For offline installations it is possible to download the release sites as a zip file. In this case, make sure you have the corresponding <a
-		href="http://www.eclipse.org/Xtext/download.html">Xtext</a> version installed. To install such a version, download the zip file from below, and add it as a local update site using the <em>Install new software...</em> wizard.</p>
+		href="http://www.eclipse.org/Xtext/download.html">Xtext</a> version installed. To install such a version, download the zip file from below, and add it as a local repository using the <em>Install new software...</em> wizard.</p>
 
 		<table>
 			<thead>
 				<tr>
-					<th>Version&nbsp;</th><th>p2 repository&nbsp;</th><th>Xtext</th><th>Links</th><th>Notes</th>
+					<th>Version&nbsp;</th><th>p2 repository&nbsp;</th><th>Links</th><th>Notes</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
+				<tr class="bg_lightest_gray">
 					<td><a href="https://projects.eclipse.org/projects/modeling.viatra/releases/1.7.2">1.7.2</a></td>
 					<td><code>http://download.eclipse.org/viatra/updates/release/1.7.2</code></td>
-					<td>Xtext 2.9-2.13</td>
 					<td>
-						<a href="http://www.eclipse.org/downloads/download.php?file=/viatra/updates/zipped/org.eclipse.viatra.update.1.7.2.zip">Zipped repository</a>
+						<a href="http://www.eclipse.org/downloads/download.php?file=/viatra/updates/zipped/org.eclipse.viatra.update.1.7.2.zip">Zipped repository</a><br />
 						<a href="http://www.eclipse.org/downloads/download.php?file=/viatra/javadoc/javadoc-1.7.0.zip">Javadoc</a>
 					</td>
-					<td></td>
+					<td>Requires Xtext 2.9-2.13.</td>
 				</tr>
 				<tr>
 					<td><a href="https://projects.eclipse.org/projects/modeling.viatra/releases/1.6.2">1.6.2</a></td>
 					<td><code>http://download.eclipse.org/viatra/updates/release/1.6.2</code></td>
-					<td>Xtext 2.9-2.13</td>
 					<td>
-							<a href="http://www.eclipse.org/downloads/download.php?file=/viatra/updates/zipped/org.eclipse.viatra.update.1.6.2.zip">Zipped repository</a>
+							<a href="http://www.eclipse.org/downloads/download.php?file=/viatra/updates/zipped/org.eclipse.viatra.update.1.6.2.zip">Zipped repository</a><br />
 							<a href="http://www.eclipse.org/downloads/download.php?file=/viatra/javadoc/javadoc-1.6.0.zip">Javadoc</a>
 					</td>
-					<td>Included in Oxygen.2</td>
+					<td>Requires Xtext 2.9-2.13. Included in Oxygen.2</td>
 				</tr>
 				<tr>
 					<td><a href="https://projects.eclipse.org/projects/modeling.viatra/releases/1.5.3">1.5.3</a></td>
 					<td><code>http://download.eclipse.org/viatra/updates/release/1.5.3</code></td>
-					<td>Xtext 2.9-2.11</td>
 					<td>
 						<a href="http://www.eclipse.org/downloads/download.php?file=/viatra/updates/zipped/org.eclipse.viatra.update.1.5.3.zip">Zipped repository</a><br />
 					</td>
-					<td>Neon.2 compatibility</td>
+					<td>Requires Xtext 2.9-2.11. Neon.2 compatibility</td>
 				</tr>
 				<tr>
 					<td><a href="https://projects.eclipse.org/projects/modeling.viatra/releases/1.4.1">1.4.1</a></td>
 					<td><code>http://download.eclipse.org/viatra/updates/release/1.4.1</code></td>
-					<td>Xtext 2.9-2.11</td>
 					<td>
 						<a href="http://www.eclipse.org/downloads/download.php?file=/viatra/updates/zipped/org.eclipse.viatra.update.1.4.1.zip">Zipped repository</a><br />
 					</td>
-					<td>Neon.1 compatibility</td>
+					<td>Requires Xtext 2.9-2.11. Neon.1 compatibility</td>
 				</tr>
 				<tr>
 					<td><a href="https://projects.eclipse.org/projects/modeling.viatra/releases/1.3.0">1.3.0</a></td>
 					<td><code>http://download.eclipse.org/viatra/updates/release/1.3.0</code></td>
-					<td>Xtext 2.10</td>
 					<td>
 						<a href="http://www.eclipse.org/downloads/download.php?file=/viatra/updates/zipped/org.eclipse.viatra.update.1.3.0.zip">Zipped repository</a><br />
 					</td>
-					<td>Neon compatibility</td>
+					<td>Requires Xtext 2.10. Neon compatibility</td>
 				</tr>
 				<tr>
 					<td><a href="https://projects.eclipse.org/projects/modeling.viatra/releases/1.2.0">1.2.0</a></td>
 					<td><code>http://download.eclipse.org/viatra/updates/release/1.2.0</code></td>
-					<td>Xtext 2.9</td>
 					<td>
 						<a href="http://www.eclipse.org/downloads/download.php?file=/viatra/updates/zipped/org.eclipse.viatra.update.1.2.0.zip">Zipped repository</a><br />
 					</td>
-					<td>First version after merging EMF-IncQuery</td>
+					<td>Requires Xtext 2.9. First version after merging EMF-IncQuery</td>
 				</tr>
 			</tbody>
 		</table>
 
-		<h3>Additional update sites</h3>
+		<h3>Additional repositories</h3>
 
 		<p>The VIATRA project maintains different update sites to download from. The various sites contains versions of different stability and are subject of different amount of testing. CI and integration builds may contain breaking changes, while milestone and release builds should be stable for everyday use. As a general rule of thumb, you should use the release (or maybe the milestone) repository.</p>
 		<p><strong>Warning!</strong> Only release builds are retained undefinitely, but other builds will be periodically removed.</p>
@@ -127,7 +121,7 @@
 			</dd>
 			<dt>Release composite</dt>
 			<dd>
-				<code>http://download.eclipse.org/viatra/updates/release</code> - This site contains all releases of VIATRA. <strong>Note:</strong> It is not supported to combine features from various release repositories. When installing components from this site, ensure that everything selected comes from the same version. This can be problematic
+				<code>http://download.eclipse.org/viatra/updates/release</code> - This site contains all releases of VIATRA. <strong>Note:</strong> It is not supported to combine features from various release repositories. When installing components from this site, ensure that everything selected comes from the same release. This can be problematic if a feature was removed, as old versions can still show up in the composite repository.
 			</dd>
 			<dt>Milestone builds</dt>
 			<dd>
@@ -140,9 +134,7 @@
 		</dl>
 
 		</div>
-	</section>
 
-	<section class=" ">
 		<div class="row">
 	<h3>Older releases</h3>
 	<p>
@@ -151,7 +143,6 @@
 		</div>
 	</section>
 
-<div class="clear"></div>
 <ng-include src="'/viatra/angular/blocks/footer.html'"></ng-include>
 
 </body>
