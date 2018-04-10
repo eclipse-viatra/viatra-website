@@ -44,10 +44,19 @@
 
 	<section class="">
 		<div class="row">
-	    <h3>p2 repositories</h3>
-		<p>To install the latest version of VIATRA, it is recommended to use the Marketplace client. For manual installation, use the version-specific p2 repository depicted in the list below, and provide its URL in the <em>Install new software ...</em> wizard (accessible from the Help menu).</p>
+	    <h3>Installing the current version</h3>
+		<p>For manual installation, use provide the p2 repository url <code>http://download.eclipse.org/viatra/updates/release/latest</code> in the <em>Install new software ...</em> wizard (accessible from the Help menu). Installation instructions: </p>
+		
+		<ul>
+			<li>Choose <em>Help</em> -> <em>Install New Software...</em> from the menu bar and Add....</li>
+			<li>Select the <em>VIATRA Query and Transformation SDK</em> from the category <em>VIATRA</em>> and complete the wizard by clicking the Next button until you can click Finish.</li>
+			<li>After a quick download and a restart of Eclipse, VIATRA is ready to use.</li>
+		</ul>
 
-		<p>For offline installations it is possible to download the release sites as a zip file. In this case, make sure you have the corresponding <a
+		<h3>p2 repositories</h3>
+		<p>Older releases are available in version-specific repositories, for details, consult the table below.</p>
+			
+		<p>the release repositories can also be downloaded as zip files for offline installation. In such cases, make sure you have the corresponding <a
 		href="http://www.eclipse.org/Xtext/download.html">Xtext</a> version installed. To install such a version, download the zip file from below, and add it as a local repository using the <em>Install new software...</em> wizard.</p>
 
 		<table>
@@ -110,15 +119,11 @@
 			</tbody>
 		</table>
 
-		<h3>Additional repositories</h3>
+		<h3>Development versions</h3>
 
 		<p>The VIATRA project maintains different update sites to download from. The various sites contains versions of different stability and are subject of different amount of testing. CI and integration builds may contain breaking changes, while milestone and release builds should be stable for everyday use. As a general rule of thumb, you should use the release (or maybe the milestone) repository.</p>
 		<p><strong>Warning!</strong> Only release builds are retained undefinitely, but other builds will be periodically removed.</p>
 		<dl>
-			<dt>Latest release</dt>
-			<dd>
-				<code>http://download.eclipse.org/viatra/updates/release/latest</code> - This site contains only the latest release of VIATRA. It will be updated after each consecutive release.
-			</dd>
 			<dt>Release composite</dt>
 			<dd>
 				<code>http://download.eclipse.org/viatra/updates/release</code> - This site contains all releases of VIATRA. <strong>Note:</strong> It is not supported to combine features from various release repositories. When installing components from this site, ensure that everything selected comes from the same release. This can be problematic if a feature was removed, as old versions can still show up in the composite repository.
