@@ -1788,7 +1788,8 @@ footer#solstice-footer .logo-eclipse-white {
     position: relative;
     padding-bottom: 56.25%;
     padding-top: 25px;
-    height: 0;
+	height: 0;
+	cursor: pointer;
 }
 .videowrapper iframe {
     position: absolute;
@@ -1816,4 +1817,5 @@ footer#solstice-footer .logo-eclipse-white {
 	margin-bottom: 0;
 	left: 35%;
 	top:50%;
+	cursor: pointer;
 }
