@@ -5,6 +5,7 @@ if (parts.length == 2 && parts.pop().split(";").shift() == "allow") {
     for (var i=0; i<videos.length; i++) {
         var youtube = videos[i];
 
+        var imgUrl = youtube.firstChild.firstChild.getAttribute("src")
         // Remove statically generated content (a/img tags)
         while(youtube.firstChild) {
             youtube.removeChild(youtube.firstChild);
@@ -12,7 +13,7 @@ if (parts.length == 2 && parts.pop().split(";").shift() == "allow") {
         
         // Replace it with a static overlay image
         var img = document.createElement("img");
-        img.setAttribute("src", "./images/screenshots/home/viatra-ide-video.jpg");
+        img.setAttribute("src", imgUrl);
         img.setAttribute("class", "thumb");
         
 
