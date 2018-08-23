@@ -56,31 +56,21 @@
 <div class="paragraph">
 <p>This tutorial includes a <strong>quick setup guide</strong>, then describes both <strong>model query development</strong> and their usage in the <strong>query runtime</strong>. Then, both <strong>batch</strong> and <strong>event-driven transformations</strong> are covered.</p>
 </div>
-<div class="paragraph">
-<p>This document is intended only as a short tutorial for the usage of the Query and Transformation capabilities of VIATRA. A more detailed documentation is maintained at <a href="http://wiki.eclipse.org/VIATRA" class="bare">http://wiki.eclipse.org/VIATRA</a>.</p>
-</div>
 <div id="toc" class="toc">
 <div id="toctitle" class="title">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#environment">1. Setting up the tutorial</a></li>
-<li><a href="#_domains">2. Domains</a>
+<li><a href="#_query_development">2. Query Development</a>
 <ul class="sectlevel2">
-<li><a href="#_cyber_physical_system">2.1. Cyber Physical System</a></li>
-<li><a href="#_deployment" target="_self">2.2. Deployment</a></li>
-<li><a href="#_traceability">2.3. Traceability</a></li>
+<li><a href="#_using_the_query_development_environment">2.1. Using the Query Development Environment</a></li>
+<li><a href="#_using_queries_programmatically">2.2. Using Queries Programmatically</a></li>
 </ul>
 </li>
-<li><a href="#_query_development">3. Query Development</a>
+<li><a href="#_model_transformation_development">3. Model Transformation Development</a>
 <ul class="sectlevel2">
-<li><a href="#_using_the_query_development_environment">3.1. Using the Query Development Environment</a></li>
-<li><a href="#_using_queries_programmatically">3.2. Using Queries Programmatically</a></li>
-</ul>
-</li>
-<li><a href="#_model_transformation_development">4. Model Transformation Development</a>
-<ul class="sectlevel2">
-<li><a href="#_batch_transformations">4.1. Batch Transformations</a></li>
-<li><a href="#_event_driven_transformations">4.2. Event-driven Transformations</a></li>
-<li><a href="#_debugging_model_transformations">4.3. Debugging model transformations</a></li>
+<li><a href="#_batch_transformations">3.1. Batch Transformations</a></li>
+<li><a href="#_event_driven_transformations">3.2. Event-driven Transformations</a></li>
+<li><a href="#_debugging_model_transformations">3.3. Debugging model transformations</a></li>
 </ul>
 </li>
 </ul>
@@ -92,10 +82,7 @@
 <h2 id="environment"><a class="link" href="#environment">1. Setting up the tutorial</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This tutorial was written for version 1.6 (released on 28th June 2017).</p>
-</div>
-<div class="paragraph">
-<p>Starting with version 1.6 VIATRA is available from the Simultaneous Release Train (Oxygen version: <a href="http://download.eclipse.org/releases/oxygen" class="bare">http://download.eclipse.org/releases/oxygen</a>); for older releases or for older version use the release p2 repository at <a href="http://download.eclipse.org/viatra/updates/release/" class="bare">http://download.eclipse.org/viatra/updates/release/</a></p>
+<p>This tutorial was written for version 2.0.0 (released on 28th June 2018). VIATRA 2.0 is available from the Simultaneous Release Train p2 repository (<a href="http://download.eclipse.org/releases/photon" class="bare">http://download.eclipse.org/releases/photon</a>); for older releases or for older versions use the release p2 repository at <a href="http://download.eclipse.org/viatra/updates/release/2.0.0" class="bare">http://download.eclipse.org/viatra/updates/release/2.0.0</a></p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -104,7 +91,7 @@
 <div class="title">Figure 1. Install window</div>
 </div>
 <div class="paragraph">
-<p>For a faster installation, you may deselect the <em>Contact all update sites during install...</em> field, but then it might be necessary to install the required <em>Xtext Runtime</em> manually.</p>
+<p>For a faster installation, you may deselect the <em>Contact all update sites during install...</em> field, but then it might be necessary to install the required <em>Eclipse Collections</em> and <em>Xtext Runtime</em> features manually.</p>
 </div>
 <div class="paragraph">
 <p>This document assumes that the CPS metamodels are installed into the Eclipse instance. They are available from the p2 repository <a href="http://download.eclipse.org/viatra/examples/cps" class="bare">http://download.eclipse.org/viatra/examples/cps</a></p>
@@ -113,68 +100,17 @@
 <p>VIATRA defines a custom perspective called <code>Transformation Development</code> that includes a few views and shortcuts that make it easier to develop queries and transformations. The remainder of the tutorial expects that this perspective is selected; in case a different perspective is used, the corresponding views and wizards are still available in their standard respective locations.</p>
 </div>
 <div style="page-break-after: always;"></div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_domains"><a class="link" href="#_domains">2. Domains</a></h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_cyber_physical_system"><a class="link" href="#_cyber_physical_system">2.1. Cyber Physical System</a></h3>
 <div class="paragraph">
-<p>The CPS domain specifies application and host types and their instances, requests and requirements on applications and resource requirements of applications towards hosts. Application types have a state machine that describes their behavior through states and transitions. Finally, application instances can be allocated to host instances that can communicate with each other.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="./images/cps/cps_ecore.png" alt="Cyber Physical System model Ecore diagram">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Host instances have a unique node IP address.</p>
-</li>
-<li>
-<p>Application instances have a unique identifier.</p>
-</li>
-<li>
-<p>State machines can define an initial state.</p>
-</li>
-<li>
-<p>Transitions may specify an action for sending or waiting for a signal. A signal can be sent by providing an application type (with its ID) and a signal identifier, while waiting for a signal is done by specifying its identifier.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_deployment"><a class="link" href="#_deployment">2.2. Deployment</a></h3>
-<div class="paragraph">
-<p>In the deployment model, host instances contain the applications that are running on them, while each application has a behavior with states and transitions. The behavior has a current state and transitions may trigger other transitions when the triggered transition is waiting for the signal they are sending and the application type is correct.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="./images/cps/deployment_ecore.png" alt="Deployment model Ecore diagram">
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_traceability"><a class="link" href="#_traceability">2.3. Traceability</a></h3>
-<div class="paragraph">
-<p>The traceability model describes the correspondence between a CPS and a deployment model. The traceability is stored in a set of traces that refer to zero, one or multiple CPS and deployment elements.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="./images/cps/traceability_ecore.png" alt="Traceability model Ecore diagram">
-</div>
-</div>
+<p>Unresolved directive in tutorial.asciidoc - include::cps/Domains.adoc[leveloffset=+1]</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_query_development"><a class="link" href="#_query_development">3. Query Development</a></h2>
+<h2 id="_query_development"><a class="link" href="#_query_development">2. Query Development</a></h2>
 <div class="sectionbody">
 <div style="page-break-after: always;"></div>
 <div class="sect2">
-<h3 id="_using_the_query_development_environment"><a class="link" href="#_using_the_query_development_environment">3.1. Using the Query Development Environment</a></h3>
+<h3 id="_using_the_query_development_environment"><a class="link" href="#_using_the_query_development_environment">2.1. Using the Query Development Environment</a></h3>
 <div class="paragraph">
 <p>Constraints and conditions in the VIATRA framework are expressed using a graph pattern-based language. This declarative formalism allows very compact definitions of complex conditions, while it is still possible to provide live query evaluation based on the Rete algorithm.</p>
 </div>
@@ -197,7 +133,7 @@ The pattern language always works on sets: neither the constraints nor the match
 </table>
 </div>
 <div class="sect3">
-<h4 id="_define_your_first_query"><a class="link" href="#_define_your_first_query">3.1.1. Define your First Query</a></h4>
+<h4 id="_define_your_first_query"><a class="link" href="#_define_your_first_query">2.1.1. Define your First Query</a></h4>
 <div class="paragraph">
 <p>To define queries, first a  <em>VIATRA Query Project</em> has to be created with the standard <em>New Project Wizard</em> of Eclipse. Such projects are specialized Eclipse plug-in projects with preconfigured VIATRA dependencies and the query generator initialized. Query specifications have to be added to the Java classpath of the projects, more specifically into Java packages. Based on these observations the creation of the first query consists of the following steps:</p>
 </div>
@@ -214,8 +150,8 @@ The pattern language always works on sets: neither the constraints nor the match
 <div id="vql-first" class="listingblock">
 <div class="title">queries.vql</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">// Java package declaration, must match the container of the file
-package org.eclipse.viatra.examples.cps.queries
+<pre class="highlight"><code class="language-vql" data-lang="vql">// Java package declaration, must match the container of the file
+package org.eclipse.viatra.documentation.example.queries
 
 // EPackage import
 import "http://org.eclipse.viatra/model/cps"
@@ -235,7 +171,7 @@ pattern hostIpAddress(host: HostInstance, ip : java String) {
 </div>
 </div>
 <div class="sect3">
-<h4 id="_evaluate_queries_in_the_query_results_view"><a class="link" href="#_evaluate_queries_in_the_query_results_view">3.1.2. Evaluate Queries in the Query Results View</a></h4>
+<h4 id="_evaluate_queries_in_the_query_results_view"><a class="link" href="#_evaluate_queries_in_the_query_results_view">2.1.2. Evaluate Queries in the Query Results View</a></h4>
 <div class="paragraph">
 <p>VIATRA includes a view to evaluate the results of queries over various editors, and reacts on changes in the editor.</p>
 </div>
@@ -290,7 +226,7 @@ If the 'Load model from active editor' button is not enabled, it either means, t
 </div>
 </div>
 <div class="sect3">
-<h4 id="_define_additional_queries"><a class="link" href="#_define_additional_queries">3.1.3. Define Additional Queries</a></h4>
+<h4 id="_define_additional_queries"><a class="link" href="#_define_additional_queries">2.1.3. Define Additional Queries</a></h4>
 <div class="paragraph">
 <p>In the following, we define a set of patterns that illustrate additional capabilities of the query language. Each pattern will come with a short definition, followed by the code itself and some remarks about how the pattern works.</p>
 </div>
@@ -307,7 +243,7 @@ If the 'Load model from active editor' button is not enabled, it either means, t
 <p>Notice that if you create a new <code>HostInstance</code> element, it will not appear in the match results. This happens because in EMF unset an empty attributes are different. You can write a pattern that finds missing attribute values using the <code>neg find</code> construct (see later).</p>
 <div id="vql-emptyipaddress" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">pattern emptyIpAddress(host: HostInstance) {
+<pre class="highlight"><code class="language-vql" data-lang="vql">pattern emptyIpAddress(host: HostInstance) {
     HostInstance.nodeIp(host, "");
 }</code></pre>
 </div>
@@ -324,7 +260,7 @@ If the 'Load model from active editor' button is not enabled, it either means, t
 <p>This pattern is more complex, as it has three parameters and three constraints. The first two describe similar type constraints we have seen. The pattern also compares the values of variables <code>host1</code> and <code>host2</code> with each other using the <code>!=</code> (<em>not equal</em>) operator (The <code>==</code> operator is also available).</p>
 <div id="vql-sameipaddress" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">pattern sameIpAddress(host1 : HostInstance, host2 : HostInstance, commonIp : java String) {
+<pre class="highlight"><code class="language-vql" data-lang="vql">pattern sameIpAddress(host1 : HostInstance, host2 : HostInstance, commonIp : java String) {
     HostInstance.nodeIp(host1, commonIp);
     HostInstance.nodeIp(host2, commonIp);
     host1!=host2;
@@ -346,7 +282,7 @@ If the 'Load model from active editor' button is not enabled, it either means, t
 <p>It is important to note that check expressions <strong>have to</strong> be side-effect free and can only be called on attribute variables.</p>
 <div id="vql-ipformatinvalid" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">pattern ipFormatInvalid(host : HostInstance, ip : java String) {
+<pre class="highlight"><code class="language-vql" data-lang="vql">pattern ipFormatInvalid(host : HostInstance, ip : java String) {
     HostInstance.nodeIp(host,ip);
     check (
         !ip.matches("^[\\d\\.]+")
@@ -369,7 +305,7 @@ If the 'Load model from active editor' button is not enabled, it either means, t
 <p>It is important to note that if there are multiple transitions between two states, the match set will still include only a single pair of the states, because local variables are not included in the match tuples. If all edges are required, the corresponding transition variable should also be declared as a parameter.</p>
 <div id="vql-connectedto" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">pattern connectedTo(state: State, other: State){
+<pre class="highlight"><code class="language-vql" data-lang="vql">pattern connectedTo(state: State, other: State){
     // There exists a transition from `state` to `other`
     State.outgoingTransitions(state, transition);
     Transition.targetState(transition, other);
@@ -394,7 +330,7 @@ If the 'Load model from active editor' button is not enabled, it either means, t
 <p>This pattern also includes <em>single-use</em> (or don&#8217;t care) variables, starting with the character '_'. Such a declaration describes a variable where we are only interested in its existence but not its value.</p>
 <div id="vql-badhost" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">pattern badHost(host : HostInstance, ip : java String) {
+<pre class="highlight"><code class="language-vql" data-lang="vql">pattern badHost(host : HostInstance, ip : java String) {
     find sameIpAddress(host, _other, ip);
 } or {
     HostInstance.nodeIp(host, ip);
@@ -419,7 +355,7 @@ If the 'Load model from active editor' button is not enabled, it either means, t
 <p>Those actual parameters of the negative pattern call that are not used elsewhere in the calling body are <em>universally quantified</em>, meaning that the calling pattern only matches if variables of the calling pattern cannot be bound to matching elements.</p>
 <div id="vql-goodhost" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">pattern goodHost(host : HostInstance, ip : java String) {
+<pre class="highlight"><code class="language-vql" data-lang="vql">pattern goodHost(host : HostInstance, ip : java String) {
     HostInstance.nodeIp(host, ip);
     neg find badHost(host, _);
 }</code></pre>
@@ -440,12 +376,12 @@ If the 'Load model from active editor' button is not enabled, it either means, t
 <p>It is possible to calculate the matches of a pattern using the <code>count find</code> expressions. The value of such an expression is the number of matches found with the selected number of matches.</p>
 <div id="vql-countapplications" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">private pattern applications(host : HostInstance, app : ApplicationInstance) {
+<pre class="highlight"><code class="language-vql" data-lang="vql">private pattern allocatedApplications(host : HostInstance, app : ApplicationInstance) {
     HostInstance.applications(host, app);
 }
 
 pattern countApplications(host : HostInstance, m : java Integer) {
-    m == count find applications(host, _);
+    m == count find allocatedApplications(host, _);
 }</code></pre>
 </div>
 </div>
@@ -461,7 +397,7 @@ pattern countApplications(host : HostInstance, m : java Integer) {
 <p>The reachable states are calculated using the transitive closure of the previously introduced connectedTo pattern.</p>
 <div id="vql-reachablestate" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">pattern reachableState(sm :StateMachine, state: State){
+<pre class="highlight"><code class="language-vql" data-lang="vql">pattern reachableState(sm :StateMachine, state: State){
     // The initial state of the statemachine is reachable
     StateMachine.initial(sm, state);
 } or {
@@ -481,7 +417,7 @@ pattern countApplications(host : HostInstance, m : java Integer) {
 </div>
 </div>
 <div class="sect3">
-<h4 id="_validation"><a class="link" href="#_validation">3.1.4. Validation</a></h4>
+<h4 id="_validation"><a class="link" href="#_validation">2.1.4. Validation</a></h4>
 <div class="paragraph">
 <p>VIATRA provides facilities to create validation rules based on the pattern language of the framework. These rules can be evaluated on various EMF instance models and upon violations of constraints, markers are automatically created in the Eclipse Problems View.</p>
 </div>
@@ -521,7 +457,7 @@ To find a specific editor id, we can use the <em>Plug-in Selection Spy</em> tool
 </div>
 <div id="vql-constraint" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">@Constraint(targetEditorId = "org.eclipse.viatra.examples.cps.cyberPhysicalSystem.presentation.CyberPhysicalSystemEditorID",
+<pre class="highlight"><code class="language-vql" data-lang="vql">@Constraint(targetEditorId = "org.eclipse.viatra.examples.cps.cyberPhysicalSystem.presentation.CyberPhysicalSystemEditorID",
             severity = "error",
             message = "The ip address is not unique",
             key = {host1})
@@ -537,7 +473,87 @@ pattern sameIpAddress(host1: HostInstance, host2: HostInstance, commonIp : java 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_references"><a class="link" href="#_references">3.1.5. References</a></h4>
+<h4 id="_more_complex_queries"><a class="link" href="#_more_complex_queries">2.1.5. More Complex Queries</a></h4>
+<div class="paragraph">
+<p>This section introduces a set of more complex queries, useful for both introducing the remaining language features such as aggregators while illustrating the way the query language allows breaking down more complex conditions.</p>
+</div>
+<div class="sect4">
+<h5 id="_calculate_the_maximum_number_of_instances"><a class="link" href="#_calculate_the_maximum_number_of_instances">2.1.5.1. Calculate the Maximum Number of Instances</a></h5>
+<div class="paragraph">
+<p>It is possible to find the Application Type that has the most instances defined in the model by combining a <em>counting</em> of the values of the related feature and a <em>max</em> function.  The <code>numberOfInstances</code> helper pattern uses a <code>count</code> call of the <code>ApplicationType.instances</code> feature (note the omission of the <code>find</code> keyword there). This feature is available starting with VIATRA 2.0, and allows reducing the number of trivial helper patterns, like the pattern <code>hostIpAddress</code> introduced earlier in this tutorial.</p>
+</div>
+<div class="paragraph">
+<p>After the counts are available in the match set of a pattern, it is easy to calculate the maximum value using the <code>max find</code> construct.</p>
+</div>
+<div id="vql-maximumNumberOfInstances" class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-vql" data-lang="vql">pattern maximumNumberOfInstances(at : ApplicationType, max : java Integer) {
+	max == max find sumNumberOfInstances(at, #);
+}
+
+pattern sumNumberOfInstances(at : ApplicationType, n : java Integer) {
+	n == count ApplicationType.instances(at, _);
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_check_memory_requirements_of_a_host"><a class="link" href="#_check_memory_requirements_of_a_host">2.1.5.2. Check Memory Requirements of a Host</a></h5>
+<div class="paragraph">
+<p>The CPS metamodel explicitly stores requirements of applications, and both free and total resource values in case of host instances. However, checking that application requirements and free and total values are consistent requires checking.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/tutorial/cps_resources.png" alt="Requirements in the CPS Metamodel">
+</div>
+<div class="title">Figure 4. Requirement handling in the metamodel</div>
+</div>
+<div class="paragraph">
+<p>In the following example we focus on the memory requirements, but similar queries can be provided for CPU or HDD requirements. The well-formedness constraint we are trying to enforce is as follows: <code>FREE MEMORY + SUM(MEMORY OF DEPLOYED APPLICATIONS) = TOTAL MEMORY</code>.</p>
+</div>
+<div class="paragraph">
+<p>The pattern requires two helper patterns: one of them (<code>applicationTypeRequirementRAM</code>) is responsible for collecting the RAM requirement for a selected <code>Application Type</code>, the other (<code>totalMemoryRequirements</code>) summarizes all memory requirements a selected application instance.</p>
+</div>
+<div class="paragraph">
+<p>Using these helper patterns, the <code>invalidMemoryRequirement</code> pattern executes two additional steps: (1) it <em>summarizes</em> the results of the pattern <code>totalMemoryRequirements</code> with regards to the application instances allocated to a host instance, and (2) <em>checks</em> whether the three requirements are consistent.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+A Host Instance is allocated to at most a single application, so it is not required to summarize the requirements of all applications here as done in the <code>invalidMemoryRequirement</code> pattern. However, adding this element to the query illustrates how to use <code>sum</code> correctly if multiple levels of summarization is necessary.
+</td>
+</tr>
+</table>
+</div>
+<div id="vql-invalidMemoryRequirement" class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-vql" data-lang="vql">pattern invalidMemoryRequirement(h : HostInstance, available : java Integer, allocated : java Integer, total : java Integer) {
+	HostInstance.availableRam(h, available);
+	HostInstance.totalRam(h, total);
+	allocated == sum find totalMemoryRequirements(h, _, #);
+	check(total != allocated + available);
+}
+
+private pattern totalMemoryRequirements(h : HostInstance, ai : ApplicationInstance, ram : java Integer) {
+	HostInstance.applications(h, ai);
+	ApplicationInstance.type(ai, at);
+	ram == sum find applicationTypeRequirementRAM(at, #);
+}
+
+private pattern applicationTypeRequirementRAM(at : ApplicationType, ram : java Integer) {
+	ApplicationType.requirements(at, req);
+	ResourceRequirement.requiredRam(req, ram);
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_references"><a class="link" href="#_references">2.1.6. References</a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -555,7 +571,7 @@ pattern sameIpAddress(host1: HostInstance, host2: HostInstance, commonIp : java 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_using_queries_programmatically"><a class="link" href="#_using_queries_programmatically">3.2. Using Queries Programmatically</a></h3>
+<h3 id="_using_queries_programmatically"><a class="link" href="#_using_queries_programmatically">2.2. Using Queries Programmatically</a></h3>
 <div class="paragraph">
 <p>VIATRA Query provides an API to execute queries on various models, including support for listening to match set changes. However, as the incremental evaluation relies on indexes, the API also covers lifecycle management for the runtime. The central element of the API is the Query Engine that is responsible for loading query specifications, setting up indexes and providing match results. This approach is supported by code generators that create a runtime representation for graph patterns and provide a type-safe API to access VIATRA code.</p>
 </div>
@@ -563,32 +579,44 @@ pattern sameIpAddress(host1: HostInstance, host2: HostInstance, commonIp : java 
 <div class="content">
 <img src="./images/tutorial/query_runtime.png" alt="query runtime">
 </div>
-<div class="title">Figure 4. Overview of the runtime components of VIATRA Query</div>
+<div class="title">Figure 5. Overview of the runtime components of VIATRA Query</div>
 </div>
 <div class="paragraph">
 <p>To start working with the VIATRA Query API, we have to provide (1) a Scope representing the model and a (2) set of query specifications. The easiest way to initialize a scope, is to simply wrap an EMF ResourceSet inside a new EMFScope instace. For query specifications, the generated matcher classes can be used as an example, see as follows.</p>
 </div>
 <div class="paragraph">
-<p>In general, the generated code in a VIATRA Query project consists of a (1) query specification classes that represents the original VQL specifications for the runtime API, (2) a Match and Matcher class for each pattern definition (recommended for general usage) together with (3) a match processor class to execute some actions on pattern matches in a Java stream-like API. Finally, (4) a group class for each file that can be used to initialize all queries together.</p>
+<p>In general, the generated code in a VIATRA Query project is based on a (1) query specification classes representing the original VQL specifications for the runtime API, sharing a qualified class name with the original pattern specification. Each query specification includes (2) a Match and Matcher nested subclass for each pattern definition (recommended for general usage). Finally, (3) a group class for each file that can be used to initialize all queries together, using the same Java classname as the original vql file.</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="./images/tutorial/query_generated_code.png" alt="query generated code">
 </div>
-<div class="title">Figure 5. Structure of the query generated code</div>
+<div class="title">Figure 6. Structure of the query generated code</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The default generated API structure was changed in VIATRA 2.0. Before VIATRA 2.0 query specifications, matches and matchers were generated into separate classes. The remainder of the tutorial relies on the new generation schema; using the old schema requires a few updates in the code, specifically for match and matcher class references are to be updated accordingly.
+</td>
+</tr>
+</table>
 </div>
 <div class="sect3">
-<h4 id="_initialize_a_headless_application"><a class="link" href="#_initialize_a_headless_application">3.2.1. Initialize a headless Application</a></h4>
+<h4 id="_initialize_a_headless_application"><a class="link" href="#_initialize_a_headless_application">2.2.1. Initialize a headless Application</a></h4>
 <div class="paragraph">
 <p>To illustrate the usage of the VIATRA Query API, we will create a headless Eclipse application, and execute it over one of the queries written in the previous part. Such an application is a Java class registered using the extension point <code><code>org.eclipse.core.runtime.applications</code></code> (requiring the <code><code>org.eclipse.core.runtime</code></code> bundle as a dependency).</p>
 </div>
 <div id="query-runtime-app-extension" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">  &lt;extension id="queryrunner" point="org.eclipse.core.runtime.applications"&gt;
-    &lt;application cardinality="singleton-global" thread="main" visible="true"&gt;
-      &lt;run class="org.eclipse.viatra.examples.cps.queries.runner.QueryRunner"/&gt;
-    &lt;/application&gt;
-  &lt;/extension&gt;</code></pre>
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;extension id="queryrunner" point="org.eclipse.core.runtime.applications"&gt;
+  &lt;application cardinality="singleton-global" thread="main" visible="true"&gt;
+    &lt;run class="org.eclipse.viatra.examples.cps.queries.runner.QueryRunner"/&gt;
+  &lt;/application&gt;
+&lt;/extension&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -596,7 +624,7 @@ pattern sameIpAddress(host1: HostInstance, host2: HostInstance, commonIp : java 
 </div>
 <div id="query-runtime-app-code" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class QueryRunner implements IApplication {
+<pre class="highlight"><code class="language-java" data-lang="java">public class QueryRunner implements IApplication {
 
 	@Override
 	public Object start(IApplicationContext context) throws Exception {
@@ -619,21 +647,21 @@ pattern sameIpAddress(host1: HostInstance, host2: HostInstance, commonIp : java 
 <div class="content">
 <img src="./images/tutorial/run_headless_application.png" alt="run headless application">
 </div>
-<div class="title">Figure 6. Running the Query Runner application</div>
+<div class="title">Figure 7. Running the Query Runner application</div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_initializing_a_query_engine"><a class="link" href="#_initializing_a_query_engine">3.2.2. Initializing a Query Engine</a></h4>
+<h4 id="_initializing_a_query_engine"><a class="link" href="#_initializing_a_query_engine">2.2.2. Initializing a Query Engine</a></h4>
 <div class="paragraph">
 <p>To initialize a query engine, as first step an EMF scope has to be loaded. This can be done using the following code segment (expecting the model file was copied into the root of the queries project):</p>
 </div>
 <div id="query-runtime-scope" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private EMFScope initializeModelScope() throws IOException, ViatraQueryException {
+<pre class="highlight"><code class="language-java" data-lang="java">private EMFScope initializeModelScope() throws ViatraQueryException {
 	ResourceSet rs = new ResourceSetImpl();
-	Resource res = rs.createResource(URI.createPlatformPluginURI("org.eclipse.viatra.examples.cps.queries/example.cyberphysicalsystem", false));
-	res.load(new HashMap&lt;&gt;());
-    return new EMFScope(rs);
+	rs.getResource(URI.createPlatformPluginURI("org.eclipse.viatra.examples.cps.queries/example.cyberphysicalsystem", true), true);
+
+	return new EMFScope(rs);
 }</code></pre>
 </div>
 </div>
@@ -645,7 +673,7 @@ pattern sameIpAddress(host1: HostInstance, host2: HostInstance, commonIp : java 
 </div>
 <div id="query-runtime-prepare" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private ViatraQueryEngine prepareQueryEngine(EMFScope scope) throws ViatraQueryException {
+<pre class="highlight"><code class="language-java" data-lang="java">private ViatraQueryEngine prepareQueryEngine(EMFScope scope) {
 	// Access managed query engine
     ViatraQueryEngine engine = ViatraQueryEngine.on(scope);
 
@@ -670,20 +698,20 @@ If multiple query groups are to be loaded, either create a generic pattern group
 </div>
 </div>
 <div class="sect3">
-<h4 id="_the_pattern_matcher_api"><a class="link" href="#_the_pattern_matcher_api">3.2.3. The pattern matcher API</a></h4>
+<h4 id="_the_pattern_matcher_api"><a class="link" href="#_the_pattern_matcher_api">2.2.3. The pattern matcher API</a></h4>
 <div class="paragraph">
 <p>The easiest way to use all the query engine is to ask for all matches of a query. The <code><code>getAllMatches</code></code> method of a pattern matcher returns a <strong>set</strong> of match objects that allow named references to its parameters</p>
 </div>
 <div id="query-runtime-printallmatches" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private void printAllMatches(ViatraQueryEngine engine) throws ViatraQueryException {
-    // Access pattern matcher
-    HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
-    // Get and iterate over all matches
-    for (HostIpAddressMatch match : matcher.getAllMatches()) {
-        // Print all the matches to the standard output
-        System.out.println(match.getHost());
-    }
+<pre class="highlight"><code class="language-java" data-lang="java">private void printAllMatches(ViatraQueryEngine engine ) throws ViatraQueryException {
+	// Access pattern matcher
+	HostIpAddress.Matcher matcher = HostIpAddress.Matcher.on(engine);
+	// Get and iterate over all matches
+	for (HostIpAddress.Match match : matcher.getAllMatches()) {
+		// Print all the matches to the standard output
+		System.out.println(match.getHost());
+	}
 }</code></pre>
 </div>
 </div>
@@ -700,11 +728,11 @@ It is safe to ask for the same matcher multiple times using the <code><code>on</
 </table>
 </div>
 <div class="paragraph">
-<p>It is also possible to use a more functional style processing of matches using match processors.</p>
+<p>It is also possible to use a more functional style processing of matches with a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html">Consumer</a>.</p>
 </div>
-<div id="query-runtime-printallmatches2" class="listingblock">
+<div id="query-runtime-printAllMatches2" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private void printAllMatches2(ViatraQueryEngine engine) throws ViatraQueryException {
+<pre class="highlight"><code class="language-java" data-lang="java">private void printAllMatches2(ViatraQueryEngine engine) {
     HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
     matcher.forEachMatch(new HostIpAddressProcessor() {
 
@@ -717,29 +745,43 @@ It is safe to ask for the same matcher multiple times using the <code><code>on</
 </div>
 </div>
 <div class="paragraph">
-<p>When using Java 8, the same functionality can be accessed using lambda functions, however in this case only the match can be used as a parameter.</p>
+<p>This can be simplified with a lambda expression as follows:</p>
 </div>
-<div id="query-runtime-printallmatches3" class="listingblock">
+<div id="query-runtime-printAllMatches3" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private void printAllMatches3(ViatraQueryEngine engine) throws ViatraQueryException {
-    HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
-    // The lambda method implements IMatchProcessor&lt;HostIpAddressMatch&gt;
-    matcher.forEachMatch((match) -&gt; {
-            System.out.println(match.getHost());
-        });
+<pre class="highlight"><code class="language-java" data-lang="java">private void printAllMatches3(ViatraQueryEngine engine ) throws ViatraQueryException {
+	HostIpAddress.Matcher matcher = HostIpAddress.Matcher.on(engine);
+	for (HostInstance hi : matcher.getAllValuesOfhost()) {
+		System.out.println(hi);
+	}
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Often it is beneficial to check for and process only a single match. For this reason it is possible to ask for a single match using the <code><code>getOneArbitraryMatch</code></code> method.</p>
+<p>Often it is beneficial to check for and process only a single match. For this reason it is possible to ask for a single match using the <code><code>getOneArbitraryMatch</code></code> method. In order to handle cases where the given matcher has no matches in the current model, this method returns with an <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Optional.html">Optional</a> instance.</p>
 </div>
 <div id="query-runtime-printonematch" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private void printOneMatch(ViatraQueryEngine engine) throws ViatraQueryException {
-    HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
-    System.out.println(matcher.getOneArbitraryMatch());
+<pre class="highlight"><code class="language-java" data-lang="java">private void printOneMatch(ViatraQueryEngine engine) throws ViatraQueryException {
+	HostIpAddress.Matcher matcher = HostIpAddress.Matcher.on(engine);
+	// getOneArbitraryMatch returns an optional
+	matcher.getOneArbitraryMatch()
+		//Print out the match only if available
+		.ifPresent(match -&gt; System.out.println(match.getHost()));
 }</code></pre>
 </div>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Caution"></i>
+</td>
+<td class="content">
+The match returned by the <code><code>getOneArbitraryMatch</code></code> is neither random nor deterministic, but unspecified. <em>Usually</em> repeatedly calling it on the same model (without any model updates) returns the same match, but this is also not guaranteed. On the other hand, restarting the application on the same model <em>usually</em> changes the match returned.
+</td>
+</tr>
+</table>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -748,7 +790,7 @@ It is safe to ask for the same matcher multiple times using the <code><code>on</
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The match returned by the <code><code>getOneArbitraryMatch</code></code> is neither random nor deterministic, but unspecified. <em>Usually</em> repeatedly calling it on the same model (without any model updates) returns the same match, but this is also not guaranteed. On the other hand, restarting the application on the same model <em>usually</em> changes the match returned.
+Before version 2.0, <code><code>getOneArbitraryMatch</code></code> returned <code><code>null</code></code> if no matches are available. Do not forget to handle this case if necessary.
 </td>
 </tr>
 </table>
@@ -758,8 +800,8 @@ The match returned by the <code><code>getOneArbitraryMatch</code></code> is neit
 </div>
 <div id="query-runtime-printalladdresses" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private void printAllAddresses(ViatraQueryEngine engine) throws ViatraQueryException {
-    HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
+<pre class="highlight"><code class="language-java" data-lang="java">private void printAllAddresses(ViatraQueryEngine engine) {
+    HostIpAddress.Matcher matcher = HostIpAddress.Matcher.on(engine);
     for (String ip : matcher.getAllValuesOfip()) {
         System.out.println(ip);
     }
@@ -783,11 +825,11 @@ If there are multiple hosts that have the same IP address, the <code><code>getAl
 </div>
 <div id="query-runtime-printfilteredmatches" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private void printFilteredMatches(ViatraQueryEngine engine) throws ViatraQueryException {
-    HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
-    for (HostIpAddressMatch match : matcher.getAllMatches(null, "152.66.102.2")) {
-        System.out.println(match.prettyPrint());
-    }
+<pre class="highlight"><code class="language-java" data-lang="java">private void printFilteredMatches(ViatraQueryEngine engine) throws ViatraQueryException {
+	HostIpAddress.Matcher matcher = HostIpAddress.Matcher.on(engine);
+	for (HostIpAddress.Match match : matcher.getAllMatches(null, "152.66.102.1")) {
+		System.out.println(match);
+	}
 }</code></pre>
 </div>
 </div>
@@ -808,13 +850,11 @@ Regardless of input values receiving null values, the <code><code>getAllmatches<
 </div>
 <div id="query-runtime-printfilteredmatches2" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private void printFilteredMatches2(ViatraQueryEngine engine) throws ViatraQueryException {
-    HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
-    HostIpAddressMatch filterMatch = HostIpAddressMatch.newEmptyMatch();
-	filterMatch.setIp("152.66.102.3");
-    for (HostIpAddressMatch match : matcher.getAllMatches(filterMatch)) {
-        System.out.println(match.prettyPrint());
-    }
+<pre class="highlight"><code class="language-java" data-lang="java">private void printFilteredMatches(ViatraQueryEngine engine) throws ViatraQueryException {
+	HostIpAddress.Matcher matcher = HostIpAddress.Matcher.on(engine);
+	for (HostIpAddress.Match match : matcher.getAllMatches(null, "152.66.102.1")) {
+		System.out.println(match);
+	}
 }</code></pre>
 </div>
 </div>
@@ -823,11 +863,11 @@ Regardless of input values receiving null values, the <code><code>getAllmatches<
 </div>
 <div id="query-runtime-countmatches" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private void countMatches(ViatraQueryEngine engine) throws ViatraQueryException {
-    HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
-    System.out.printf("Count matches: %d %n", matcher.countMatches());
-    System.out.printf("Has matches: %b %n", matcher.hasMatch(HostIpAddressMatch.newEmptyMatch()));
-    System.out.printf("Count matches with ip 152.66.102.3: %d %n", matcher.countMatches(null, "152.66.102.3"));
+<pre class="highlight"><code class="language-java" data-lang="java">private void printCounts(ViatraQueryEngine engine) throws ViatraQueryException {
+	HostIpAddress.Matcher matcher = HostIpAddress.Matcher.on(engine);
+	System.out.println(matcher.countMatches());
+	System.out.println(matcher.hasMatch(null, null));
+	System.out.printf("Count matches with ip 152.66.102.3: %d %n", matcher.countMatches(null, "152.66.102.3"));
     System.out.printf("Has matches with ip 152.66.102.13: %b %n", matcher.hasMatch(null, "152.66.102.13"));
 }</code></pre>
 </div>
@@ -846,13 +886,13 @@ If asking for the has/count calls is immediately followed by the processing of t
 </div>
 </div>
 <div class="sect3">
-<h4 id="_advanced_query_engine_features"><a class="link" href="#_advanced_query_engine_features">3.2.4. Advanced query engine features</a></h4>
+<h4 id="_advanced_query_engine_features"><a class="link" href="#_advanced_query_engine_features">2.2.4. Advanced query engine features</a></h4>
 <div class="paragraph">
 <p>There are cases where the standard engine lifecycle is inappropriate, e.g. the models will not be unloaded but we want to spare memory by freeing up indexes. Furthermore, there are some functionality, like hint handling or match update listener support that was not added the the base implementation to keep its API clean.</p>
 </div>
 <div id="query-runtime-prepareadvanced" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private AdvancedViatraQueryEngine prepareAdvancedQueryEngine(EMFScope scope) throws ViatraQueryException {
+<pre class="highlight"><code class="language-java" data-lang="java">private AdvancedViatraQueryEngine prepareAdvancedQueryEngine(EMFScope scope) {
     AdvancedViatraQueryEngine engine = AdvancedViatraQueryEngine.createUnmanagedEngine(scope);
 
     // Initialize all queries on engine
@@ -875,34 +915,35 @@ Do not forget to dispose unmanaged engine manually using the <code><code>Advance
 </table>
 </div>
 <div class="sect4">
-<h5 id="_react_to_match_updates"><a class="link" href="#_react_to_match_updates">3.2.4.1. React to match updates</a></h5>
+<h5 id="_react_to_match_updates"><a class="link" href="#_react_to_match_updates">2.2.4.1. React to match updates</a></h5>
 <div class="paragraph">
 <p>One feature of the advanced query engine is to allow listening to changes, e.g. registering a match update listener for a pattern matcher. Such a listener is triggered when the match set for a pattern matcher changes, together with the direction of the changes.</p>
 </div>
 <div id="query-runtime-changelistener" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">IMatchUpdateListener&lt;HostIpAddressMatch&gt; listener = new IMatchUpdateListener&lt;HostIpAddressMatch&gt;() {
+<pre class="highlight"><code class="language-java" data-lang="java">IMatchUpdateListener&lt;HostIpAddress.Match&gt; listener = new IMatchUpdateListener&lt;HostIpAddress.Match&gt;() {
 
     @Override
-    public void notifyAppearance(HostIpAddressMatch match) {
+    public void notifyAppearance(HostIpAddress.Match match) {
         System.out.printf("[ADD] %s %n", match.prettyPrint());
     }
 
     @Override
-    public void notifyDisappearance(HostIpAddressMatch match) {
+    public void notifyDisappearance(HostIpAddress.Match match) {
         System.out.printf("[REM] %s %n", match.prettyPrint());
 
     }
 };
 
-private void addChangeListener(AdvancedViatraQueryEngine engine) throws ViatraQueryException {
-    HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
+private void addChangeListener(AdvancedViatraQueryEngine engine) {
+    HostIpAddress.Matcher matcher = HostIpAddress.Matcher.on(engine);
 
     try {
         // fireNow = true parameter means all current matches are sent to the listener
         engine.addMatchUpdateListener(matcher, listener, true);
         // execute model manipulations
-        matcher.getOneArbitraryMatch().getHost().setNodeIp("123.123.123.123");
+        matcher.getOneArbitraryMatch()
+        	.ifPresent(match -&gt; match.getHost().setNodeIp("123.123.123.123"));
     } finally {
         // Don't forget to remove listeners if not required anymore
         engine.removeMatchUpdateListener(matcher, listener);
@@ -939,7 +980,7 @@ Be very careful when using match update listeners, as sometimes they are called 
 </div>
 </div>
 <div class="sect4">
-<h5 id="_query_backends_and_hints"><a class="link" href="#_query_backends_and_hints">3.2.4.2. Query backends and hints</a></h5>
+<h5 id="_query_backends_and_hints"><a class="link" href="#_query_backends_and_hints">2.2.4.2. Query backends and hints</a></h5>
 <div class="paragraph">
 <p>The advanced query engine also allows to initialize patterns with non-default settings called <strong>hints</strong>. The most important feature of these hints allow setting the pattern matcher backend, and other backend-specific settings could be changed.</p>
 </div>
@@ -948,11 +989,14 @@ Be very careful when using match update listeners, as sometimes they are called 
 </div>
 <div id="query-runtime-localsearch" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private void queryWithLocalSearch(AdvancedViatraQueryEngine engine) throws ViatraQueryException {
+<pre class="highlight"><code class="language-java" data-lang="java">private void queryWithLocalSearch(AdvancedViatraQueryEngine engine) {
+	// Prepares a hint for local search
     QueryEvaluationHint hint = LocalSearchHints.getDefault().build();
-    HostIpAddressMatcher matcher = engine.getMatcher(HostIpAddressQuerySpecification.instance(), hint);
+    // Ensures that local search is used for matching
+    HostIpAddress.Matcher matcher = engine.getMatcher(HostIpAddress.instance(), hint);
 
-    for (HostIpAddressMatch match : matcher.getAllMatches()) {
+    // The local search backend features the same API as the Rete backend
+    for (HostIpAddress.Match match : matcher.getAllMatches()) {
         System.out.println(match.prettyPrint());
     }
 }</code></pre>
@@ -974,7 +1018,7 @@ As the name suggests, <strong>hints</strong> might be ignored by the query engin
 </table>
 </div>
 <div class="paragraph">
-<p>There are a few aspects where the current (version 1.6) local search backend behaves differently to the original, Rete-based algorithm:</p>
+<p>There are a few aspects where the current (version 2.0) local search backend behaves differently to the original, Rete-based algorithm:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1005,7 +1049,7 @@ The local search backend of VIATRA is almost functionally compatible with the Re
 </div>
 </div>
 <div class="sect1">
-<h2 id="_model_transformation_development"><a class="link" href="#_model_transformation_development">4. Model Transformation Development</a></h2>
+<h2 id="_model_transformation_development"><a class="link" href="#_model_transformation_development">3. Model Transformation Development</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>For model transformation development a Java API is available, allowing seamless integration of the transformations into any Java applications. However, to enhance readability, we recommend using a higher-level JVM language, as it allows defining the transformation as an internal DSL of this host language.</p>
@@ -1014,20 +1058,20 @@ The local search backend of VIATRA is almost functionally compatible with the Re
 <p>In this tutorial we rely on the <a href="https://eclipse.org/xtend/">Xtend language</a> to host the VIATRA transformation DSL, and we rely on its extension method and type inference support to reduce unnecessary elements. However, other JVM-based languages can also be used with similar efficiency (for an example in <a href="https://kotlinlang.org/">Kotlin</a> see <a href="https://gist.github.com/doczir/bfe95c470599c5b8e60b400b80f92ea2" class="bare">https://gist.github.com/doczir/bfe95c470599c5b8e60b400b80f92ea2</a>).</p>
 </div>
 <div class="sect2">
-<h3 id="_batch_transformations"><a class="link" href="#_batch_transformations">4.1. Batch Transformations</a></h3>
+<h3 id="_batch_transformations"><a class="link" href="#_batch_transformations">3.1. Batch Transformations</a></h3>
 <div class="paragraph">
 <p>This exercise helps the audience to create a simple batch transformation using the VIATRA Transformation API.
 The transformation will transform the hosts and applications in a CPS model to a deployment model.
 The exercise also covers registering a menu command which initializes the transformation.</p>
 </div>
 <div class="sect3">
-<h4 id="_create_transformation"><a class="link" href="#_create_transformation">4.1.1. Create transformation</a></h4>
+<h4 id="_create_transformation"><a class="link" href="#_create_transformation">3.1.1. Create transformation</a></h4>
 <div class="paragraph">
 <p>For the transformation, we have to created a <em>VIATRA Query Project</em> (the one from the <a href="#_query_development">query development tutorial</a> could also be reused), and create a new query file called <em>CpsXformM2M.vql</em> to store the patterns we want to use in the transformation with the following contents:</p>
 </div>
 <div id="bmt-queries" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">import "http://org.eclipse.viatra/model/cps"
+<pre class="highlight"><code class="language-vql" data-lang="vql">import "http://org.eclipse.viatra/model/cps"
 import "http://org.eclipse.viatra/model/deployment"
 import "http://org.eclipse.viatra/model/cps-traceability"
 
@@ -1070,7 +1114,7 @@ pattern cps2depTrace(
 <div class="content">
 <img src="./images/tutorial/transformation_wizard.png" alt="transformation wizard">
 </div>
-<div class="title">Figure 7. Model Transformation Wizard - Create new transformation</div>
+<div class="title">Figure 8. Model Transformation Wizard - Create new transformation</div>
 </div>
 </li>
 <li>
@@ -1079,7 +1123,7 @@ pattern cps2depTrace(
 <div class="content">
 <img src="./images/tutorial/batch_transformation_wizard_name.png" alt="batch transformation wizard name">
 </div>
-<div class="title">Figure 8. Model Transformation Wizard - Name of the new batch transformation</div>
+<div class="title">Figure 9. Model Transformation Wizard - Name of the new batch transformation</div>
 </div>
 </li>
 <li>
@@ -1088,7 +1132,7 @@ pattern cps2depTrace(
 <div class="content">
 <img src="./images/tutorial/batch_transformation_wizard_type.png" alt="batch transformation wizard type">
 </div>
-<div class="title">Figure 9. Model Transformation Wizard - Type of the new transformation</div>
+<div class="title">Figure 10. Model Transformation Wizard - Type of the new transformation</div>
 </div>
 </li>
 </ul>
@@ -1101,7 +1145,7 @@ pattern cps2depTrace(
 </div>
 <div id="bmt-codeextensions" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">/** VIATRA Query Pattern group **/
+<pre class="highlight"><code class="language-java" data-lang="java">/** VIATRA Query Pattern group **/
 val extension CpsXformM2M cpsXformM2M = CpsXformM2M.instance
 
 /** EMF metamodels **/
@@ -1122,7 +1166,7 @@ val extension TraceabilityPackage trPackage = TraceabilityPackage.eINSTANCE</cod
 <p>The IModelManipulations implementation is used to make model access replaceable, this way the same transformation may be used for cases where the resource set is transactional. The initialization of this is generated automatically into the <code>createTransformation</code> method.</p>
 <div id="bmt-init" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">val CPSToDeployment cps2dep
+<pre class="highlight"><code class="language-java" data-lang="java">val CPSToDeployment cps2dep
 
 new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
     this.cps2dep = cps2dep
@@ -1151,7 +1195,7 @@ new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 <p>A VIATRA query is used as precondition to the rule, which means the rule will be activated each time the given pattern when changes allowing to update the output accordingly.</p>
 <div id="bmt-rule-structure" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">val hostRule = createRule.precondition(HostInstanceMatcher.querySpecification).action[/*Action part*/].build</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">val hostRule = createRule.precondition(HostInstance.instance).action[/*Action part*/].build</code></pre>
 </div>
 </div>
 </li>
@@ -1162,7 +1206,7 @@ new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 <p>Specify which action to run when the rule fires. It will create the transformed <code>DeploymentHost</code> element in the output model as well as a trace element associating the source <code>HostInstance</code> and the target <code>DeploymentHost</code>:</p>
 <div id="bmt-hostrule" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">val hostRule = createRule.precondition(HostInstanceMatcher.querySpecification).action[
+<pre class="highlight"><code class="language-java" data-lang="java">val hostRule = createRule.precondition(HostInstance.instance).action[
     val cpsHostInstance = it.hostInstance
     val nodeIp = cpsHostInstance.nodeIp
     println('''Mapping host with IP: «nodeIp»''')
@@ -1187,7 +1231,7 @@ new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 <p>The rule which creates <code>DeploymentApplication</code> elements for <code>ApplicationInstance</code> objects, looks similar. It has to find the <code>DeploymentHost</code> created from the <code>HostInstance</code> to which the source <code>ApplicationInstance</code> is allocated, so it assumes the <code>hostRule</code> has already fired:</p>
 <div id="bmt-apprule" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">val applicationRule = createRule.precondition(ApplicationInstanceMatcher.querySpecification).action[
+<pre class="highlight"><code class="language-java" data-lang="java">val applicationRule = createRule.precondition(ApplicationInstance.instance).action[
     val cpsApplicationInstance = it.appInstance
     val appId = cpsApplicationInstance.identifier
     println('''Mapping application with ID: «appId»''')
@@ -1222,7 +1266,7 @@ new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 <p>Pay attention to fire the rules in the proper order</p>
 <div id="bme-execute" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">def execute() {
+<pre class="highlight"><code class="language-java" data-lang="java">def execute() {
     println('''Executing transformation on: Cyber-physical system: «cps2dep.cps.identifier»''')
     /* Clear output &amp; trace model for batch transformation**/
     cps2dep.deployment.hosts.clear
@@ -1241,14 +1285,14 @@ new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 </div>
 </div>
 <div class="sect3">
-<h4 id="_create_a_menu_command_to_execute_the_transformation"><a class="link" href="#_create_a_menu_command_to_execute_the_transformation">4.1.2. Create a menu command to execute the transformation</a></h4>
+<h4 id="_create_a_menu_command_to_execute_the_transformation"><a class="link" href="#_create_a_menu_command_to_execute_the_transformation">3.1.2. Create a menu command to execute the transformation</a></h4>
 <div class="ulist">
 <ul>
 <li>
 <p>Create a UI plugin with the following additional dependencies:</p>
 <div id="bmt-ui-dependencies" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">org.eclipse.ui,
+<pre class="highlight"><code class="language-java" data-lang="java">org.eclipse.ui,
 com.incquerylabs.course.cps.viatra.batch;bundle-version="0.1.0",
 org.eclipse.viatra.examples.cps.traceability;bundle-version="0.1.0",
 org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
@@ -1260,7 +1304,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <div id="bmt-handler" class="listingblock">
 <div class="title">TransformHandler.java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class TransformHandler extends AbstractHandler implements IHandler {
+<pre class="highlight"><code class="language-java" data-lang="java">public class TransformHandler extends AbstractHandler implements IHandler {
 
     ViatraQueryEngine engine;
     CPS2DeploymentTransformationViatra transformation;
@@ -1297,7 +1341,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <p>Register handler in the context menu of <code>CPSToDeployment</code> elements in <code>plugin.xml</code>:</p>
 <div id="bmt-command" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;extension point="org.eclipse.ui.commands"&gt;
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;extension point="org.eclipse.ui.commands"&gt;
     &lt;command
         defaultHandler="com.incquerylabs.course.cps.viatra.batch.ui.TransformHandler"
         id="com.incquerylabs.course.cps.viatra.batch.ui.command"
@@ -1329,7 +1373,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_execute_the_transformation"><a class="link" href="#_execute_the_transformation">4.1.3. Execute the transformation</a></h4>
+<h4 id="_execute_the_transformation"><a class="link" href="#_execute_the_transformation">3.1.3. Execute the transformation</a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1344,7 +1388,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <div class="content">
 <img src="./images/tutorial/viatraIncr_example1.png" alt="viatraIncr example1">
 </div>
-<div class="title">Figure 10. Project with a .cyberphysicalsystem resource</div>
+<div class="title">Figure 11. Project with a .cyberphysicalsystem resource</div>
 </div>
 </li>
 <li>
@@ -1357,7 +1401,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <div class="content">
 <img src="./images/tutorial/viatraIncr_example2.png" alt="viatraIncr example2">
 </div>
-<div class="title">Figure 11. New Deployment Model</div>
+<div class="title">Figure 12. New Deployment Model</div>
 </div>
 </li>
 </ul>
@@ -1373,7 +1417,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <div class="content">
 <img src="./images/tutorial/viatraIncr_example3.png" alt="viatraIncr example3">
 </div>
-<div class="title">Figure 12. New Traceability Model</div>
+<div class="title">Figure 13. New Traceability Model</div>
 </div>
 </li>
 </ul>
@@ -1385,7 +1429,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <div class="content">
 <img src="./images/tutorial/viatraIncr_example4.png" alt="viatraIncr example4">
 </div>
-<div class="title">Figure 13. Load necessary resources into the Tracebility Model</div>
+<div class="title">Figure 14. Load necessary resources into the Tracebility Model</div>
 </div>
 </li>
 <li>
@@ -1394,7 +1438,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <div class="content">
 <img src="./images/tutorial/viatraIncr_example5.png" alt="viatraIncr example5">
 </div>
-<div class="title">Figure 14. Set the references of the Traceability Model</div>
+<div class="title">Figure 15. Set the references of the Traceability Model</div>
 </div>
 </li>
 <li>
@@ -1406,14 +1450,14 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <div class="content">
 <img src="./images/tutorial/viatrabatch.png" alt="viatrabatch">
 </div>
-<div class="title">Figure 15. Transformation command in the context menu</div>
+<div class="title">Figure 16. Transformation command in the context menu</div>
 </div>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_references_2"><a class="link" href="#_references_2">4.1.4. References</a></h4>
+<h4 id="_references_2"><a class="link" href="#_references_2">3.1.4. References</a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1428,7 +1472,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_event_driven_transformations"><a class="link" href="#_event_driven_transformations">4.2. Event-driven Transformations</a></h3>
+<h3 id="_event_driven_transformations"><a class="link" href="#_event_driven_transformations">3.2. Event-driven Transformations</a></h3>
 <div class="paragraph">
 <p>This exercise heps the audience to create a simple event-driven transformation using the VIATRA Transformation API. The transformation will create (and then incrementally update while active) a deployment model based on a CPS model. The exercise also covers registering a menu command which initializes the transformation.</p>
 </div>
@@ -1436,13 +1480,13 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <p>Given the batch and event-driven transformations are really similar, this section focuses mainly on the differences; if required, consult the <a href="#_batch_transformations">batch transformation tutorial</a>.</p>
 </div>
 <div class="sect3">
-<h4 id="_create_transformation_2"><a class="link" href="#_create_transformation_2">4.2.1. Create transformation</a></h4>
+<h4 id="_create_transformation_2"><a class="link" href="#_create_transformation_2">3.2.1. Create transformation</a></h4>
 <div class="paragraph">
 <p>Specific patterns have to be defined for event-driven rules; note that there are small differences to the batch definitions, e.g. there is an additional pattern called <em>allocatedDeploymentApplication</em>.</p>
 </div>
 <div id="emt-queries" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">import "http://org.eclipse.viatra/model/cps"
+<pre class="highlight"><code class="language-vql" data-lang="vql">import "http://org.eclipse.viatra/model/cps"
 import "http://org.eclipse.viatra/model/deployment"
 import "http://org.eclipse.viatra/model/cps-traceability"
 
@@ -1478,7 +1522,7 @@ pattern cps2depTrace(cps2dep, trace, cpsElement, depElement) {
 <div class="content">
 <img src="./images/tutorial/transformation_wizard.png" alt="transformation wizard">
 </div>
-<div class="title">Figure 16. Model Transformation Wizard - Create new transformation</div>
+<div class="title">Figure 17. Model Transformation Wizard - Create new transformation</div>
 </div>
 <div class="ulist">
 <ul>
@@ -1488,7 +1532,7 @@ pattern cps2depTrace(cps2dep, trace, cpsElement, depElement) {
 <div class="content">
 <img src="./images/tutorial/eventdriven_transformation_wizard_name.png" alt="eventdriven transformation wizard name">
 </div>
-<div class="title">Figure 17. Model Transformation Wizard - Name of the new batch transformation</div>
+<div class="title">Figure 18. Model Transformation Wizard - Name of the new batch transformation</div>
 </div>
 </li>
 <li>
@@ -1497,7 +1541,7 @@ pattern cps2depTrace(cps2dep, trace, cpsElement, depElement) {
 <div class="content">
 <img src="./images/tutorial/eventdriven_transformation_wizard_type.png" alt="eventdriven transformation wizard type">
 </div>
-<div class="title">Figure 18. Model Transformation Wizard - Type of the new transformation</div>
+<div class="title">Figure 19. Model Transformation Wizard - Type of the new transformation</div>
 </div>
 </li>
 </ul>
@@ -1510,7 +1554,7 @@ pattern cps2depTrace(cps2dep, trace, cpsElement, depElement) {
 <p>Register used, domain-specific APIs as extensions, common APIs are already generated</p>
 <div id="emt-extensions" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">/*
+<pre class="highlight"><code class="language-java" data-lang="java">/*
  * VIATRA Query group
  */
 val extension CpsXformM2M cpsXformM2M = CpsXformM2M.instance
@@ -1534,7 +1578,7 @@ val extension TraceabilityPackage trPackage = TraceabilityPackage::eINSTANCE</co
 <p>The IModelManipulations implementation is used to make model access replaceable, this way the same transformation may be used for cases where the resource set is transactional</p>
 <div id="emt-init" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">val CPSToDeployment cps2dep
+<pre class="highlight"><code class="language-java" data-lang="java">val CPSToDeployment cps2dep
 
 new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
     this.cps2dep = cps2dep
@@ -1563,7 +1607,7 @@ new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 <p>A VIATRA query pattern is used as precondition to the rule, which means the rule will be activated each time the given pattern changes allowing to update the output accordingly.</p>
 <div id="emt-rule-structure" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">val hostRule = createRule.precondition(HostInstanceMatcher.querySpecification)</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">val hostRule = createRule.precondition(HostInstanceMatcher.querySpecification)</code></pre>
 </div>
 </div>
 </li>
@@ -1578,7 +1622,7 @@ new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 <p>upon creation of a HostInstance</p>
 <div id="emt-hostrule" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">.action(CRUDActivationStateEnum.CREATED) [
+<pre class="highlight"><code class="language-java" data-lang="java">.action(CRUDActivationStateEnum.CREATED) [
     val hostinstance = hostInstance
     val nodeIp = hostInstance.nodeIp
     println('''Mapping host with IP: «nodeIp»''')
@@ -1599,7 +1643,7 @@ new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 <p>upon the change of a HostInstance</p>
 <div id="emt-hostupdated" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">.action(CRUDActivationStateEnum.UPDATED) [
+<pre class="highlight"><code class="language-java" data-lang="java">.action(CRUDActivationStateEnum.UPDATED) [
     /* find associated DeploymentHost element */
     val depHost = engine.cps2depTrace
                         .getOneArbitraryMatch(cps2dep, null, hostInstance, null)
@@ -1618,7 +1662,7 @@ new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 <p>upon the removal of a HostInstance</p>
 <div id="emt-hostdeleted" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">.action(CRUDActivationStateEnum.DELETED) [
+<pre class="highlight"><code class="language-java" data-lang="java">.action(CRUDActivationStateEnum.DELETED) [
     /* Find trace element */
     val traceMatch = engine.cps2depTrace
                         .getOneArbitraryMatch(cps2dep, null, hostInstance, null)
@@ -1641,7 +1685,7 @@ new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 <p>The lifecycle defines the state machine used to determine the possible states on which transition actions can defined.</p>
 <div id="emt-lifecycle" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">.addLifeCycle(Lifecycles.getDefault(true, true)).build</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">.addLifeCycle(Lifecycles.getDefault(true, true)).build</code></pre>
 </div>
 </div>
 </li>
@@ -1655,7 +1699,7 @@ new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 <p>The rule which create DeploymentApplication elements for ApplicationInstances, looks similar</p>
 <div id="emt-applicationrule" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">val applicationRule = createRule.precondition(ApplicationInstanceMatcher.querySpecification)
+<pre class="highlight"><code class="language-java" data-lang="java">val applicationRule = createRule.precondition(ApplicationInstanceMatcher.querySpecification)
 .action(CRUDActivationStateEnum.CREATED) [
     /* Find associated DeploymentHost for the HostInstance this application is allocated to */
     val depHost = engine.cps2depTrace.getAllValuesOfdepElement(null, null, appInstance.allocatedTo).filter(
@@ -1703,7 +1747,7 @@ new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 <p>We use a priority-based resolver (lower priority rules will be executed first), which considers priority of disappearing rules to be inverted (a disappearing application&#8217;s priority will be -2)</p>
 <div id="emt-create" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private def createTransformation() {
+<pre class="highlight"><code class="language-java" data-lang="java">private def createTransformation() {
     //Initialize model manipulation API
     this.manipulation = new SimpleModelManipulations(engine)
 
@@ -1728,7 +1772,7 @@ new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 </div>
 </div>
 <div class="sect3">
-<h4 id="_creating_a_menu_command_to_execute_the_transformation"><a class="link" href="#_creating_a_menu_command_to_execute_the_transformation">4.2.2. Creating a menu command to execute the transformation</a></h4>
+<h4 id="_creating_a_menu_command_to_execute_the_transformation"><a class="link" href="#_creating_a_menu_command_to_execute_the_transformation">3.2.2. Creating a menu command to execute the transformation</a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1739,7 +1783,7 @@ new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 <div id="emt-dependencies" class="listingblock">
 <div class="title">MANIFEST.MF</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">org.eclipse.ui,
+<pre class="highlight"><code class="language-java" data-lang="java">org.eclipse.ui,
 com.incquerylabs.course.cps.viatra.incr;bundle-version="0.1.0",
 org.eclipse.viatra.examples.cps.traceability;bundle-version="0.1.0",
 org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
@@ -1751,7 +1795,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <div id="emt-handler" class="listingblock">
 <div class="title">ToggleTransformationHandler.java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class ToggleTransformationHandler extends AbstractHandler implements IHandler {
+<pre class="highlight"><code class="language-java" data-lang="java">public class ToggleTransformationHandler extends AbstractHandler implements IHandler {
 
     ViatraQueryEngine engine;
     CPS2DeploymentTransformationViatra transformation;
@@ -1798,7 +1842,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <div id="emt-command" class="listingblock">
 <div class="title">plugin.xml</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;extension point="org.eclipse.ui.commands"&gt;
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;extension point="org.eclipse.ui.commands"&gt;
     &lt;command defaultHandler="com.incquerylabs.course.cps.viatra.incr.ui.ToggleTransformationHandler"
             id="com.incquerylabs.course.cps.viatra.incr.ui.command"
             name="Toggle Transformation"&gt;
@@ -1830,7 +1874,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_executing_the_transformation"><a class="link" href="#_executing_the_transformation">4.2.3. Executing the transformation</a></h4>
+<h4 id="_executing_the_transformation"><a class="link" href="#_executing_the_transformation">3.2.3. Executing the transformation</a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1845,7 +1889,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <div class="content">
 <img src="./images/tutorial/viatraIncr_example1.png" alt="viatraIncr example1">
 </div>
-<div class="title">Figure 19. Project with a .cyberphysicalsystem resource</div>
+<div class="title">Figure 20. Project with a .cyberphysicalsystem resource</div>
 </div>
 </li>
 <li>
@@ -1858,7 +1902,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <div class="content">
 <img src="./images/tutorial/viatraIncr_example2.png" alt="viatraIncr example2">
 </div>
-<div class="title">Figure 20. New Deployment Model</div>
+<div class="title">Figure 21. New Deployment Model</div>
 </div>
 </li>
 </ul>
@@ -1874,7 +1918,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <div class="content">
 <img src="./images/tutorial/viatraIncr_example3.png" alt="viatraIncr example3">
 </div>
-<div class="title">Figure 21. New Traceability Model</div>
+<div class="title">Figure 22. New Traceability Model</div>
 </div>
 </li>
 </ul>
@@ -1886,7 +1930,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <div class="content">
 <img src="./images/tutorial/viatraIncr_example4.png" alt="viatraIncr example4">
 </div>
-<div class="title">Figure 22. Load necessary resources into the Traceability Model</div>
+<div class="title">Figure 23. Load necessary resources into the Traceability Model</div>
 </div>
 </li>
 <li>
@@ -1895,7 +1939,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <div class="content">
 <img src="./images/tutorial/viatraIncr_example5.png" alt="viatraIncr example5">
 </div>
-<div class="title">Figure 23. Set the references of the Traceability Model</div>
+<div class="title">Figure 24. Set the references of the Traceability Model</div>
 </div>
 </li>
 <li>
@@ -1904,7 +1948,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <div class="content">
 <img src="./images/tutorial/viatraIncr_example6.png" alt="viatraIncr example6">
 </div>
-<div class="title">Figure 24. Toggle transformation in the context menu</div>
+<div class="title">Figure 25. Toggle transformation in the context menu</div>
 </div>
 </li>
 <li>
@@ -1914,7 +1958,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_references_3"><a class="link" href="#_references_3">4.2.4. References</a></h4>
+<h4 id="_references_3"><a class="link" href="#_references_3">3.2.4. References</a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1929,7 +1973,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_debugging_model_transformations"><a class="link" href="#_debugging_model_transformations">4.3. Debugging model transformations</a></h3>
+<h3 id="_debugging_model_transformations"><a class="link" href="#_debugging_model_transformations">3.3. Debugging model transformations</a></h3>
 <div class="paragraph">
 <p>The development and debugging of  model transformations is not a trivial exercise, the basic concepts of software debugging however can be mapped to this field as well. Debuggers can be used for detecting bugs, as well as better understanding the structure and behavior of programs. Direct control over a program allows the programmer to follow the flow of execution or stop the program at any desired point. Then it is possible to inspect its current state and verify the correctness of the software. These properties are very desirable in the field of model transformations too.
 The VIATRA framework incorporates a debugger framework that supports the following features:</p>
@@ -1951,7 +1995,7 @@ The VIATRA framework incorporates a debugger framework that supports the followi
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_setting_up_the_transformation_under_debugging"><a class="link" href="#_setting_up_the_transformation_under_debugging">4.3.1. Setting Up the Transformation Under Debugging</a></h4>
+<h4 id="_setting_up_the_transformation_under_debugging"><a class="link" href="#_setting_up_the_transformation_under_debugging">3.3.1. Setting Up the Transformation Under Debugging</a></h4>
 <div class="paragraph">
 <p>In order to support debugging, the model transformation definition needs minor modifications. These can be done in two different ways:</p>
 </div>
@@ -1978,13 +2022,13 @@ Use the <em>VIATRA Debugger Session Name</em> optional parameter to define a tex
 <div class="content">
 <img src="./images/transformation/screenshots/wizard_selection.png" alt="Wizard selection">
 </div>
-<div class="title">Figure 25. Opening the Wizard</div>
+<div class="title">Figure 26. Opening the Wizard</div>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="./images/transformation/screenshots/wizard_debugging.png" alt="Wizard debug">
 </div>
-<div class="title">Figure 26. Selecting debugger support</div>
+<div class="title">Figure 27. Selecting debugger support</div>
 </div>
 <div class="ulist">
 <ul>
@@ -1995,7 +2039,7 @@ Use the <em>VIATRA Debugger Session Name</em> optional parameter to define a tex
 </div>
 <div id="Transformation-setup" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-Java hljs" data-lang="Java">private def createTransformation() {
+<pre class="highlight"><code class="language-Java" data-lang="Java">private def createTransformation() {
     import org.eclipse.viatra.transformation.debug.configuration.TransformationDebuggerConfiguration
     ...
     transformation = BatchTransformation.forEngine(engine).addAdapterConfiguration(new TransformationDebuggerConfiguration("TestTransformation")).build
@@ -2008,7 +2052,7 @@ Use the <em>VIATRA Debugger Session Name</em> optional parameter to define a tex
 </div>
 <div id="Transformation-handler" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-Java hljs" data-lang="Java">public class BatchTestHandler extends AbstractHandler {
+<pre class="highlight"><code class="language-Java" data-lang="Java">public class BatchTestHandler extends AbstractHandler {
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
         final Job job = new Job(JOB_NAME) {
@@ -2035,19 +2079,19 @@ Use the <em>VIATRA Debugger Session Name</em> optional parameter to define a tex
 </div>
 <div id="Transformation-vmargs" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-Java hljs" data-lang="Java">-Dcom.sun.management.jmxremote.port="port to be used, typically 1099"
+<pre class="highlight"><code class="language-Java" data-lang="Java">-Dcom.sun.management.jmxremote.port="port to be used, typically 1099"
 -Dcom.sun.management.jmxremote.authenticate=false
 -Dcom.sun.management.jmxremote.ssl=false</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_using_the_debugger_ui"><a class="link" href="#_using_the_debugger_ui">4.3.2. Using the Debugger UI</a></h4>
+<h4 id="_using_the_debugger_ui"><a class="link" href="#_using_the_debugger_ui">3.3.2. Using the Debugger UI</a></h4>
 <div class="paragraph">
 <p>The following section describes how to use the VIATRA transformation debugger UI elements once the debugging infrastructure is set up. This section of the guide assumes that a target Eclipse instance is running.</p>
 </div>
 <div class="sect4">
-<h5 id="_connecting_to_the_transformation_under_debugging"><a class="link" href="#_connecting_to_the_transformation_under_debugging">4.3.2.1. Connecting to the transformation under debugging</a></h5>
+<h5 id="_connecting_to_the_transformation_under_debugging"><a class="link" href="#_connecting_to_the_transformation_under_debugging">3.3.2.1. Connecting to the transformation under debugging</a></h5>
 <div class="ulist">
 <ul>
 <li>
@@ -2059,7 +2103,7 @@ Use the <em>VIATRA Debugger Session Name</em> optional parameter to define a tex
 <div class="content">
 <img src="./images/transformation/screenshots/debug_persp_empty.png" alt="Debug perspective">
 </div>
-<div class="title">Figure 27. Debug perspective with debugger views</div>
+<div class="title">Figure 28. Debug perspective with debugger views</div>
 </div>
 <div class="ulist">
 <ul>
@@ -2081,13 +2125,13 @@ Use the <em>VIATRA Debugger Session Name</em> optional parameter to define a tex
 <div class="content">
 <img src="./images/transformation/screenshots/debug_newlaunch.png" alt="Class selection">
 </div>
-<div class="title">Figure 28. Editing launch configuration</div>
+<div class="title">Figure 29. Editing launch configuration</div>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="./images/transformation/screenshots/newtransf_classsel.png" alt="Class selection">
 </div>
-<div class="title">Figure 29. Selecting a class</div>
+<div class="title">Figure 30. Selecting a class</div>
 </div>
 <div class="ulist">
 <ul>
@@ -2103,11 +2147,11 @@ Use the <em>VIATRA Debugger Session Name</em> optional parameter to define a tex
 <div class="content">
 <img src="./images/transformation/screenshots/debug_persp.png" alt="Debug perspective">
 </div>
-<div class="title">Figure 30. Debugger in its initialized state</div>
+<div class="title">Figure 31. Debugger in its initialized state</div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_browsing_the_transformation_state"><a class="link" href="#_browsing_the_transformation_state">4.3.2.2. Browsing the transformation state</a></h5>
+<h5 id="_browsing_the_transformation_state"><a class="link" href="#_browsing_the_transformation_state">3.3.2.2. Browsing the transformation state</a></h5>
 <div class="paragraph">
 <p>One of the main use-cases of the VIATRA transformation debugger, is to enable the transformation developer to observe the state of a VIATRA transformation at certain point in its execution sequence. The debugger allows the transformation developer to observe the following transformation elements:</p>
 </div>
@@ -2140,7 +2184,7 @@ In order to use the debugger UI elements, select the Debug Stack trace represent
 <div class="content">
 <img src="./images/transformation/screenshots/selectthread.png" alt="Select transformation stack frame">
 </div>
-<div class="title">Figure 31. Selecting the transformation stack frame</div>
+<div class="title">Figure 32. Selecting the transformation stack frame</div>
 </div>
 <div class="paragraph">
 <p>The <em>Transformation Browser</em> view is responsible for observing the internal state of the transformation. It allows the user to observe the current transformation rule activations, and it supports the definition of various transformation breakpoints.</p>
@@ -2149,13 +2193,13 @@ In order to use the debugger UI elements, select the Debug Stack trace represent
 <div class="content">
 <img src="./images/transformation/screenshots/transformation_rules.png" alt="TB rules">
 </div>
-<div class="title">Figure 32. Transformation Browser ordered by transformation rules</div>
+<div class="title">Figure 33. Transformation Browser ordered by transformation rules</div>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="./images/transformation/screenshots/conflict_set.png" alt="TB conflict set">
 </div>
-<div class="title">Figure 33. Transformation Browser ordered by EVM Conflict Set state</div>
+<div class="title">Figure 34. Transformation Browser ordered by EVM Conflict Set state</div>
 </div>
 <div class="paragraph">
 <p>The <em>Transformation Model Instance Viewer</em> enables the transformation developer to observe the state of the source and target model instances related to the model transformation selected in the <em>Adaptable Transformation Browser</em> view. This view displays the model instances in a multi-tabbed tree view with properties view support.</p>
@@ -2164,7 +2208,7 @@ In order to use the debugger UI elements, select the Debug Stack trace represent
 <div class="content">
 <img src="./images/transformation/screenshots/model_browser.png" alt="VTB view">
 </div>
-<div class="title">Figure 34. VIATRA model instance browser view</div>
+<div class="title">Figure 35. VIATRA model instance browser view</div>
 </div>
 <div class="paragraph">
 <p>The parameters of the next activation to be executed can be observed via the <em>Variables</em> Eclipse Debug View. After selecting the given debug stack frame (representing a transformation rule activation), the parameters of the transformation rule precondition are displayed as variables.</p>
@@ -2173,11 +2217,11 @@ In order to use the debugger UI elements, select the Debug Stack trace represent
 <div class="content">
 <img src="./images/transformation/screenshots/variables_view.png" alt="Variables view">
 </div>
-<div class="title">Figure 35. VIATRA transformation preconditions as Variables</div>
+<div class="title">Figure 36. VIATRA transformation preconditions as Variables</div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_controlling_the_transformation_execution_sequence"><a class="link" href="#_controlling_the_transformation_execution_sequence">4.3.2.3. Controlling the transformation execution sequence</a></h5>
+<h5 id="_controlling_the_transformation_execution_sequence"><a class="link" href="#_controlling_the_transformation_execution_sequence">3.3.2.3. Controlling the transformation execution sequence</a></h5>
 <div class="paragraph">
 <p>The VIATRA transformation debugger enables the transformation developer to control the execution sequence of the transformation under debugging. This can be done in the following ways.</p>
 </div>
@@ -2203,13 +2247,13 @@ In order to use the debugger UI elements, select the Debug Stack trace represent
 <div class="content">
 <img src="./images/transformation/screenshots/rule_breakpoint.png" alt="Rule breakpoint definition">
 </div>
-<div class="title">Figure 36. Rule breakpoint definition dialog</div>
+<div class="title">Figure 37. Rule breakpoint definition dialog</div>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="./images/transformation/screenshots/conditional_breakpoint.png" alt="Conditional breakpoint definition">
 </div>
-<div class="title">Figure 37. Conditional breakpoint definition dialog</div>
+<div class="title">Figure 38. Conditional breakpoint definition dialog</div>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -2263,13 +2307,13 @@ The breakpoints added are displayed in the <em>Breakpoints</em> Eclipse Debug vi
 <div class="content">
 <img src="./images/transformation/screenshots/conditional_breakpoint_parseerror.png" alt="Conditional breakpoint parsing error">
 </div>
-<div class="title">Figure 38. Conditional breakpoint error dialog</div>
+<div class="title">Figure 39. Conditional breakpoint error dialog</div>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="./images/transformation/screenshots/breakpoints_view.png" alt="Eclipse Breakpoints view">
 </div>
-<div class="title">Figure 39. Transformation breakpoints in the Eclipse Breakpoints view</div>
+<div class="title">Figure 40. Transformation breakpoints in the Eclipse Breakpoints view</div>
 </div>
 <div class="paragraph">
 <p>The debugger supports the following Eclipse debug commands:</p>
@@ -2315,7 +2359,7 @@ The changes made this ways could produce unpredictable behavior in the model tra
 <div class="content">
 <img src="./images/transformation/screenshots/select_next.png" alt="Select next activation">
 </div>
-<div class="title">Figure 40. Selecting the next activation</div>
+<div class="title">Figure 41. Selecting the next activation</div>
 </div>
 <div class="paragraph">
 <p>Once the next activation is selected, notice that the red rectangle representing, the next activation to be fired, is moved to the desired activation. At this point, if the transformation is resumed, it will continue its execution from the selected activation.</p>
@@ -2324,9 +2368,9 @@ The changes made this ways could produce unpredictable behavior in the model tra
 </div>
 </div>
 <div class="sect3">
-<h4 id="_common_issues"><a class="link" href="#_common_issues">4.3.3. Common issues</a></h4>
+<h4 id="_common_issues"><a class="link" href="#_common_issues">3.3.3. Common issues</a></h4>
 <div class="sect4">
-<h5 id="_trying_to_connect_to_an_unreachable_viatra_transformation_instance"><a class="link" href="#_trying_to_connect_to_an_unreachable_viatra_transformation_instance">4.3.3.1. Trying to connect to an unreachable VIATRA transformation instance</a></h5>
+<h5 id="_trying_to_connect_to_an_unreachable_viatra_transformation_instance"><a class="link" href="#_trying_to_connect_to_an_unreachable_viatra_transformation_instance">3.3.3.1. Trying to connect to an unreachable VIATRA transformation instance</a></h5>
 <div class="paragraph">
 <p>If the VIATRA transformation instance specified in the debugger launch configuration does not exist, the debugger tooling will inform the user, that the debugging session could not be initialized and terminate the newly created session as well.</p>
 </div>
@@ -2334,11 +2378,11 @@ The changes made this ways could produce unpredictable behavior in the model tra
 <div class="content">
 <img src="./images/transformation/screenshots/connection_error.png" alt="Debugger Connection Error">
 </div>
-<div class="title">Figure 41. Debugger Connection Error</div>
+<div class="title">Figure 42. Debugger Connection Error</div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_transformation_under_debugging_terminated_abruptly"><a class="link" href="#_transformation_under_debugging_terminated_abruptly">4.3.3.2. Transformation under debugging terminated abruptly.</a></h5>
+<h5 id="_transformation_under_debugging_terminated_abruptly"><a class="link" href="#_transformation_under_debugging_terminated_abruptly">3.3.3.2. Transformation under debugging terminated abruptly.</a></h5>
 <div class="paragraph">
 <p>If the eclipse instance in which the target transformation is running is terminated, or the connection is severed between the host and target components, the debugger tooling will terminate the respective VIATRA debugger launch automatically.</p>
 </div>
@@ -2346,11 +2390,11 @@ The changes made this ways could produce unpredictable behavior in the model tra
 <div class="content">
 <img src="./images/transformation/screenshots/automatic_termination.png" alt="Automatic termination">
 </div>
-<div class="title">Figure 42. Automatic termination</div>
+<div class="title">Figure 43. Automatic termination</div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_trying_to_add_a_conditional_breakpoint_but_the_xtext_parser_infrastructure_is_not_initialized"><a class="link" href="#_trying_to_add_a_conditional_breakpoint_but_the_xtext_parser_infrastructure_is_not_initialized">4.3.3.3. Trying to add a conditional breakpoint, but the Xtext parser infrastructure is not initialized.</a></h5>
+<h5 id="_trying_to_add_a_conditional_breakpoint_but_the_xtext_parser_infrastructure_is_not_initialized"><a class="link" href="#_trying_to_add_a_conditional_breakpoint_but_the_xtext_parser_infrastructure_is_not_initialized">3.3.3.3. Trying to add a conditional breakpoint, but the Xtext parser infrastructure is not initialized.</a></h5>
 <div class="paragraph">
 <p>In order to ensure that the conditional breakpoint patterns are parsed properly in the runtime Eclipse instance, the Xtext parser infrastructure needs to be initialized. If the debugger tooling produces the following exception, open a VIATRA query view (e.g.: VIATRA Query Explorer) to manually initialize the parser tooling. These manual steps are needed, as Xtext-based parser tooling components are loaded lazily.</p>
 </div>
@@ -2358,7 +2402,7 @@ The changes made this ways could produce unpredictable behavior in the model tra
 <div class="content">
 <img src="./images/transformation/screenshots/conditional_breakpoint_parseerror.png" alt="Conditional breakpoint parsing error">
 </div>
-<div class="title">Figure 43. Conditional breakpoint error dialog</div>
+<div class="title">Figure 44. Conditional breakpoint error dialog</div>
 </div>
 </div>
 </div>
