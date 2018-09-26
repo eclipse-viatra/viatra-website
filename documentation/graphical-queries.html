@@ -65,7 +65,7 @@ The section is based on the version available at the early September 2018. Given
 <h2 id="_requirements_and_installation">Requirements and Installation</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The current version of the editor is based on Sirius 6.0 (and thus transitively requires Eclipse Oxygen as well). Furthermore, it requires a current version of VIATRA 2.1 IDE installed as well (more precisely, it requires a 2.1 build newer than 09 September, 2018).</p>
+<p>The current version of the editor is based on Sirius 6.0 (and thus transitively requires Eclipse Oxygen as well). Furthermore, it requires a current version of VIATRA 2.1 IDE installed as well (more precisely, the 2.1.0.M2 is the recommended starting point). To download that version, use the following p2 repository: <code><a href="http://download.eclipse.org/viatra/updates/milestone/latest" class="bare">http://download.eclipse.org/viatra/updates/milestone/latest</a></code></p>
 </div>
 <div class="paragraph">
 <p><span class="image"><img src="images/tools/vgql_install.png" alt="vgql install" height="300"></span></p>
@@ -173,9 +173,6 @@ In the first prototype, in addition to adding the declaration, required plug-in 
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p>To ensure all required elements are filled out, live validation rules are available. In the first prototype these validation rules are not started by default, but can be initialized by right clicking the pattern editor, and selecting <code>VIATRA Validation</code>/<code>Initialize VIATRA Validators on Editor</code>.</p>
-</div>
 </div>
 <div class="sect2">
 <h3 id="_evaluating_query_results">Evaluating Query Results</h3>
@@ -209,26 +206,7 @@ This integration assumes that the <code>vql</code> file is generated, so it requ
 <h2 id="_missing_feature_and_known_issues">Missing Feature and Known Issues</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In the early prototype available now there are a few known issues. It is planned that these will be addressed before VIATRA 2.1 is released.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>When adding a metamodel, the Eclipse bundle providing the generated code for that metamodel is not added to the bundle, but has to be added manually using the plug-in manifest editor. Without the corresponding dependency added, the generated <code>vgl</code> files will be erroneous.</p>
-</li>
-<li>
-<p>Validation does not start automatically. To start validation, right click on an opened diagram, and select <code>VIATRA Validation</code>/<code>Initialize VIATRA Validators on Editor</code>.</p>
-</li>
-<li>
-<p>Currently assigning documentation to the patterns is not supported.</p>
-</li>
-<li>
-<p>There is no support in automatically updating an existing VIATRA Query project to a Graphical Query project.</p>
-</li>
-<li>
-<p>When creating a second graphical query file in a project with the wizard, only the <code>vgql</code> file is created, but the diagram is not. To create the second diagram, the <code>aird</code> editor provided by Sirius can be used instead.</p>
-</li>
-</ul>
+<p>In the early prototype available in VIATRA 2.1.0 2 there are a few known issues that are planned to be addressed before the final VIATRA 2.1 is released in December 2012. These issues are maintained in <a href="https://bugs.eclipse.org/bugs/buglist.cgi?list_id=17930299&amp;product=Viatra&amp;query_format=advanced&amp;status_whiteboard=vgql-editor&amp;status_whiteboard_type=allwordssubstr">Bugzilla</a>.</p>
 </div>
 </div>
 </div>
