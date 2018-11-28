@@ -111,25 +111,17 @@
 <div class="paragraph">
 <p>To make behaviour more predictable, the default configuration of the Local Search query engine no longer allows hybrid pattern matching in conjuction with the incremental query backend across pattern calls, i.e. if the caller pattern is evaluated with LS, so will the callee pattern during the same matcher invocation. To enable hybrid matching, where the local search backend may request results of called patterns from the incremental backend (in case the callee is declared <code>incremental pattern</code>), use configurations that explicitly enable this, such as <code>LocalSearchHints.getDefaultGenericHybrid()</code>.</p>
 </div>
-<div class="literalblock">
-<div class="content">
-<pre>=== Query Runtime UI Project introduced</pre>
+</div>
+<div class="sect3">
+<h4 id="_query_runtime_ui_project_introduced"><a class="link" href="#_query_runtime_ui_project_introduced">Query Runtime UI Project introduced</a></h4>
+<div class="paragraph">
+<p>To support reusing model connectors without tooling dependencies, the IModelConnector interface and all its uses have been moved to a new <code>org.eclipse.viatra.query.runtime.ui</code> plugin, and it has been renamed accordingly. All adapters provided by VIATRA were updated to provide the new interface, the few existing users should request instances of <code>org.eclipse.viatra.query.runtime.ui.modelconnector.IModelConnector</code> instead. The new implementation behaves in exactly the same way than before.</p>
 </div>
 </div>
-<div class="literalblock">
-<div class="content">
-<pre>To support reusing model connectors without tooling dependencies, the IModelConnector interface and all its uses have been moved to a new `org.eclipse.viatra.query.runtime.ui` plugin, and it has been renamed accordingly. All adapters provided by VIATRA were updated to provide the new interface, the few existing users should request instances of `org.eclipse.viatra.query.runtime.ui.modelconnector.IModelConnector` instead. The new implementation behaves in exactly the same way than before.</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>=== Facet Editor Integration Removed</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>VIATRA included for a few years a component to make sure our IDE features such as the Query Results view work well with the Facet Editor, originally provided by the EMF Facet project than later the MoDisco project. Given these editors are only used sparingly, and MoDisco leaves the simultaneous release, we have decided not to support this editor anymore.</pre>
-</div>
+<div class="sect3">
+<h4 id="_facet_editor_integration_removed"><a class="link" href="#_facet_editor_integration_removed">Facet Editor Integration Removed</a></h4>
+<div class="paragraph">
+<p>VIATRA included for a few years a component to make sure our IDE features such as the Query Results view work well with the Facet Editor, originally provided by the EMF Facet project than later the MoDisco project. Given these editors are only used sparingly, and MoDisco leaves the simultaneous release, we have decided not to support this editor anymore.</p>
 </div>
 </div>
 </div>
