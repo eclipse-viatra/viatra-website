@@ -50,6 +50,7 @@
 <div id="toc" class="toc">
 <div id="toctitle" class="title">Table of Contents</div>
 <ul class="sectlevel1">
+<li><a href="#viatra-21">VIATRA 2.1 (To be released on 19th December 2018B)</a></li>
 <li><a href="#viatra-20">VIATRA 2.0</a></li>
 <li><a href="#viatra-17">VIATRA 1.7</a></li>
 <li><a href="#viatra-16">VIATRA 1.6</a></li>
@@ -62,10 +63,83 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="viatra-20"><a class="link" href="#viatra-20">VIATRA 2.0 (Release date: 27th June 2018)</a></h2>
+<h2 id="viatra-21"><a class="link" href="#viatra-21">VIATRA 2.1 (To be released on 19th December 2018B)</a></h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_new_and_noteworthy"><a class="link" href="#_new_and_noteworthy">New and Noteworthy</a></h3>
+<div class="sect3">
+<h4 id="_graphical_query_editor"><a class="link" href="#_graphical_query_editor">Graphical Query Editor</a></h4>
+<div class="paragraph">
+<p>VIATRA 2.1 includes an experimental graphical editor for model queries based on Sirius. The queries created by the graphical editor are translated to the existing textual syntax, then handled with the existing runtime and IDE features. See <a href="graphical-queries.html">the documentation page</a> for details.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_other_language_features"><a class="link" href="#_other_language_features">Other Language Features</a></h4>
+<div class="paragraph">
+<p>The severity of missing variable types is increased to warning. The reason for this change is that explicitly declaring parameter types helps increases readability of patterns and helps precise error localization in case of type errors. However, to avoid breaking existing pattern declarations, such missing types are not considered as errors. However, in a future release such missing declarations might be considered as erroneous, so it is recommended to add the missing declarations (e.g. using the appropriate quick fix functionality).</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_updated_headless_pattern_parser"><a class="link" href="#_updated_headless_pattern_parser">Updated Headless Pattern Parser</a></h4>
+<div class="paragraph">
+<p>The headless pattern parser component of VIATRA has been updated to be able to maintain an updatable set of query specifications, useful for integrating custom query evaluation functionality in modeling tools, where the queries are updated.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_migrating_to_viatra_2_1"><a class="link" href="#_migrating_to_viatra_2_1">Migrating to VIATRA 2.1</a></h3>
+<div class="sect3">
+<h4 id="_conflict_resolution_between_transformation_rules"><a class="link" href="#_conflict_resolution_between_transformation_rules">Conflict Resolution between Transformation Rules</a></h4>
+<div class="paragraph">
+<p>The default rule priority in InvertedDisappearancePriorityConflictResolver was changed in version 2.1 from 0 to 1. This change was motivated by the fact that in case of 0 priority additions and deletions would have the same priority that is in contrast with the goal of the resolver.</p>
+</div>
+<div class="paragraph">
+<p>This is a breaking change as transformations using both priority '0' and '1' might change their internal behavior. To avoid this, it is recommended not to use priority '0' at all with this conflict resolver.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_updated_transformation_rule_creation"><a class="link" href="#_updated_transformation_rule_creation">Updated transformation rule creation</a></h4>
+<div class="paragraph">
+<p>Before version 2.1 the <code>createRule</code> methods of the classes BatchTransformationRuleFactory and EventDrivenTransformationRuleFactory were parameterless and the query specification was provided in the <code>precondition</code> method. This worked fine when using JVM-based languages with advanced type inference, such as Xtend or Kotlin for writing transformation, but when transformations were created in Java, it became cumbersome, as some type casting was required to initialize the rules properly.</p>
+</div>
+<div class="paragraph">
+<p>To fix this, new <code>createRule</code> methods were created that expect the query specification input as parameters, thus replacing both the old <code>createRule</code> and <code>precondition</code> methods. To consolidate this API, the old calls are marked as deprecated, but are still available in VIATRA 2.1.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_changed_hybridization_behaviour_in_the_local_search_query_backend"><a class="link" href="#_changed_hybridization_behaviour_in_the_local_search_query_backend">Changed hybridization behaviour in the Local Search Query Backend</a></h4>
+<div class="paragraph">
+<p>To make behaviour more predictable, the default configuration of the Local Search query engine no longer allows hybrid pattern matching in conjuction with the incremental query backend across pattern calls, i.e. if the caller pattern is evaluated with LS, so will the callee pattern during the same matcher invocation. To enable hybrid matching, where the local search backend may request results of called patterns from the incremental backend (in case the callee is declared <code>incremental pattern</code>), use configurations that explicitly enable this, such as <code>LocalSearchHints.getDefaultGenericHybrid()</code>.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>=== Query Runtime UI Project introduced</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>To support reusing model connectors without tooling dependencies, the IModelConnector interface and all its uses have been moved to a new `org.eclipse.viatra.query.runtime.ui` plugin, and it has been renamed accordingly. All adapters provided by VIATRA were updated to provide the new interface, the few existing users should request instances of `org.eclipse.viatra.query.runtime.ui.modelconnector.IModelConnector` instead. The new implementation behaves in exactly the same way than before.</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>=== Facet Editor Integration Removed</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>VIATRA included for a few years a component to make sure our IDE features such as the Query Results view work well with the Facet Editor, originally provided by the EMF Facet project than later the MoDisco project. Given these editors are only used sparingly, and MoDisco leaves the simultaneous release, we have decided not to support this editor anymore.</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="viatra-20"><a class="link" href="#viatra-20">VIATRA 2.0</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_new_and_noteworthy_2"><a class="link" href="#_new_and_noteworthy_2">New and Noteworthy</a></h3>
 <div class="sect3">
 <h4 id="_new_language_features"><a class="link" href="#_new_language_features">New Language Features</a></h4>
 <div class="paragraph">
@@ -170,12 +244,18 @@ private pattern availableCPU(host : HostInstance, value : java Integer) {
 </div>
 </div>
 <div class="sect3">
+<h4 id="_improved_ui_support_for_recursive_query_evaluation"><a class="link" href="#_improved_ui_support_for_recursive_query_evaluation">Improved UI Support for Recursive Query Evaluation</a></h4>
+<div class="paragraph">
+<p>For users who want to evaluate <a href="#recursion">recursive queries</a> via the Query Result View, we proudly report that the <a href="#recursion-dred">delete and rederive (DRED)</a> evaluation mode can now be selected on the UI (specifically the Preferences page for the VIATRA Query Explorer).</p>
+</div>
+</div>
+<div class="sect3">
 <h4 id="_p2_repository_structure_update"><a class="link" href="#_p2_repository_structure_update">p2 repository structure update</a></h4>
 <div class="paragraph">
 <p>The removal of various features in this release made us reconsider the contents  of our p2 repository. Previously we used a composite repository with all of our releases, but the features removed from version 2.0 show up in its earlier version that can be confusing. In order to handle this case better (and also for better performance), we have introduced a <code>/latest</code> p2 repository, and simplified the categorization instead.</p>
 </div>
 <div class="paragraph">
-<p>With regards to these changes, the <a href="http://eclipse.org/viatra/downloads.html">download page</a> was also updated.</p>
+<p>With regards to these changes, the <a href="http://eclipse.org/viatra/download.html">download page</a> was also updated.</p>
 </div>
 </div>
 </div>
@@ -522,7 +602,7 @@ ViatraQueryEngine engine = ViatraQueryEngine.on(scope);</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>In case of the query scope is set to a subset of the entire model (e.g only one EMF resource within the resource set), model elements within the scope of the engine may have references pointing to elements outside the scope; these are called <strong>dangling edges</strong>. Previous versions of VIATRA made the assumption that the model is self-contained and free of dangling edges; the behavior of the query engine was unspecified (potentially incorrect match sets) if the model did not have this property. In VIATRA 1.6, this behavior was cleaned up by adding a new indexer mode that drops this assumption, and (with a minor cost to performance) always checks both ends of all indexed edges to be in-scope. For backward compatibility, the old behavior is used by default, but you can manually change this using the corresponding base index option as below. For new code we suggest to use the option to drop the dangling-free assumption, as it provides more consistent and intuitive results in a lot of cases; in a future VIATRA release this will be the new default.</p>
+<p>In case of the query scope is set to a subset of the entire model (e.g only one EMF resource within the resource set), model elements within the scope of the engine may have references pointing to elements outside the scope; these are called <strong>dangling edges</strong>. Previous versions of VIATRA made the assumption that the model is self-contained and free of dangling edges; the behavior of the query engine was unspecified (potentially incorrect match sets) if the model did not have this property. In VIATRA 1.6, this behavior was cleaned up by adding a new indexer mode that drops this assumption, and (with a minor cost to performance) always checks both ends of all indexed edges to be in-scope. To avoid surprises, the new behaviour is used by default, but if necessary, the old behavior can be accessed by manually changing the corresponding base index option as below. For new code we suggest to use the option to drop the dangling-free assumption, as it provides more consistent and intuitive results in a lot of cases; in a future VIATRA release this will be the new default.</p>
 </div>
 <div id="v16-danglingfree" class="listingblock">
 <div class="content">
@@ -806,6 +886,11 @@ pattern locatedOnThoroughfare(house: House, location: Thoroughfare) {
 <h3 id="_remote_debugging_support_added_to_the_viatra_model_transformation_debugger"><a class="link" href="#_remote_debugging_support_added_to_the_viatra_model_transformation_debugger">Remote debugging support added to the VIATRA model transformation debugger</a></h3>
 <div class="paragraph">
 <p>The VIATRA model transformation debugger (introduced in VIATRA 1.3.0) has undergone a series of architectural  and backend-related changes. The current, 0.15.0 version of the debugger now enables the user to connect to remote VIATRA model transformations, while maintaining the user experience introduced in the previous version. This way, model transformations running on remote JVM instances can be analysed much more straightforward way.</p>
+</div>
+<div class="videoblock">
+<div class="content">
+<iframe src="https://www.youtube.com/embed/TaLvKgfxQNg#?rel=0" frameborder="0" allowfullscreen></iframe>
+</div>
 </div>
 </div>
 <div class="sect2">
