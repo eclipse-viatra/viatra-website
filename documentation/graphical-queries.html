@@ -116,18 +116,6 @@ The section is based on the version available at the early September 2018. Given
 <div class="paragraph">
 <p>After the wizard finishes, a new diagram is opened for the created file, where the pattern definitions can be edited using the usual tools.</p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-There is a known bug with regards to the wizard: creating the second vgql file does not create an additional diagram, but opens the diagram for the first file. Second and later diagrams can be created using the <code>aird editor</code> provided by Sirius.
-</td>
-</tr>
-</table>
-</div>
 </div>
 <div class="sect2">
 <h3 id="_creating_the_first_pattern">Creating the First Pattern</h3>
@@ -142,14 +130,14 @@ There is a known bug with regards to the wizard: creating the second vgql file d
 </li>
 </ol>
 </div>
-<div class="admonitionblock warning">
+<div class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
-<div class="title">Warning</div>
+<div class="title">Note</div>
 </td>
 <td class="content">
-In the first prototype, in addition to adding the declaration, required plug-in dependencies are to be added manually to the project, otherwise the generated vql files will be erroneous. In the meantime, if necessary, the generated vql files have a quick fix to add this dependency to the project.
+The editor tries to add the required plug-in dependencies automatically to the project. In rare case this may fail, causing the generated vql files will be erroneous. In such cases the generated vql files have a quick fix to add this dependency to the project.
 </td>
 </tr>
 </table>
@@ -172,6 +160,21 @@ In the first prototype, in addition to adding the declaration, required plug-in 
 <span class="image"><img src="images/tools/vgql_first_pattern.png" alt="vgql first pattern" height="300"></span></p>
 </li>
 </ol>
+</div>
+<div class="paragraph">
+<p>In order to ensure the created patterns are well-formed VIATRA queries, the queries can be validated using the default Sirius-based validators: select <code>Validate Diagram</code> from the pop-up menu of the diagram.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+In case of errors in the specification, the generated VQL files will be erroneous. In such cases it is recommended to re-validate the diagram and look at the provided error reports to fix the issues.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -206,7 +209,7 @@ This integration assumes that the <code>vql</code> file is generated, so it requ
 <h2 id="_missing_feature_and_known_issues">Missing Feature and Known Issues</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In the early prototype available in VIATRA 2.1.0 2 there are a few known issues that are planned to be addressed before the final VIATRA 2.1 is released in December 2012. These issues are maintained in <a href="https://bugs.eclipse.org/bugs/buglist.cgi?list_id=17930299&amp;product=Viatra&amp;query_format=advanced&amp;status_whiteboard=vgql-editor&amp;status_whiteboard_type=allwordssubstr">Bugzilla</a>.</p>
+<p>The graphical pattern editor in VIATRA 2.1.0 is considered experimental, and there are a few known issues that are planned to be addressed after the the final VIATRA 2.1 is released in December 2012. These issues are maintained in <a href="https://bugs.eclipse.org/bugs/buglist.cgi?list_id=17930299&amp;product=Viatra&amp;query_format=advanced&amp;status_whiteboard=vgql-editor&amp;status_whiteboard_type=allwordssubstr">Bugzilla</a>.</p>
 </div>
 </div>
 </div>
