@@ -37,10 +37,6 @@
 <body ng-app="viatra" ng-controller="main" class="cloak">
 <ng-include src="'/viatra/angular/blocks/header.html'"></ng-include>
 
-<div class="clear"></div>
-<div id="body_wrapper">
-<h1 class="page_title">The VIATRA Query Language</h1>
-	
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
@@ -93,9 +89,11 @@
 </li>
 <li><a href="#_advanced_language_features">3. Advanced Language Features</a>
 <ul class="sectlevel2">
-<li><a href="#_working_with_emaps_in_viatra_query">3.1. Working with EMaps in VIATRA Query</a></li>
-<li><a href="#recursion">3.2. Recursive queries in VIATRA Query</a></li>
-<li><a href="#functional-dependencies">3.3. Functional dependencies</a></li>
+<li><a href="#_import_aliasing">3.1. Import aliasing</a></li>
+<li><a href="#_java_type_and_edatatype_references">3.2. Java type and EDataType references</a></li>
+<li><a href="#_working_with_emaps_in_viatra_query">3.3. Working with EMaps in VIATRA Query</a></li>
+<li><a href="#recursion">3.4. Recursive queries in VIATRA Query</a></li>
+<li><a href="#functional-dependencies">3.5. Functional dependencies</a></li>
 </ul>
 </li>
 <li><a href="#extensibility">4. Extensibility</a>
@@ -440,12 +438,112 @@ As of some shortcomings of the EMF generator, the <code>org.eclipse.emf.ecore.ge
 <h2 id="_advanced_language_features"><a class="link" href="#_advanced_language_features">3. Advanced Language Features</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_working_with_emaps_in_viatra_query"><a class="link" href="#_working_with_emaps_in_viatra_query">3.1. Working with EMaps in VIATRA Query</a></h3>
+<h3 id="_import_aliasing"><a class="link" href="#_import_aliasing">3.1. Import aliasing</a></h3>
+<div class="paragraph">
+<p>When writing queries over multiple metamodels, sometimes there are multiple EClass instances with the same name, but in different EPackages. To handle such cases, VQL supports import aliasing: it is possible to extend an import declaration with an alias that can later be used to differentiate between the sources.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The syntax to define the import is as follows: <code>import "http://my.own.ePackage.nsUri/1.0" as alias</code></p>
+</li>
+<li>
+<p>The alias can be used as a prefix for any EMF type reference, such as <code>alias::TypeName</code></p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If no alias is used to specify the used metamodel, the import declarations provided later shadow the previous ones.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>As an example on how to use this feature effectively, consider the following example, where both the <code>custom</code> and the <code><a href="http://www.eclipse.org/uml2/5.0.0/UML" class="bare">http://www.eclipse.org/uml2/5.0.0/UML</a></code> EPackage instances define an <code>EClass NamedElement</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-vql" data-lang="vql">import "custom" as custom
+import "http://www.eclipse.org/uml2/5.0.0/UML" as uml
+
+pattern importAliases(x : NamedElement) { // From UML metamodel, selected by order of  imports
+  uml::NamedElement(x); // From UML metamodel, selected explicitly
+  custom::NamedElement(x); // Selected from the custom metamodel
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If aliasing is used for referencing the types, only the selected metamodel will be considered. For example, if the custom metamodel would not define an <code>EClassifier NamedElement</code>, the <code>custom::NamedElement</code> type reference will not be resolved, regardless of the <code>EClassifier NamedElement</code> defined in the UML metamodel.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_java_type_and_edatatype_references"><a class="link" href="#_java_type_and_edatatype_references">3.2. Java type and EDataType references</a></h3>
+<div class="paragraph">
+<p>Type constraints with Java types and EDataTypes behave differently in two major aspects:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>EDataTypes only contain values that are explicitly present in the model. For example, an <code>EString</code> type usually includes all names and identifiers from a model, but does not include any computed string (with the exception if the calculated string is also present in the instance models). On the other hand, a <code>java String</code> includes both the names and identifiers and all the possible computed values as well.</p>
+</li>
+<li>
+<p>The match set of EDataType constraints is enumerable, while the set of instances of Java types is not. This is important for both performance optimization and well-formedness of the pattern; and the difference can be explained by the fact that all instances present in the model can be practically enumerated (e.g. by consulting all EObjects in the model that have an EString-typed EAttribute), but the instances of a Java type cannot (e.g. one cannot enumerate all java Strings, as there are virtually infinitely many).</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The following example illustrates the difference between the various cases: when returning the number of <code>EClass</code> instances in the model, the <code>EDataType EInt</code> is inappropriate, as any non-negative integer can be result, but the model might not contain those. By explicitly using <code>java Integer</code> as type, any valid count can be returned.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-vql" data-lang="vql">import "http://www.eclipse.org/emf/2002/Ecore"
+
+// Incorrect
+pattern numberOfClasses1(n : EInt) { // imports EInt EDataType from Ecore
+  n == count EClass(_c);
+}
+
+// Correct
+pattern numberOfClasses3(n : java Integer) { // Explicitly declares Java Integer
+  n == count EClass(_c);
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+When in doubt, rely on java types instead of EDataType constraints. Use EDataTypes only if it is really required for the end result to be present in the instance models.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_working_with_emaps_in_viatra_query"><a class="link" href="#_working_with_emaps_in_viatra_query">3.3. Working with EMaps in VIATRA Query</a></h3>
 <div class="paragraph">
 <p>The eclipse.org EMF wiki gives a proper FAQ about the various modeling related issues, including the usage of EMaps in your metamodel. With VIATRA Query you can even write your own queries to extract the key-value pairs from your instance model.</p>
 </div>
 <div class="sect3">
-<h4 id="_emaps_in_your_metamodel"><a class="link" href="#_emaps_in_your_metamodel">3.1.1. EMaps in your metamodel</a></h4>
+<h4 id="_emaps_in_your_metamodel"><a class="link" href="#_emaps_in_your_metamodel">3.3.1. EMaps in your metamodel</a></h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -483,7 +581,7 @@ As of some shortcomings of the EMF generator, the <code>org.eclipse.emf.ecore.ge
 </div>
 </div>
 <div class="sect3">
-<h4 id="_querying_emaps_from_viatra_query_patterns"><a class="link" href="#_querying_emaps_from_viatra_query_patterns">3.1.2. Querying EMaps from VIATRA Query patterns</a></h4>
+<h4 id="_querying_emaps_from_viatra_query_patterns"><a class="link" href="#_querying_emaps_from_viatra_query_patterns">3.3.2. Querying EMaps from VIATRA Query patterns</a></h4>
 <div class="paragraph">
 <p>Here is an example query to extract the key-value pairs from an EMap:</p>
 </div>
@@ -503,7 +601,7 @@ As of some shortcomings of the EMF generator, the <code>org.eclipse.emf.ecore.ge
 </div>
 </div>
 <div class="sect2">
-<h3 id="recursion"><a class="link" href="#recursion">3.2. Recursive queries in VIATRA Query</a></h3>
+<h3 id="recursion"><a class="link" href="#recursion">3.4. Recursive queries in VIATRA Query</a></h3>
 <div class="paragraph">
 <p>As explained on the <a href="#advanced-constraints">Advanced Pattern Constraints section</a>, VIATRA Query supports pattern composition via the <code>find</code> keyword. Does it support recursive composition, i.e. a pattern calling itself, or multiple patterns cyclically referencing each other? Yes, it does, albeit with limits. The situation is complicated, as described below; see <a href="#recursion-summary">Summary and suggestions</a> for an executive summary.</p>
 </div>
@@ -524,7 +622,7 @@ As of some shortcomings of the EMF generator, the <code>org.eclipse.emf.ecore.ge
 <p>To avoid such contradictions, VIATRA Query supports <strong>positive recursion</strong> only, i.e. patterns referencing themselves or each other cyclically, solely by positive <code>find</code> pattern calls, never by negation (<code>neg find</code>) or aggregation (<code>count find</code>). (In mathematics, this property is called <a href="https://en.wikipedia.org/wiki/Stratification_%28mathematics%29">stratification</a>.) Positively recursive queries are always meaningful - unfortunately, they still will not work in all cases, as explained below. From this point onward, the discussion will be restricted to stratified / positive recursion.</p>
 </div>
 <div class="sect3">
-<h4 id="_well_founded_recursion"><a class="link" href="#_well_founded_recursion">3.2.1. Well-founded recursion</a></h4>
+<h4 id="_well_founded_recursion"><a class="link" href="#_well_founded_recursion">3.4.1. Well-founded recursion</a></h4>
 <div class="paragraph">
 <p>Suppose that we have elements of type <code>Node</code> forming a containment hierarchy of parents and children, and we want to assign them qualified names composed from their simple names and and the name of their parent. Let&#8217;s see the following recursive pattern:</p>
 </div>
@@ -553,7 +651,7 @@ As of some shortcomings of the EMF generator, the <code>org.eclipse.emf.ecore.ge
 <p>In general, VIATRA Query returns correct results for positively recursive queries that are <code>well-founded</code>, i.e. individual matches never support each other cyclically. This is typically found to be the case if the recursion traverses along a containment tree (in either direction), or any graph structure that is known to be a DAG (directed acyclic graph).</p>
 </div>
 <div class="sect4">
-<h5 id="_optional_reading_problems_in_the_ill_founded_case"><a class="link" href="#_optional_reading_problems_in_the_ill_founded_case">3.2.1.1. Optional reading: problems in the ill-founded case</a></h5>
+<h5 id="_optional_reading_problems_in_the_ill_founded_case"><a class="link" href="#_optional_reading_problems_in_the_ill_founded_case">3.4.1.1. Optional reading: problems in the ill-founded case</a></h5>
 <div class="paragraph">
 <p>As an aside, one can draw parallels with imperative programs, where the well-founded property of a recursive subroutine would warrant that the recursion terminates. If a recursive program is not well-founded, the subroutine may not terminate. VIATRA Query, however, is guaranteed to terminate even for recursive queries that are not well-founded; the problem lies elsewhere.</p>
 </div>
@@ -585,7 +683,7 @@ As of some shortcomings of the EMF generator, the <code>org.eclipse.emf.ecore.ge
 </div>
 </div>
 <div class="sect3">
-<h4 id="recursion-dred"><a class="link" href="#recursion-dred">3.2.2. Delete and REDerive: conquering the ill-founded case</a></h4>
+<h4 id="recursion-dred"><a class="link" href="#recursion-dred">3.4.2. Delete and REDerive: conquering the ill-founded case</a></h4>
 <div class="paragraph">
 <p>Since the 1.6 version, VIATRA Queries supports <em>Delete and REDerive</em> evaluation in the query engine. This evaluation strategy makes it possible to correctly compute the results of <em>recursive graph patterns</em> on <em>instance models that contain cycles</em> (i.e. when the recursion is ill-founded). Prior versions of VIATRA Queries supported only scenarios where at least one of the cycles was missing, that is, either the patterns were not recursive or the instance models were acyclic.</p>
 </div>
@@ -593,7 +691,7 @@ As of some shortcomings of the EMF generator, the <code>org.eclipse.emf.ecore.ge
 <p>As of now, the Delete and REDerive evaluation can be manually enabled using the query evaluation hint <code>ReteHintOptions.deleteRederiveEvaluation</code>. From version 2.0, this option can be selected for query evaluation through the Query Results View in the Preferences page for the VIATRA Query Explorer.</p>
 </div>
 <div class="sect4">
-<h5 id="_optional_reading_under_the_hood"><a class="link" href="#_optional_reading_under_the_hood">3.2.2.1. Optional reading: under the hood</a></h5>
+<h5 id="_optional_reading_under_the_hood"><a class="link" href="#_optional_reading_under_the_hood">3.4.2.1. Optional reading: under the hood</a></h5>
 <div class="paragraph">
 <p>We demonstrate the problems of the old execution mode and the DRED solution by a concrete example.</p>
 </div>
@@ -656,7 +754,7 @@ pattern allSecrets(person : Student, secret : EString) {
 </div>
 </div>
 <div class="sect3">
-<h4 id="recursion-summary"><a class="link" href="#recursion-summary">3.2.3. Summary and suggestions</a></h4>
+<h4 id="recursion-summary"><a class="link" href="#recursion-summary">3.4.3. Summary and suggestions</a></h4>
 <div class="paragraph">
 <p>In summary, VIATRA Query supports positive (stratified) recursion only. Even for positive recursion, correct (minimal fixpoint) results are only guaranteed if either (i) we enable the <a href="#recursion-dred">new DRED mode</a>, at a performance cost, or (ii) the recursion is well-founded (e.g. moves along a containment hierarchy or acyclic graph). Otherwise (in default mode, with ill-founded recursion), the results are OK only if the model is guaranteed to only ever change by monotonously inserting new stuff, never deleting, moving or replacing.</p>
 </div>
@@ -666,7 +764,7 @@ pattern allSecrets(person : Student, secret : EString) {
 </div>
 </div>
 <div class="sect2">
-<h3 id="functional-dependencies"><a class="link" href="#functional-dependencies">3.3. Functional dependencies</a></h3>
+<h3 id="functional-dependencies"><a class="link" href="#functional-dependencies">3.5. Functional dependencies</a></h3>
 <div class="paragraph">
 <p>The performance of query evaluation may benefit in various ways from knowing the <strong>functional dependencies</strong> among pattern variables. We say that variables <code>x1</code>, <code>x2</code>, <code>x3</code>, &#8230;&#8203; <code>xn</code> determine variable ''y'' if there can&#8217;t be more than one value of <code>y</code> given a combination of values for <code>x1</code>, <code>x2</code>, <code>x3</code>, &#8230;&#8203; <code>xn</code>. In other words, <code>x1</code>, <code>x2</code>, <code>x3</code>, &#8230;&#8203; <code>xn</code> together uniquely determine <code>y</code>. Yet another way to put it: if two matches of the pattern agree on the values of variables <code>x1</code>, <code>x2</code>, <code>x3</code>, &#8230;&#8203; <code>xn</code>, they must also agree on the value of <code>y</code>.</p>
 </div>
@@ -674,7 +772,7 @@ pattern allSecrets(person : Student, secret : EString) {
 <p>In many cases, the recognition of functional dependencies can drastically improve the performance of the evaluation process. It is therefore important to have the dependencies known in case of performance-critical queries.</p>
 </div>
 <div class="sect3">
-<h4 id="_automatic_inference"><a class="link" href="#_automatic_inference">3.3.1. Automatic inference</a></h4>
+<h4 id="_automatic_inference"><a class="link" href="#_automatic_inference">3.5.1. Automatic inference</a></h4>
 <div class="paragraph">
 <p>Viatra Query has two ways to determine the functional dependencies of your queries: it does its best to automatically infer such dependencies, and you can also help by manually specifying some dependencies (see below). Automatic inference covers cases such as the source of a many-to-one reference uniquely determining its target; or the result of an <code>eval()</code> expression being determined by the variables used in the expression. Since version 1.5, dependencies among parameters for called patterns are also taken into account, though this kind of inference has its limits.</p>
 </div>
@@ -693,7 +791,7 @@ pattern allSecrets(person : Student, secret : EString) {
 </div>
 </div>
 <div class="sect3">
-<h4 id="_manually_specifying_dependencies_since_v1_5"><a class="link" href="#_manually_specifying_dependencies_since_v1_5">3.3.2. Manually specifying dependencies (since v1.5)</a></h4>
+<h4 id="_manually_specifying_dependencies_since_v1_5"><a class="link" href="#_manually_specifying_dependencies_since_v1_5">3.5.2. Manually specifying dependencies (since v1.5)</a></h4>
 <div class="paragraph">
 <p>The <code>@FunctionalDependency</code> annotation can be used inform the query engine about additional functional dependencies that it would be unable to automatically recognize. The annotation is placed on a pattern, and expresses a functional dependency among pattern parameters. Annotation parameters indicate which query parameters determine which other ones. Note that is is not the evaluation of the annotated pattern, but rather other patterns calling it, that can take advantage of the supplied information.</p>
 </div>
@@ -859,7 +957,7 @@ Once again, please read the Javadoc carefully and take a look at the built-in im
 </ul>
 </div>
 </div>
-</div>	
+</div>
 
 <div class="clear"></div>
 <ng-include src="'/viatra/angular/blocks/footer.html'"></ng-include>
