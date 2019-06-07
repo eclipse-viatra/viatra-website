@@ -87,51 +87,54 @@
 </div>
 </div>
 <div class="sect3">
-<h4 id="_query_editor_enhancements"><a class="link" href="#_query_editor_enhancements">Query Editor Enhancements</a></h4>
+<h4 id="_code_mining_in_query_editor"><a class="link" href="#_code_mining_in_query_editor">Code Mining in Query Editor</a></h4>
 <div class="paragraph">
 <p>VIATRA 2.2 introduces a set of code minings to provide extra inline information about the developed patterns. Currently, two information sources are enabled:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/releases/22_codemining.png" alt="Code Mining in Action" width="605" height="144">
+</div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Inferred parameter types are displayed if missing.</p>
+<p>Inferred parameter types are displayed if missing. It is still recommended to always specify the parameter types (e.g. using the appropriate quick fixes to generate them), but displaying the missing values might still be helpful.</p>
 </li>
 <li>
-<p>In case of pattern calls the names of the called parameters is also displayed, helping</p>
+<p>In case of pattern calls the names of the called parameters is also displayed, making it easier to understand more complex calls, especially ones with unnamed variables.</p>
 </li>
 </ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/releases/22_codemining_prefs.png" alt="Preference Page to Enable Code Mining" width="624" height="266">
+</div>
 </div>
 <div class="paragraph">
 <p>Code minings are only available if Eclipse Photon or newer is used; however, for version 2.2, we consider code minings experimental: in future versions we might update when minings are presented, both for performance and usability concerns. Because of this reason, code minings are by default turned off; in case of interest they can be turned on using an appropriate preference setting.</p>
 </div>
-<div class="imageblock">
-<div class="content">
-<img src="./images/releases/22_codemining_prefs.png" alt="Preference Page to Enable Code Mining">
 </div>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="./images/releases/22_codemining.png" alt="Code Mining in Action">
-</div>
-</div>
+<div class="sect3">
+<h4 id="_easier_parameter_creation_in_query_editor"><a class="link" href="#_easier_parameter_creation_in_query_editor">Easier Parameter Creation in Query Editor</a></h4>
 <div class="paragraph">
 <p>To ease the modification previously created patterns, the editor makes it easier to convert existing local variables to parameters easily by appropriate content assist and quick fix-based enhancements.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/releases/22_add_parameter.png" alt="Quick Fix for Single-use Variables Support Adding a Parameter">
+<img src="./images/releases/22_add_parameter.png" alt="Quick Fix for Single-use Variables Support Adding a Parameter" width="614" height="126">
 </div>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/releases/20_ca_parameter.png" alt="Content Assist Offers Existing Variables for Parameters">
+<img src="./images/releases/22_ca_parameter.png" alt="Content Assist Offers Existing Variables for Parameters" width="507" height="83">
 </div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_batch_transformation_api_refresh"><a class="link" href="#_batch_transformation_api_refresh">Batch Transformation API Refresh</a></h4>
 <div class="paragraph">
-<p>The batch transformation API was updated to provide better support for that are controlled by data dependencies. The control flow for these transformations is usually trivial - the rules are executed one by one until there are no more matches left. This behavior is very similar to event-driven transformation with the main difference that these transformations are not executed on changes in the underlying model but triggered manually.</p>
+<p>The batch transformation API was updated to provide better support for transformations that are almost exclusively controlled by data dependencies. The control flow for these transformations is usually trivial - the rules are executed one by one until there are no more matches left. This behavior is very similar to event-driven transformation with the main difference that these transformations are not executed on changes in the underlying model but are triggered manually.</p>
 </div>
 <div class="paragraph">
 <p>The API received multiple small enhancements to support such transformations:</p>
@@ -156,7 +159,7 @@
 <div class="sect3">
 <h4 id="_batch_transformation_api"><a class="link" href="#_batch_transformation_api">Batch Transformation API</a></h4>
 <div class="paragraph">
-<p>Prior to version 2.2, the filter settings of batch transformation rules were ignored, and only filters defined in statements were taken into account. In version 2.2, filters are handled the following way:</p>
+<p>Prior to version 2.2, the filter settings of batch transformation rules were ignored by mistake, and only filters defined in statements were taken into account. In version 2.2, filters are handled the following way:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -164,7 +167,7 @@
 <p>If neither the transformation rule nor the statement define a filter, all matches of the pattern are considered.</p>
 </li>
 <li>
-<p>If either the transformation rule or the statement define a filter (but not both), the filter is used.</p>
+<p>If either the transformation rule or the statement define a filter (but not both), that filter is used.</p>
 </li>
 <li>
 <p>If both the transformation rule and the statement defines a filter, the filter defined by the statement overrides the default filter.</p>
@@ -172,7 +175,7 @@
 </ol>
 </div>
 <div class="paragraph">
-<p>This behavior might change the behavior of existing transformations when transformation rule filters were defined but filterless statements were used: in such case, the default rule filters will be applied. In such cases, the unnecessary default filters should be removed; or if necessary, a new filter could be used to override the default filter where the rule was activate.</p>
+<p>This behavior might change the behavior of existing transformations when transformation rule filters were defined but filterless statements were used: in such case, the default rule filters will be applied. In such cases, the unnecessary default filters should be removed; or if necessary, a new filter could be used to override the default filter when activating the rule.</p>
 </div>
 </div>
 <div class="sect3">
