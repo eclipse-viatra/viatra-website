@@ -198,18 +198,24 @@ The pattern language always works on sets: neither the constraints nor the match
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Create a new VIATRA Query project in the host Eclipse with the following name: <code>org.eclipse.viatra.examples.cps.queries</code>.</p>
+<p>Create a new VIATRA Query project in the host Eclipse with any name. The tutorial will assume the following name: <code>org.eclipse.viatra.examples.cps.queries</code>.</p>
 </li>
 <li>
-<p>Add <code>org.eclipse.viatra.examples.cps.model</code> to the Plug-in dependencies</p>
+<p>Add <code>org.eclipse.viatra.examples.cps.model</code> to the Plug-in dependencies to make the CPS metamodel available for the project.</p>
 </li>
 <li>
-<p>Create a new query definition in a package named <code>org.eclipse.viatra.examples.cps.queries</code> and a file named <code>CPSQueries.vql</code>. In the wizard create an empty query. Fill the first query:</p>
+<p>Create a Java package to store the queries. The tutorial will assume one named <code>org.eclipse.viatra.examples.cps.queries</code>.</p>
+</li>
+<li>
+<p>Create a new query definition in a package named using the <code>New Query Definition</code> wizard from the VIATRA category. The tutorial assumes the query file is named <code>CPSQueries.vql</code>.</p>
+</li>
+<li>
+<p>Fill the first query:</p>
 <div id="vql-first" class="listingblock">
 <div class="title">queries.vql</div>
 <div class="content">
 <pre class="highlight"><code class="language-vql" data-lang="vql">// Java package declaration, must match the container of the file
-package org.eclipse.viatra.documentation.example.queries
+package org.eclipse.viatra.examples.cps.queries
 
 // EPackage import
 import "http://org.eclipse.viatra/model/cps"
@@ -298,7 +304,7 @@ If the 'Load model from active editor' button is not enabled, it either means, t
 <p>This pattern, similar to the first pattern, still consists of a single constraint. The pattern constraints can refer to Java literals, like empty strings or numbers directly. This pattern should have no matches in the example model, as by default all instances have a non-empty IP address set up.</p>
 </li>
 <li>
-<p>Notice that if you create a new <code>HostInstance</code> element, it will not appear in the match results. This happens because in EMF unset an empty attributes are different. You can write a pattern that finds missing attribute values using the <code>neg find</code> construct (see later).</p>
+<p>Notice that if you create a new <code>HostInstance</code> element, it will not appear in the match results. This happens because in EMF unset and empty attributes are different (similar to the difference between empty Strings and null in Java). You can write a pattern that finds missing attribute values using the <code>neg find</code> construct (see later).</p>
 <div id="vql-emptyipaddress" class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-vql" data-lang="vql">pattern emptyIpAddress(host: HostInstance) {
@@ -527,7 +533,23 @@ pattern sameIpAddress(host1: HostInstance, host2: HostInstance, commonIp : java 
 </div>
 </div>
 <div class="paragraph">
-<p>When adding such a constraint annotation to a graph pattern, the code generator initializes a validation project that includes and registers the rules derived from the patterns for the framework. These rules can be tried out by opening a new, runtime Eclipse instance, opening an erroneous instance model in the model editor (the same one added to the <code>targetEditorId</code> parameter), and starting the validation from the popup menu items under <strong>VIATRA Validation</strong>.</p>
+<p>When adding such a constraint annotation to a graph pattern, the code generator initializes a validation project that includes and registers the rules derived from the patterns for the framework. These rules can be tried out by opening a new runtime Eclipse instance:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Launch a new <code>Eclipse application</code> containing all projects in the workspace.</p>
+</li>
+<li>
+<p>In the newly launched Eclipse instance, open an erroneous instance model in the model editor (make sure the editor is the same one that is added to the <code>targetEditorId</code> parameter).</p>
+</li>
+<li>
+<p>Start the validation from the popup menu items under <strong>VIATRA Validation</strong>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For more information about look at the <a href="https://www.vogella.com/tutorials/EclipsePlugin/article.html">Eclipse IDE Plug-in Development tutorial at vogella.com</a>.</p>
 </div>
 </div>
 <div class="sect3">
@@ -538,7 +560,7 @@ pattern sameIpAddress(host1: HostInstance, host2: HostInstance, commonIp : java 
 <div class="sect4">
 <h5 id="_calculate_the_maximum_number_of_instances"><a class="link" href="#_calculate_the_maximum_number_of_instances">3.1.5.1. Calculate the Maximum Number of Instances</a></h5>
 <div class="paragraph">
-<p>It is possible to find the Application Type that has the most instances defined in the model by combining a <em>counting</em> of the values of the related feature and a <em>max</em> function.  The <code>numberOfInstances</code> helper pattern uses a <code>count</code> call of the <code>ApplicationType.instances</code> feature (note the omission of the <code>find</code> keyword there). This feature is available starting with VIATRA 2.0, and allows reducing the number of trivial helper patterns, like the pattern <code>hostIpAddress</code> introduced earlier in this tutorial.</p>
+<p>It is possible to find the Application Type that has the most instances defined in the model by combining a <em>counting</em> of the values of the related feature and a <em>max</em> function.  The <code>sumNumberOfInstances</code> helper pattern uses a <code>count</code> call of the <code>ApplicationType.instances</code> feature (note the omission of the <code>find</code> keyword there). This feature is available starting with VIATRA 2.0, and allows reducing the number of trivial helper patterns, like the pattern <code>hostIpAddress</code> introduced earlier in this tutorial.</p>
 </div>
 <div class="paragraph">
 <p>After the counts are available in the match set of a pattern, it is easy to calculate the maximum value using the <code>max find</code> construct.</p>
@@ -946,7 +968,7 @@ If asking for the has/count calls is immediately followed by the processing of t
 <div class="sect3">
 <h4 id="_advanced_query_engine_features"><a class="link" href="#_advanced_query_engine_features">3.2.4. Advanced query engine features</a></h4>
 <div class="paragraph">
-<p>There are cases where the standard engine lifecycle is inappropriate, e.g. the models will not be unloaded but we want to spare memory by freeing up indexes. Furthermore, there are some functionality, like hint handling or match update listener support that was not added the the base implementation to keep its API clean.</p>
+<p>There are cases where the standard engine lifecycle is inappropriate, e.g. the models will not be unloaded but we want to spare memory by freeing up indexes. Furthermore, there are some functionality, like hint handling or match update listener support that was not added to the base implementation to keep its API clean.</p>
 </div>
 <div id="query-runtime-prepareadvanced" class="listingblock">
 <div class="content">
@@ -1125,7 +1147,7 @@ The exercise also covers registering a menu command which initializes the transf
 <div class="sect3">
 <h4 id="_create_transformation"><a class="link" href="#_create_transformation">4.1.1. Create transformation</a></h4>
 <div class="paragraph">
-<p>For the transformation, we have to created a <em>VIATRA Query Project</em> (the one from the <a href="#_query_development">query development tutorial</a> could also be reused), and create a new query file called <em>CpsXformM2M.vql</em> to store the patterns we want to use in the transformation with the following contents:</p>
+<p>For the transformation, we have to create a <em>VIATRA Query Project</em> (the one from the <a href="#_query_development">query development tutorial</a> could also be reused), and create a new query file called <em>CpsXformM2M.vql</em> to store the patterns we want to use in the transformation with the following contents:</p>
 </div>
 <div id="bmt-queries" class="listingblock">
 <div class="content">
@@ -1264,7 +1286,7 @@ new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 <p>Specify which action to run when the rule fires. It will create the transformed <code>DeploymentHost</code> element in the output model as well as a trace element associating the source <code>HostInstance</code> and the target <code>DeploymentHost</code>:</p>
 <div id="bmt-hostrule" class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">val hostRule = createRule.precondition(HostInstance.instance).action[
+<pre class="highlight"><code class="language-java" data-lang="java">val hostRule = createRule(HostInstance.instance).action[
     val cpsHostInstance = it.hostInstance
     val nodeIp = cpsHostInstance.nodeIp
     println('''Mapping host with IP: «nodeIp»''')
@@ -1285,11 +1307,27 @@ new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 </div>
 </div>
 </li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Before version 2.1 the <code>createRule</code> method was parameterless and the query specification had to be provided in the <code>precondition</code> method. This was changed as the old API required some unexpected type casts when writing transformations in plain Java (instead of Xtend or Kotlin). This approach is still available in VIATRA 2.1, but it is marked as deprecated.
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p>The rule which creates <code>DeploymentApplication</code> elements for <code>ApplicationInstance</code> objects, looks similar. It has to find the <code>DeploymentHost</code> created from the <code>HostInstance</code> to which the source <code>ApplicationInstance</code> is allocated, so it assumes the <code>hostRule</code> has already fired:</p>
 <div id="bmt-apprule" class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">val applicationRule = createRule.precondition(ApplicationInstance.instance).action[
+<pre class="highlight"><code class="language-java" data-lang="java">val applicationRule = createRule(ApplicationInstance.instance).action[
     val cpsApplicationInstance = it.appInstance
     val appId = cpsApplicationInstance.identifier
     println('''Mapping application with ID: «appId»''')
@@ -1441,7 +1479,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"</code></pre>
 <p>Create a generic resource project</p>
 </li>
 <li>
-<p>Copy a <code>.cyberphysicalsystem</code> resource in it if you already have one, or create a new <em>CaberPhysicalSystem Model</em></p>
+<p>Copy a <code>.cyberphysicalsystem</code> resource in it if you already have one, or create a new <em>CyberPhysicalSystem Model</em></p>
 <div class="imageblock">
 <div class="content">
 <img src="./images/tutorial/viatraIncr_example1.png" alt="viatraIncr example1">
@@ -1590,11 +1628,11 @@ pattern cps2depTrace(cps2dep, trace, cpsElement, depElement) {
 <div class="content">
 <img src="./images/tutorial/eventdriven_transformation_wizard_name.png" alt="eventdriven transformation wizard name">
 </div>
-<div class="title">Figure 18. Model Transformation Wizard - Name of the new batch transformation</div>
+<div class="title">Figure 18. Model Transformation Wizard - Name of the new event-driven transformation</div>
 </div>
 </li>
 <li>
-<p>Setup the type of the transformation to <em>BatchTransformation</em> and click Finish</p>
+<p>Setup the type of the transformation to <em>EventDrivenTransformation</em> and click Finish</p>
 <div class="imageblock">
 <div class="content">
 <img src="./images/tutorial/eventdriven_transformation_wizard_type.png" alt="eventdriven transformation wizard type">
@@ -1665,13 +1703,29 @@ new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 <p>A VIATRA query pattern is used as precondition to the rule, which means the rule will be activated each time the given pattern changes allowing to update the output accordingly.</p>
 <div id="emt-rule-structure" class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">val hostRule = createRule.precondition(HostInstanceMatcher.querySpecification)</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">val hostRule = createRule(HostInstanceMatcher.querySpecification)</code></pre>
 </div>
 </div>
 </li>
 </ul>
 </div>
 </li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Before version 2.1 the <code>createRule</code> method was parameterless and the query specification had to be provided in the <code>precondition</code> method. This was changed as the old API required some unexpected type casts when writing transformations in plain Java (instead of Xtend or Kotlin). This approach is still available in VIATRA 2.1, but it is marked as deprecated.
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p>Add action for each kind of changes in the pattern to update trace and output models:</p>
 <div class="ulist">
@@ -1757,7 +1811,7 @@ new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 <p>The rule which create DeploymentApplication elements for ApplicationInstances, looks similar</p>
 <div id="emt-applicationrule" class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">val applicationRule = createRule.precondition(ApplicationInstanceMatcher.querySpecification)
+<pre class="highlight"><code class="language-java" data-lang="java">val applicationRule = createRule(ApplicationInstanceMatcher.querySpecification)
 .action(CRUDActivationStateEnum.CREATED) [
     /* Find associated DeploymentHost for the HostInstance this application is allocated to */
     val depHost = engine.cps2depTrace.getAllValuesOfdepElement(null, null, appInstance.allocatedTo).filter(
