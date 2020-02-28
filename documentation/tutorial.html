@@ -89,16 +89,13 @@
 <h2 id="environment"><a class="link" href="#environment">1. Setting up the tutorial</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This tutorial was written for version 2.0.0 (released on 28th June 2018). VIATRA 2.0 is available from the Simultaneous Release Train p2 repository (<a href="http://download.eclipse.org/releases/photon" class="bare">http://download.eclipse.org/releases/photon</a>); for older releases or for older versions use the release p2 repository at <a href="http://download.eclipse.org/viatra/updates/release/2.0.0" class="bare">http://download.eclipse.org/viatra/updates/release/2.0.0</a></p>
+<p>This tutorial was last updated using VIATRA 2.3.0 (released on 18th December 2019), available from the Simultaneous Release Train p2 repository (<a href="http://download.eclipse.org/releases/2019-12" class="bare">http://download.eclipse.org/releases/2019-12</a>). The latest version can be downloaded from <a href="http://download.eclipse.org/viatra/updates/release/latest" class="bare">http://download.eclipse.org/viatra/updates/release/latest</a> that should be compatible with everything described here. To install VIATRA, select the <code>VIATRA Query and Transformation SDK</code> from the selected repository to install.</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="./images/tutorial/install.png" alt="Install window">
 </div>
 <div class="title">Figure 1. Install window</div>
-</div>
-<div class="paragraph">
-<p>For a faster installation, you may deselect the <em>Contact all update sites during install...</em> field, but then it might be necessary to install the required <em>Eclipse Collections</em> and <em>Xtext Runtime</em> features manually.</p>
 </div>
 <div class="paragraph">
 <p>This document assumes that the CPS metamodels are installed into the Eclipse instance. They are available from the p2 repository <a href="http://download.eclipse.org/viatra/examples/cps" class="bare">http://download.eclipse.org/viatra/examples/cps</a></p>
@@ -301,7 +298,7 @@ If the 'Load model from active editor' button is not enabled, it either means, t
 <div class="ulist">
 <ul>
 <li>
-<p>This pattern, similar to the first pattern, still consists of a single constraint. The pattern constraints can refer to Java literals, like empty strings or numbers directly. This pattern should have no matches in the example model, as by default all instances have a non-empty IP address set up.</p>
+<p>This pattern, similar to the first pattern, still consists of a single constraint. The pattern constraints can refer to Java literals, like empty strings or numbers directly.</p>
 </li>
 <li>
 <p>Notice that if you create a new <code>HostInstance</code> element, it will not appear in the match results. This happens because in EMF unset and empty attributes are different (similar to the difference between empty Strings and null in Java). You can write a pattern that finds missing attribute values using the <code>neg find</code> construct (see later).</p>
@@ -563,12 +560,13 @@ pattern sameIpAddress(host1: HostInstance, host2: HostInstance, commonIp : java 
 <p>It is possible to find the Application Type that has the most instances defined in the model by combining a <em>counting</em> of the values of the related feature and a <em>max</em> function.  The <code>sumNumberOfInstances</code> helper pattern uses a <code>count</code> call of the <code>ApplicationType.instances</code> feature (note the omission of the <code>find</code> keyword there). This feature is available starting with VIATRA 2.0, and allows reducing the number of trivial helper patterns, like the pattern <code>hostIpAddress</code> introduced earlier in this tutorial.</p>
 </div>
 <div class="paragraph">
-<p>After the counts are available in the match set of a pattern, it is easy to calculate the maximum value using the <code>max find</code> construct.</p>
+<p>After the counts are available in the match set of a pattern, it is possible to calculate the maximum value using the <code>max find</code> construct. However, it is important that calculating the maximum does not connect the ApplicationType instances to their maximum, that needs to be done with an additional constraint.</p>
 </div>
 <div id="vql-maximumNumberOfInstances" class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-vql" data-lang="vql">pattern maximumNumberOfInstances(at : ApplicationType, max : java Integer) {
 	max == max find sumNumberOfInstances(at, #);
+	find sumNumberOfInstances(applicationType, max);
 }
 
 pattern sumNumberOfInstances(at : ApplicationType, n : java Integer) {
@@ -784,7 +782,7 @@ If multiple query groups are to be loaded, either create a generic pattern group
 </div>
 <div id="query-runtime-printallmatches" class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">private void printAllMatches(ViatraQueryEngine engine ) {
+<pre class="highlight"><code class="language-java" data-lang="java">private void printAllMatches(ViatraQueryEngine engine) {
 	// Access pattern matcher
 	HostIpAddress.Matcher matcher = HostIpAddress.Matcher.on(engine);
 	// Get and iterate over all matches
@@ -813,27 +811,36 @@ It is safe to ask for the same matcher multiple times using the <code><code>on</
 <div id="query-runtime-printAllMatches2" class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-java" data-lang="java">private void printAllMatches2(ViatraQueryEngine engine) {
-    HostIpAddressMatcher matcher = HostIpAddressMatcher.on(engine);
-    matcher.forEachMatch(new HostIpAddressProcessor() {
-
+    HostIpAddress.Matcher matcher = HostIpAddress.Matcher.on(engine);
+    matcher.forEachMatch(new Consumer&lt;HostIpAddress.Match&gt;() {
         @Override
-        public void process(HostInstance pHost, String pIp) {
-            System.out.println(pHost);
+        public void accept(HostIpAddress.Match match) {
+            System.out.println(match.getHost());
         }
     });
 }</code></pre>
 </div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Before VIATRA 2.0, a separate MatchProcessor class was generated for each class that works similar to the Consumer-based implementation, but also extract all parameters. In version 2.0, this MatchProcessor is not generated by default, but can be enabled in the compiler settings.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>This can be simplified with a lambda expression as follows:</p>
 </div>
 <div id="query-runtime-printAllMatches3" class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">private void printAllMatches3(ViatraQueryEngine engine ) {
+<pre class="highlight"><code class="language-java" data-lang="java">private void printAllMatches3(ViatraQueryEngine engine) {
 	HostIpAddress.Matcher matcher = HostIpAddress.Matcher.on(engine);
-	for (HostInstance hi : matcher.getAllValuesOfhost()) {
-		System.out.println(hi);
-	}
+	matcher.forEachMatch(match -&gt; System.out.println(match.getHost()));
 }</code></pre>
 </div>
 </div>
@@ -930,9 +937,10 @@ Regardless of input values receiving null values, the <code><code>getAllmatches<
 </div>
 <div id="query-runtime-printfilteredmatches2" class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">private void printFilteredMatches(ViatraQueryEngine engine) {
+<pre class="highlight"><code class="language-java" data-lang="java">private void printFilteredMatches2(ViatraQueryEngine engine) {
 	HostIpAddress.Matcher matcher = HostIpAddress.Matcher.on(engine);
-	for (HostIpAddress.Match match : matcher.getAllMatches(null, "152.66.102.1")) {
+	HostIpAddress.Match filter = matcher.newMatch(null, "152.66.102.1");
+	for (HostIpAddress.Match match : matcher.getAllMatches(filter)) {
 		System.out.println(match);
 	}
 }</code></pre>
@@ -2106,6 +2114,18 @@ The VIATRA framework incorporates a debugger framework that supports the followi
 </li>
 </ul>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The model transformation debugger described in this section requires the <code>VIATRA Query and Transformation SDK Extensions (Incubation)</code> component to be installed from the VIATRA repository. The debugger in its current form is considered experimental, and both the feature set and API setup is subject to change in future releases of VIATRA.
+</td>
+</tr>
+</table>
+</div>
 <div class="sect3">
 <h4 id="_setting_up_the_transformation_under_debugging"><a class="link" href="#_setting_up_the_transformation_under_debugging">4.3.1. Setting Up the Transformation Under Debugging</a></h4>
 <div class="paragraph">
@@ -2116,7 +2136,33 @@ The VIATRA framework incorporates a debugger framework that supports the followi
 <li>
 <p>If the transformation is being newly developed, it is highly advised to use the VIATRA model transformation creation wizard. As shown on the figure below, the user can select the "VIATRA debugger support" checkbox, this way the generated code will incorporate the appropriate setup.</p>
 </li>
+<li>
+<p>In case of an already-existing transformation, the model transformation definition needs to be modified manually. This involves adding the VIATRA debug configuration to the VIATRA transformation builder (requiring an additional dependency to the plugin <code>org.eclipse.viatra.transformation.runtime.debug</code>). The following example snippet shows how this is achieved for the example.</p>
+</li>
 </ul>
+</div>
+<div id="Transformation-setup" class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-Java" data-lang="Java">// New import declaration
+import org.eclipse.viatra.transformation.debug.configuration.TransformationDebuggerConfiguration
+
+public class CPS2DeploymentTransformationViatra {
+...
+    private def createTransformation() {
+        ...
+        // Initializes a debugger configuration with the name `TestTransformation`
+        val debugger = new TransformationDebuggerConfiguration("TestTransformation")
+        transformation = BatchTransformation
+            .forEngine(engine)
+            // Adds the debugger configuration to the transformation
+            .addAdapterConfiguration(debugger)
+            .build
+        ...
+    }
+
+...
+}</code></pre>
+</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -2125,69 +2171,13 @@ The VIATRA framework incorporates a debugger framework that supports the followi
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Use the <em>VIATRA Debugger Session Name</em> optional parameter to define a textual identifier for the transformation. Usage of this identifier helps the transformation developer to  differentiate between different model transformation sessions, while using the transformation debugger.
+Here we replace the previously created transformation to always start with debugging enabled. If necessary, the addition of the adapters could be made configurable by the transformation developer and separate menu items can be added as necessary.
 </td>
 </tr>
 </table>
 </div>
-<div class="imageblock">
-<div class="content">
-<img src="./images/transformation/screenshots/wizard_selection.png" alt="Wizard selection">
-</div>
-<div class="title">Figure 26. Opening the Wizard</div>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="./images/transformation/screenshots/wizard_debugging.png" alt="Wizard debug">
-</div>
-<div class="title">Figure 27. Selecting debugger support</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>In case of an already-existing transformation, the model transformation definition needs to be modified manually. This involves adding the VIATRA debug configuration to the VIATRA transformation builder. The following example snippet shows how this is achieved in the example.</p>
-</li>
-</ul>
-</div>
-<div id="Transformation-setup" class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-Java" data-lang="Java">private def createTransformation() {
-    import org.eclipse.viatra.transformation.debug.configuration.TransformationDebuggerConfiguration
-    ...
-    transformation = BatchTransformation.forEngine(engine).addAdapterConfiguration(new TransformationDebuggerConfiguration("TestTransformation")).build
-    ...
-}</code></pre>
-</div>
-</div>
 <div class="paragraph">
-<p>As the VIATRA transformation debugger is a <em>Remote Debugging</em>-style debugger, the example transformation needs to be started manually. This is especially true in case of batch transformations, since event-driven transformations typically run continuously. The example uses a simple command and handler to run the model transformation on a predefined test model.</p>
-</div>
-<div id="Transformation-handler" class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-Java" data-lang="Java">public class BatchTestHandler extends AbstractHandler {
-    @Override
-    public Object execute(ExecutionEvent event) throws ExecutionException {
-        final Job job = new Job(JOB_NAME) {
-            protected IStatus run(IProgressMonitor monitor) {
-                // Load the CPS model
-                CPSModelInitializer init = new CPSModelInitializer();
-                CPSToDeployment cps2dep = init.loadModel(SOURCE_MODEL_URI);
-                // Initialize CPS to Deployment Transformation
-                CPSTransformation transformation = new CPSBatchTransformation(cps2dep);
-                // Execute the transformation and observe the effects of the selected adapter
-                transformation.execute();
-                transformation.dispose();
-                return Status.OK_STATUS;
-            }
-        };
-        job.schedule();
-        return null;
-    }
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>In order to properly initiate the VIATRA debugger runtime agent, the target Eclipse instance should be launched via using the following command line arguments:</p>
+<p>The transformation debugger configuration registers a runtime agent that blocks transformation execution until a debugger client connects via JMX. For the agent to work, a few command line parameters to be specified:</p>
 </div>
 <div id="Transformation-vmargs" class="listingblock">
 <div class="content">
@@ -2215,7 +2205,7 @@ Use the <em>VIATRA Debugger Session Name</em> optional parameter to define a tex
 <div class="content">
 <img src="./images/transformation/screenshots/debug_persp_empty.png" alt="Debug perspective">
 </div>
-<div class="title">Figure 28. Debug perspective with debugger views</div>
+<div class="title">Figure 26. Debug perspective with debugger views</div>
 </div>
 <div class="ulist">
 <ul>
@@ -2237,13 +2227,13 @@ Use the <em>VIATRA Debugger Session Name</em> optional parameter to define a tex
 <div class="content">
 <img src="./images/transformation/screenshots/debug_newlaunch.png" alt="Class selection">
 </div>
-<div class="title">Figure 29. Editing launch configuration</div>
+<div class="title">Figure 27. Editing launch configuration</div>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="./images/transformation/screenshots/newtransf_classsel.png" alt="Class selection">
 </div>
-<div class="title">Figure 30. Selecting a class</div>
+<div class="title">Figure 28. Selecting a class</div>
 </div>
 <div class="ulist">
 <ul>
@@ -2259,7 +2249,7 @@ Use the <em>VIATRA Debugger Session Name</em> optional parameter to define a tex
 <div class="content">
 <img src="./images/transformation/screenshots/debug_persp.png" alt="Debug perspective">
 </div>
-<div class="title">Figure 31. Debugger in its initialized state</div>
+<div class="title">Figure 29. Debugger in its initialized state</div>
 </div>
 </div>
 <div class="sect4">
@@ -2296,7 +2286,7 @@ In order to use the debugger UI elements, select the Debug Stack trace represent
 <div class="content">
 <img src="./images/transformation/screenshots/selectthread.png" alt="Select transformation stack frame">
 </div>
-<div class="title">Figure 32. Selecting the transformation stack frame</div>
+<div class="title">Figure 30. Selecting the transformation stack frame</div>
 </div>
 <div class="paragraph">
 <p>The <em>Transformation Browser</em> view is responsible for observing the internal state of the transformation. It allows the user to observe the current transformation rule activations, and it supports the definition of various transformation breakpoints.</p>
@@ -2305,13 +2295,13 @@ In order to use the debugger UI elements, select the Debug Stack trace represent
 <div class="content">
 <img src="./images/transformation/screenshots/transformation_rules.png" alt="TB rules">
 </div>
-<div class="title">Figure 33. Transformation Browser ordered by transformation rules</div>
+<div class="title">Figure 31. Transformation Browser ordered by transformation rules</div>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="./images/transformation/screenshots/conflict_set.png" alt="TB conflict set">
 </div>
-<div class="title">Figure 34. Transformation Browser ordered by EVM Conflict Set state</div>
+<div class="title">Figure 32. Transformation Browser ordered by EVM Conflict Set state</div>
 </div>
 <div class="paragraph">
 <p>The <em>Transformation Model Instance Viewer</em> enables the transformation developer to observe the state of the source and target model instances related to the model transformation selected in the <em>Adaptable Transformation Browser</em> view. This view displays the model instances in a multi-tabbed tree view with properties view support.</p>
@@ -2320,7 +2310,7 @@ In order to use the debugger UI elements, select the Debug Stack trace represent
 <div class="content">
 <img src="./images/transformation/screenshots/model_browser.png" alt="VTB view">
 </div>
-<div class="title">Figure 35. VIATRA model instance browser view</div>
+<div class="title">Figure 33. VIATRA model instance browser view</div>
 </div>
 <div class="paragraph">
 <p>The parameters of the next activation to be executed can be observed via the <em>Variables</em> Eclipse Debug View. After selecting the given debug stack frame (representing a transformation rule activation), the parameters of the transformation rule precondition are displayed as variables.</p>
@@ -2329,7 +2319,7 @@ In order to use the debugger UI elements, select the Debug Stack trace represent
 <div class="content">
 <img src="./images/transformation/screenshots/variables_view.png" alt="Variables view">
 </div>
-<div class="title">Figure 36. VIATRA transformation preconditions as Variables</div>
+<div class="title">Figure 34. VIATRA transformation preconditions as Variables</div>
 </div>
 </div>
 <div class="sect4">
@@ -2359,13 +2349,13 @@ In order to use the debugger UI elements, select the Debug Stack trace represent
 <div class="content">
 <img src="./images/transformation/screenshots/rule_breakpoint.png" alt="Rule breakpoint definition">
 </div>
-<div class="title">Figure 37. Rule breakpoint definition dialog</div>
+<div class="title">Figure 35. Rule breakpoint definition dialog</div>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="./images/transformation/screenshots/conditional_breakpoint.png" alt="Conditional breakpoint definition">
 </div>
-<div class="title">Figure 38. Conditional breakpoint definition dialog</div>
+<div class="title">Figure 36. Conditional breakpoint definition dialog</div>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -2419,13 +2409,13 @@ The breakpoints added are displayed in the <em>Breakpoints</em> Eclipse Debug vi
 <div class="content">
 <img src="./images/transformation/screenshots/conditional_breakpoint_parseerror.png" alt="Conditional breakpoint parsing error">
 </div>
-<div class="title">Figure 39. Conditional breakpoint error dialog</div>
+<div class="title">Figure 37. Conditional breakpoint error dialog</div>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="./images/transformation/screenshots/breakpoints_view.png" alt="Eclipse Breakpoints view">
 </div>
-<div class="title">Figure 40. Transformation breakpoints in the Eclipse Breakpoints view</div>
+<div class="title">Figure 38. Transformation breakpoints in the Eclipse Breakpoints view</div>
 </div>
 <div class="paragraph">
 <p>The debugger supports the following Eclipse debug commands:</p>
@@ -2471,7 +2461,7 @@ The changes made this ways could produce unpredictable behavior in the model tra
 <div class="content">
 <img src="./images/transformation/screenshots/select_next.png" alt="Select next activation">
 </div>
-<div class="title">Figure 41. Selecting the next activation</div>
+<div class="title">Figure 39. Selecting the next activation</div>
 </div>
 <div class="paragraph">
 <p>Once the next activation is selected, notice that the red rectangle representing, the next activation to be fired, is moved to the desired activation. At this point, if the transformation is resumed, it will continue its execution from the selected activation.</p>
@@ -2490,7 +2480,7 @@ The changes made this ways could produce unpredictable behavior in the model tra
 <div class="content">
 <img src="./images/transformation/screenshots/connection_error.png" alt="Debugger Connection Error">
 </div>
-<div class="title">Figure 42. Debugger Connection Error</div>
+<div class="title">Figure 40. Debugger Connection Error</div>
 </div>
 </div>
 <div class="sect4">
@@ -2502,7 +2492,7 @@ The changes made this ways could produce unpredictable behavior in the model tra
 <div class="content">
 <img src="./images/transformation/screenshots/automatic_termination.png" alt="Automatic termination">
 </div>
-<div class="title">Figure 43. Automatic termination</div>
+<div class="title">Figure 41. Automatic termination</div>
 </div>
 </div>
 <div class="sect4">
@@ -2514,7 +2504,7 @@ The changes made this ways could produce unpredictable behavior in the model tra
 <div class="content">
 <img src="./images/transformation/screenshots/conditional_breakpoint_parseerror.png" alt="Conditional breakpoint parsing error">
 </div>
-<div class="title">Figure 44. Conditional breakpoint error dialog</div>
+<div class="title">Figure 42. Conditional breakpoint error dialog</div>
 </div>
 </div>
 </div>
