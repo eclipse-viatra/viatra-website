@@ -214,14 +214,20 @@ As of some shortcomings of the EMF generator, the <code>org.eclipse.emf.ecore.ge
 <p>In the language, these parameter types are considered the same as type constraints in the pattern body.</p>
 </li>
 <li>
-<p>Type declarations are optional, but <strong>strongly recommended</strong> to use. In later versions, they might become mandatory. We recommend using EClass types for all EObject parameter variables, and, since version 1.4, Java class types (prefixed with the <code>java</code> keyword) for attribute-valued and computed parameters.</p>
+<p>Type declarations are optional, but <strong>strongly recommended</strong> to use. In future versions of VIATRA, they might become mandatory. We recommend using EClass types for all EObject parameter variables, and, since version 1.4, Java class types (prefixed with the <code>java</code> keyword) for attribute-valued and computed parameters.</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>Since version 1.4, parameters can optionally be marked as incoming (<code>in</code>) or outgoing (<code>out</code>). Incoming parameters <strong>must</strong> be bound when the pattern matcher initializes, while outgoing parameters <strong>must not</strong>. Unmarked parameters are neither incoming nor outgoing: they might be either bound or unbound when called. These declarations are used as only hints; the pattern matcher might ignore them if necessary.
-* <code>pattern myPattern(in a, out b, c) {&#8230;&#8203;}</code></p>
+<p>Since version 1.4, parameters can optionally be marked as incoming (<code>in</code>) or outgoing (<code>out</code>). Incoming parameters <strong>must</strong> be bound when the pattern matcher initializes, while outgoing parameters <strong>must not</strong>. Unmarked parameters are neither incoming nor outgoing: they might be either bound or unbound when called. These declarations are used as only hints; the pattern matcher might ignore them if necessary.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>pattern myPattern(in a, out b, c) {&#8230;&#8203;}</code></p>
+</li>
+</ul>
+</div>
 </li>
 <li>
 <p>Since version 1.4, the evaluation backend can be specified as local search-only (<code>search</code>) or Rete-only (<code>incremental</code>), providing hints to the runtime what pattern matcher should be initialized for this pattern. If undefined, the default hints of the engine is used (by default, Rete).</p>
@@ -365,7 +371,7 @@ As of some shortcomings of the EMF generator, the <code>org.eclipse.emf.ecore.ge
 </li>
 <li>
 <p>Starting with VIATRA 2.0, it is also possible to calculate the reflexive transitive closure of a pattern call, e.g. to return all friends and
-(note the <code><strong></code> symbol after the name of the called pattern): <code>find friend</strong>(myGuy, friendOfAFriendOfAFriend);</code>. This is equivalent with the following construct: <code>pattern friendOrMySelf(self, other) { other == self; } or { find friend+(self, other);}</code></p>
+(note the <code>*</code> symbol after the name of the called pattern): <code>find friend*(myGuy, friendOfAFriendOfAFriend);</code>. This is equivalent with the following construct: <code>pattern friendOrMySelf(self, other) { other == self; } or { find friend+(self, other);}</code></p>
 </li>
 </ol>
 </div>
@@ -847,18 +853,18 @@ pattern locatedOnThoroughfare(house: House, location: Thoroughfare) {
 </ul>
 </div>
 <div class="paragraph">
-<p>Starting with version 2.0, the registration method has changed to support the url:https://docs.oracle.com/javase/tutorial/ext/basics/spi.html[Java ServiceLoader] mechanism. This allows extending the standalone compiler, e.g. the maven plug-ins with support for these extensions. However, because of the limitations of the mechanism, both the extension and the serviceloader entries are required - the ServiceLoader is used in standalone environments, while the Eclipse IDE relies on the extensions. For example usages, see the following links:</p>
+<p>Starting with version 2.0, the registration method has changed to support the <a href="https://docs.oracle.com/javase/tutorial/ext/basics/spi.html">Java ServiceLoader</a> mechanism. This allows extending the standalone compiler, e.g. the maven plug-ins with support for these extensions. However, because of the limitations of the mechanism, both the extension and the serviceloader entries are required - the ServiceLoader is used in standalone environments, while the Eclipse IDE relies on the extensions. For example usages, see the following links:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>url:http://git.eclipse.org/c/viatra/org.eclipse.viatra.git/tree/query/plugins/org.eclipse.viatra.query.patternlanguage.emf/src/org/eclipse/viatra/query/patternlanguage/emf/validation/whitelist/extensions/MathWhitelistProvider.java[Extension library for the class java.lang.Math]</p>
+<p><a href="http://git.eclipse.org/c/viatra/org.eclipse.viatra.git/tree/query/plugins/org.eclipse.viatra.query.patternlanguage.emf/src/org/eclipse/viatra/query/patternlanguage/emf/validation/whitelist/extensions/MathWhitelistProvider.java">Extension library for the class java.lang.Math</a></p>
 </li>
 <li>
-<p>url:http://git.eclipse.org/c/viatra/org.eclipse.viatra.git/tree/query/plugins/org.eclipse.viatra.query.patternlanguage.emf/src/META-INF/services/org.eclipse.viatra.query.patternlanguage.emf.validation.whitelist.IPureElementProvider[ServiceLoader registration]</p>
+<p><a href="http://git.eclipse.org/c/viatra/org.eclipse.viatra.git/tree/query/plugins/org.eclipse.viatra.query.patternlanguage.emf/src/META-INF/services/org.eclipse.viatra.query.patternlanguage.emf.validation.whitelist.IPureElementProvider">ServiceLoader registration</a></p>
 </li>
 <li>
-<p>url:http://git.eclipse.org/c/viatra/org.eclipse.viatra.git/tree/query/plugins/org.eclipse.viatra.query.patternlanguage.emf/plugin.xml[Extension registration for Eclipse plug-ins]</p>
+<p><a href="http://git.eclipse.org/c/viatra/org.eclipse.viatra.git/tree/query/plugins/org.eclipse.viatra.query.patternlanguage.emf/plugin.xml">Extension registration for Eclipse plug-ins</a></p>
 </li>
 </ul>
 </div>
