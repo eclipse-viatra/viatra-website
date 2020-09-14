@@ -165,7 +165,7 @@ As of some shortcomings of the EMF generator, the <code>org.eclipse.emf.ecore.ge
 <p>Enclose pattern definitions in a package: <code>package my.own.patterns</code></p>
 </li>
 <li>
-<p>Import declarations are required to indicate which EMF packages and Java classes are referenced in the query definitions.</p>
+<p>Import declarations are required to indicate which EMF packages, VQL patterns from other files and Java classes are referenced in the query definitions.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -182,6 +182,21 @@ As of some shortcomings of the EMF generator, the <code>org.eclipse.emf.ecore.ge
 </li>
 <li>
 <p>Note that here and elsewhere, a caret character can be used to escape keywords, such as java.</p>
+</li>
+<li>
+<p>Note that similar to how Java handles subpackages they also have to be imported with fully qualified names.</p>
+</li>
+<li>
+<p>Patterns of other files can also be imported by their fully qualified names:</p>
+</li>
+<li>
+<p><code>import my.imported.package.PatternName</code></p>
+</li>
+<li>
+<p>Only public patterns can be imported</p>
+</li>
+<li>
+<p>Patterns defined in the same package as the current file are automatically imported.</p>
 </li>
 </ul>
 </div>
@@ -215,6 +230,9 @@ As of some shortcomings of the EMF generator, the <code>org.eclipse.emf.ecore.ge
 </li>
 <li>
 <p>Type declarations are optional, but <strong>strongly recommended</strong> to use. In future versions of VIATRA, they might become mandatory. We recommend using EClass types for all EObject parameter variables, and, since version 1.4, Java class types (prefixed with the <code>java</code> keyword) for attribute-valued and computed parameters.</p>
+</li>
+<li>
+<p>It is possible to have a pattern without parameters - these pattern can be used to check whether the model structure described by the pattern body exists in the model or not.</p>
 </li>
 </ul>
 </div>
@@ -887,7 +905,7 @@ the custom aggregator implementations should be considered an experimental featu
 </table>
 </div>
 <div class="paragraph">
-<p>The first step is to provide a class that implements the Java interface <a href="http://git.eclipse.org/c/viatra/org.eclipse.viatra.git/tree/query/plugins/org.eclipse.viatra.query.runtime.matchers/src/org/eclipse/viatra/query/runtime/matchers/psystem/aggregations/IMultisetAggregationOperator.java">IMultisetAggregationOperator</a> by subclassing <a href="http://git.eclipse.org/c/viatra/org.eclipse.viatra.git/tree/query/plugins/org.eclipse.viatra.query.runtime.matchers/src/org/eclipse/viatra/query/runtime/matchers/psystem/aggregations/AbstractMultisetAggregationOperator.java">AbstractMultisetAggregationOperator</a>. An instance of your class would represent a mathematical aggregation operator (independently of any context, such as patterns, variables, etc.) and provide incremental computation of the aggregate results from a changing multiset of values. Please read the Javadoc carefully to ensure that you meet all assumed contracts; you may also want to inspect the provided built-in implementors to gain a better understanding.</p>
+<p>The first step is to provide a class that implements the Java interface <a href="http://git.eclipse.org/c/viatra/org.eclipse.viatra.git/tree/query/plugins/org.eclipse.viatra.query.runtime.matchers/src/org/eclipse/viatra/query/runtime/matchers/psystem/aggregations/IMultisetAggregationOperator.java">IMultisetAggregationOperator</a>. An instance of your class would represent a mathematical aggregation operator (independently of any context, such as patterns, variables, etc.) and provide incremental computation of the aggregate results from a changing multiset of values. Please read the Javadoc carefully to ensure that you meet all assumed contracts; you may also want to inspect the provided built-in implementors to gain a better understanding.</p>
 </div>
 <div class="paragraph">
 <p>In order to actually use your aggregator in the query language, the second step is to provide an implementation of <a href="http://git.eclipse.org/c/viatra/org.eclipse.viatra.git/tree/query/plugins/org.eclipse.viatra.query.runtime.matchers/src/org/eclipse/viatra/query/runtime/matchers/psystem/aggregations/IAggregatorFactory.java">IAggregatorFactory</a> that must be on the classpath of the query project in order to be accessible from queries. It is customary to take exception to Java naming conventions and use a lower-case class name, as the name of this class will be the aggregator operator name in the query language. The role of this class is twofold:</p>
