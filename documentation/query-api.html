@@ -1095,10 +1095,20 @@ engine.delayUpdatePropagation(new Callable&lt;Void&gt;() {
 <div class="sect2">
 <h3 id="_run_once_query_engine"><a class="link" href="#_run_once_query_engine">10.3. Run-once Query Engine</a></h3>
 <div class="paragraph">
-<p>This page describes how VIATRA Query can be used to carry out one-time query evaluation which is useful in the following cases:
-* You want less (steady-state) memory consumption instead of incremental evaluation.
-* You have derived features that are not [[VIATRA/Addon/Query_Based_Features#Well-behaving_structural_features|well-behaving]], but you want to include them in queries.
-* You like the query language of VIATRA Query, but you don&#8217;t need incremental evaluation and the batch performance is better than the sum of model modification overheads between query usages.</p>
+<p>This page describes how VIATRA Query can be used to carry out one-time query evaluation which is useful in the following cases:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You want less (steady-state) memory consumption instead of incremental evaluation.</p>
+</li>
+<li>
+<p>You have derived features that are not well-behaving, more precisely do not always send correct notifications when its value changes, but you want to include them in queries.</p>
+</li>
+<li>
+<p>You like the query language of VIATRA Query, but you don&#8217;t need incremental evaluation and the batch performance is better than the sum of model modification overheads between query usages.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>These scenarios are now supported by a "run-once" query engine that will perform the evaluation on a given query and return the match set then dispose of the Rete network and base index to free up memory.</p>
@@ -1221,7 +1231,7 @@ This means you may encounter the following on your console if no configuration w
 <div class="content">
 <pre> log4j:WARN No appenders could be found for logger (org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil).
  log4j:WARN Please initialize the log4j system properly.</pre>
-</div>x
+</div>
 </div>
 <div class="paragraph">
 <p>There are several cases where this can occur:</p>
