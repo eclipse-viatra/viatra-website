@@ -314,6 +314,23 @@ If the 'Load model from active editor' button is not enabled, it either means, t
 </div>
 </li>
 <li>
+<p>List all application instances that are running</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Similar to integer, numeric and boolean literals, you can refer to EMF enumerations as constants. This pattern uses the EEnum literal <code>AppState::Running</code> instead of a variable.</p>
+<div id="vql-runningapplication" class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-vql" data-lang="vql">pattern runningApplication(application : ApplicationInstance) {
+    ApplicationInstance.state(application, AppState::Running);
+}</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
 <p>List all <code>HostInstance</code>-<code>HostInstance</code> pairs that share a common IP address</p>
 <div class="ulist">
 <ul>
@@ -2510,9 +2527,6 @@ The changes made this ways could produce unpredictable behavior in the model tra
 </div>
 </div>
 </div>
-</div>
-
-	<script>hljs.initHighlighting()</script>
 </div>	
 
 <div class="clear"></div>
