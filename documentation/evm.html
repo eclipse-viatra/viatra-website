@@ -25,8 +25,8 @@
 	<link type="text/css" rel="stylesheet" href="/viatra/css/bootstrap.min.css" />
 	<link type="text/css" rel="stylesheet" href="/viatra/css/style.css" />
 	<link type="text/css" rel="stylesheet" href="/viatra/css/media.css" />
-	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> 
-	<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300italic,700,300' rel='stylesheet' type='text/css'>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css"> 
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300italic,700,300" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" href="https://use.fontawesome.com/ef6567f233.css">
 
 	<link rel="stylesheet" href="/viatra/highlight.js/styles/foundation.min.css">
@@ -149,16 +149,16 @@
 <p>We illustrate the two main usage modes of the EVM with UML models. First, we have to define the preconditions with patterns, then define the rule specifications which can be added to a rule engine or execution schema.</p>
 </div>
 <div class="paragraph">
-<p>The example project is on the repository: <a href="http://git.eclipse.org/c/viatra/org.eclipse.viatra.git/tree/examples/papyrus-uml/org.eclipse.viatra.examples.uml.evm/">UML EVM Example</a></p>
+<p>The example project is on the repository: <a href="https://git.eclipse.org/c/viatra/org.eclipse.viatra.examples.git/tree/query/papyrus-uml/org.eclipse.viatra.examples.uml.evm/">UML EVM Example</a></p>
 </div>
 <div class="sect2">
 <h3 id="_precondition_pattern_definition"><a class="link" href="#_precondition_pattern_definition">2.1. Precondition pattern definition</a></h3>
 <div class="paragraph">
-<p>The code example below shows the <strong>possibleSuperClass</strong> and <strong>onlyInheritedOperations</strong> patterns of that are based on the UML example, the complete query definition can be found in our repository: <a href="http://git.eclipse.org/c/viatra/org.eclipse.viatra.git/tree/examples/papyrus-uml/org.eclipse.viatra.examples.uml.evm/src/org/eclipse/viatra/examples/uml/evm/queries/preconditions.vql">preconditions.vql</a></p>
+<p>The code example below shows the <strong>possibleSuperClass</strong> and <strong>onlyInheritedOperations</strong> patterns of that are based on the UML example, the complete query definition can be found in our repository: <a href="https://git.eclipse.org/c/viatra/org.eclipse.viatra.examples.git/tree/query/papyrus-uml/org.eclipse.viatra.examples.uml.evm/src/org/eclipse/viatra/examples/uml/evm/queries/preconditions.vql">preconditions.vql</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-vql hljs" data-lang="vql">/* Precondition for add generalization rule */
+<pre class="highlight"><code class="language-vql" data-lang="vql">/* Precondition for add generalization rule */
 pattern possibleSuperClass(cl : Class, sup : Class) {
 	neg find superClass(cl, _otherSup);
 	neg find superClass(_cl2, sup);
@@ -174,14 +174,14 @@ pattern onlyInheritedOperations(cl : Class) {
 <div class="sect2">
 <h3 id="_rule_specifications"><a class="link" href="#_rule_specifications">2.2. Rule specifications</a></h3>
 <div class="paragraph">
-<p>We define two rule specifications, both encapsulated by a method in <a href="http://git.eclipse.org/c/viatra/org.eclipse.viatra.git/tree/examples/papyrus-uml/org.eclipse.viatra.examples.uml.evm/src/org/eclipse/viatra/examples/uml/evm/UMLexampleForEVM.java">UMLexampleForEVM.java</a>.</p>
+<p>We define two rule specifications, both encapsulated by a method in <a href="https://git.eclipse.org/c/viatra/org.eclipse.viatra.examples.git/tree/query/papyrus-uml/org.eclipse.viatra.examples.uml.evm/src/org/eclipse/viatra/examples/uml/evm/UMLexampleForEVM.java">UMLexampleForEVM.java</a>.</p>
 </div>
 <div class="paragraph">
 <p>The first rule specification uses the  <strong>possibleSuperClass</strong> pattern as a precondition and when executed for a given class pair, it creates a new Generalization element to set the class <strong>sup</strong> as a superclass for <strong>cl</strong>. The life-cycle is the most simple, where neither the updated, nor the disappeared state is used.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// the job specifies what to do when an activation is fired in the given state
+<pre class="highlight"><code class="language-java" data-lang="java">// the job specifies what to do when an activation is fired in the given state
 Job job = Jobs.newStatelessJob(CRUDActivationStateEnum.APPEARED, new PossibleSuperClassProcessor() {
   @Override
   public void process(Class cl, Class sup) {
@@ -204,7 +204,7 @@ RuleSpecification spec = Rules.newSimpleMatcherRuleSpecification(factory, lifecy
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Job job = Jobs.newStatelessJob(CRUDActivationStateEnum.APPEARED, new OnlyInheritedOperationsProcessor() {
+<pre class="highlight"><code class="language-java" data-lang="java">Job job = Jobs.newStatelessJob(CRUDActivationStateEnum.APPEARED, new OnlyInheritedOperationsProcessor() {
   @Override
   public void process(Class cl) {
     System.out.println("Found class " + cl + " without operation");
@@ -226,7 +226,7 @@ RuleSpecification spec = Rules.newSimpleMatcherRuleSpecification(factory, lifecy
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// create rule engine over query engine
+<pre class="highlight"><code class="language-java" data-lang="java">// create rule engine over query engine
 RuleEngine ruleEngine = RuleEngines.createViatraQueryRuleEngine(engine);
 // create context for execution
 Context context = Context.create();
@@ -243,7 +243,7 @@ ruleEngine.addRule(createOperation);</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// check rule applicability
+<pre class="highlight"><code class="language-java" data-lang="java">// check rule applicability
 Set&lt;Activation&gt; createClassesActivations = ruleEngine.getActivations(createGeneralization);
 if (!createClassesActivations.isEmpty()) {
     // fire activation of a given rule
@@ -261,7 +261,7 @@ while (!ruleEngine.getConflictingActivations().isEmpty()) {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// rules that are no longer needed can be removed
+<pre class="highlight"><code class="language-java" data-lang="java">// rules that are no longer needed can be removed
 ruleEngine.removeRule(createGeneralization);
 // rule engine manages the activations of the added rules until disposed
 ruleEngine.dispose();</code></pre>
@@ -275,7 +275,7 @@ ruleEngine.dispose();</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// use IQBase update callback for scheduling execution
+<pre class="highlight"><code class="language-java" data-lang="java">// use IQBase update callback for scheduling execution
 UpdateCompleteBasedSchedulerFactory schedulerFactory = Schedulers.getIQEngineSchedulerFactory(engine);
 // create execution schema over ViatraQueryEngine
 ExecutionSchema executionSchema = ExecutionSchemas.createViatraQueryExecutionSchema(engine, schedulerFactory);
@@ -292,7 +292,7 @@ executionSchema.addRule(createOperation);</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// execution schema waits for a scheduling to fire activations
+<pre class="highlight"><code class="language-java" data-lang="java">// execution schema waits for a scheduling to fire activations
 // we trigger this by removing one generalization at random
 SuperClassMatcher.factory().getMatcher(engine).forOneArbitraryMatch(new SuperClassProcessor() {
     @Override
@@ -307,7 +307,7 @@ SuperClassMatcher.factory().getMatcher(engine).forOneArbitraryMatch(new SuperCla
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// rules that are no longer needed can be removed
+<pre class="highlight"><code class="language-java" data-lang="java">// rules that are no longer needed can be removed
 executionSchema.removeRule(createGeneralization);
 // execution schema manages and fires the activations of the added
 // rules until disposed
@@ -332,7 +332,7 @@ The log will include events, activation state changes, scheduling and executor e
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// just set the log level of the engine as needed
+<pre class="highlight"><code class="language-java" data-lang="java">// just set the log level of the engine as needed
 ruleEngine.getLogger().setLevel(Level.DEBUG);</code></pre>
 </div>
 </div>
@@ -486,7 +486,7 @@ Not all EVM instances are adaptable because the notification handling may have a
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class FiringLoggingEVMListener extends AbstractTransformationListener{
+<pre class="highlight"><code class="language-java" data-lang="java">public class FiringLoggingEVMListener extends AbstractTransformationListener{
     private final Logger logger;
 
     public FiringLoggingEVMListener(Logger logger) {
@@ -515,7 +515,7 @@ Not all EVM instances are adaptable because the notification handling may have a
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class ExecutorIteratorManipulatorAdapter extends AbstractTransformationAdapter{
+<pre class="highlight"><code class="language-java" data-lang="java">public class ExecutorIteratorManipulatorAdapter extends AbstractTransformationAdapter{
 
     @Override
     public Iterator&lt;Activation&lt;?&gt;&gt; getExecutableActivations(Iterator&lt;Activation&lt;?&gt;&gt; iterator) {
@@ -570,7 +570,7 @@ Not all EVM instances are adaptable because the notification handling may have a
 <div class="listingblock">
 <div class="title">Assembling an Adaptable RuleBase</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public RuleEngine createAdaptableRuleEngine(ViatraQueryEngine queryEngine) {
+<pre class="highlight"><code class="language-java" data-lang="java">public RuleEngine createAdaptableRuleEngine(ViatraQueryEngine queryEngine) {
         //Create an adaptable conflict resolver that wraps a default arbitrary conflict resolver
         //If an adaptable conflict resolver is not needed, create the arbitrary conflict resolver
         AdaptableConflictResolver conflictResolver = new AdaptableConflictResolver(new ArbitraryOrderConflictResolver(),
@@ -600,7 +600,7 @@ Not all EVM instances are adaptable because the notification handling may have a
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-if you are planning to use an adaptable rule base and want to access the full adapter functionality, use an Adaptable Executor to fire activations. See the VIATRA BatchTransformation (<a href="http://git.eclipse.org/c/viatra/org.eclipse.viatra.git/tree/transformation/plugins/org.eclipse.viatra.transformation.runtime.emf/src/org/eclipse/viatra/transformation/runtime/emf/transformation/batch/BatchTransformation.java">source</a>) and BatchTransformationStatements (<a href="http://git.eclipse.org/c/viatra/org.eclipse.viatra.git/tree/transformation/plugins/org.eclipse.viatra.transformation.runtime.emf/src/org/eclipse/viatra/transformation/runtime/emf/transformation/batch/BatchTransformationStatements.xtend">source</a>)  classes.
+if you are planning to use an adaptable rule base and want to access the full adapter functionality, use an Adaptable Executor to fire activations. See the VIATRA BatchTransformation (<a href="http://git.eclipse.org/c/viatra/org.eclipse.viatra.git/tree/transformation/plugins/org.eclipse.viatra.transformation.runtime.emf/src/org/eclipse/viatra/transformation/runtime/emf/transformation/batch/BatchTransformation.java">source</a>) and BatchTransformationStatements (<a href="http://git.eclipse.org/c/viatra/org.eclipse.viatra.git/tree/transformation/plugins/org.eclipse.viatra.transformation.runtime.emf/src/org/eclipse/viatra/transformation/runtime/emf/transformation/batch/BatchTransformationStatements.java">source</a>)  classes.
 </td>
 </tr>
 </table>
@@ -608,7 +608,7 @@ if you are planning to use an adaptable rule base and want to access the full ad
 <div class="listingblock">
 <div class="title">Assembling an Adaptable ExecutionSchema</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public ExecutionSchema createAdaptableExecutionSchema(ViatraQueryEngine queryEngine,
+<pre class="highlight"><code class="language-java" data-lang="java">public ExecutionSchema createAdaptableExecutionSchema(ViatraQueryEngine queryEngine,
             ISchedulerFactory schedulerFactory, ConflictResolver conflictResolver) {
 
         //Create an adaptable executor that wraps a default EVM executor
@@ -694,7 +694,7 @@ Just define a rule specification with the correct life-cycle and jobs and create
 <h3 id="_roll_your_own_event_provider_for_evm"><a class="link" href="#_roll_your_own_event_provider_for_evm">4.2. Roll your own event provider for EVM</a></h3>
 <div class="paragraph">
 <p>The EVM core is independent of EMF and VIATRA Query, see <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=406558" class="bare">https://bugs.eclipse.org/bugs/show_bug.cgi?id=406558</a>
-You can create your own event realm and use the EVM core concepts to execute event-driven rules. You can see a small example in <a href="http://git.eclipse.org/c/viatra/org.eclipse.viatra.git/tree/examples/evm-proto" class="bare">http://git.eclipse.org/c/viatra/org.eclipse.viatra.git/tree/examples/evm-proto</a></p>
+You can create your own event realm and use the EVM core concepts to execute event-driven rules. You can see a small example in <a href="https://git.eclipse.org/c/viatra/org.eclipse.viatra.examples.git/tree/query/evm-proto" class="bare">https://git.eclipse.org/c/viatra/org.eclipse.viatra.examples.git/tree/query/evm-proto</a></p>
 </div>
 </div>
 </div>
@@ -873,7 +873,7 @@ You can create your own event realm and use the EVM core concepts to execute eve
 </div>
 <div id="evm-initialize" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Create schema
+<pre class="highlight"><code class="language-java" data-lang="java">// Create schema
 val schedulerFactory = Schedulers.getQueryEngineSchedulerFactory(engine)
 val schema = ExecutionSchemas.createViatraQueryExecutionSchema(engine, schedulerFactory)
 // Setup conflict resolver
@@ -901,7 +901,7 @@ schema.startUnscheduledExecution</code></pre>
 </div>
 <div id="evm-common" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Create rule engine over ViatraQueryEngine
+<pre class="highlight"><code class="language-java" data-lang="java">// Create rule engine over ViatraQueryEngine
 val ruleEngine = RuleEngines.createViatraQueryRuleEngine(engine)
 // Create context for execution
 val context = Context.create()
@@ -923,7 +923,7 @@ ruleEngine.addRule(appMapping)</code></pre>
 </div>
 <div id="evm-createrule" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Check rule applicability
+<pre class="highlight"><code class="language-java" data-lang="java">// Check rule applicability
 val createClassesActivations = ruleEngine.getActivations(hostMapping)
 if (!createClassesActivations.empty) {
     // Fire activation of a given rule
@@ -942,7 +942,7 @@ if (!createClassesActivations.empty) {
 </div>
 <div id="evm-firing" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Check for any applicable rules
+<pre class="highlight"><code class="language-java" data-lang="java">// Check for any applicable rules
 while (!ruleEngine.conflictingActivations.empty) {
     // Fire next activation as long as possible
     ruleEngine.nextActivation?.fire(context)
@@ -963,7 +963,7 @@ ruleEngine.removeRule(hostMapping)</code></pre>
 </div>
 <div id="evm-filter" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Create custom filter for IP
+<pre class="highlight"><code class="language-java" data-lang="java">// Create custom filter for IP
 var eventFilter = new EventFilter&lt;HostInstancesMatch&gt;() {
     override isProcessable(HostInstancesMatch eventAtom) {
         eventAtom.hostInstance.nodeIp == FILTERED_IP
@@ -991,7 +991,7 @@ while (!ruleEngine.conflictingActivations.empty) {
 </div>
 <div id="evm-filter2" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Create query match filter with a partial match object
+<pre class="highlight"><code class="language-java" data-lang="java">// Create query match filter with a partial match object
 val matchFilter = ViatraQueryMatchEventFilter.createFilter(
     HostInstancesMatch.newMatch(
         engine.hostInstancesByIp.getOneArbitraryMatch(null, FILTERED_IP).hostInstance
@@ -1009,7 +1009,7 @@ ruleEngine.addRule(hostMapping, matchFilter)</code></pre>
 </div>
 <div id="evm-conflictset" class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Check that there is any conflicting activation
+<pre class="highlight"><code class="language-java" data-lang="java">// Check that there is any conflicting activation
 if(!ruleEngine.conflictingActivations.empty) {
     // Create the conflict set
     val conflictSet = ruleEngine.createScopedConflictSet(resolver,

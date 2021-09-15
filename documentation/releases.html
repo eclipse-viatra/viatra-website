@@ -25,8 +25,8 @@
 	<link type="text/css" rel="stylesheet" href="/viatra/css/bootstrap.min.css" />
 	<link type="text/css" rel="stylesheet" href="/viatra/css/style.css" />
 	<link type="text/css" rel="stylesheet" href="/viatra/css/media.css" />
-	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> 
-	<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300italic,700,300' rel='stylesheet' type='text/css'>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css"> 
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300italic,700,300" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" href="https://use.fontawesome.com/ef6567f233.css">
 
 	<link rel="stylesheet" href="/viatra/highlight.js/styles/foundation.min.css">
@@ -50,6 +50,7 @@
 <div id="toc" class="toc">
 <div id="toctitle" class="title">Table of Contents</div>
 <ul class="sectlevel1">
+<li><a href="#viatra-26">VIATRA 2.6</a></li>
 <li><a href="#viatra-25">VIATRA 2.5</a></li>
 <li><a href="#viatra-24">VIATRA 2.4</a></li>
 <li><a href="#viatra-23">VIATRA 2.3</a></li>
@@ -63,6 +64,29 @@
 <li><a href="#viatra-13">VIATRA 1.3</a></li>
 <li><a href="#viatra-12">VIATRA 1.2</a></li>
 </ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="viatra-26"><a class="link" href="#viatra-26">VIATRA 2.6</a></h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Release date</dt>
+<dd>
+<p>2021-09-15</p>
+</dd>
+<dt class="hdlist1">More information</dt>
+<dd>
+<p><a href="https://projects.eclipse.org/projects/modeling.viatra/releases/2.6.0" class="bare">https://projects.eclipse.org/projects/modeling.viatra/releases/2.6.0</a></p>
+</dd>
+</dl>
+</div>
+<div class="sect2">
+<h3 id="_new_and_noteworthy"><a class="link" href="#_new_and_noteworthy">New and Noteworthy</a></h3>
+<div class="paragraph">
+<p>VIATRA 2.6 is mostly a bugfix and maintenance release, in addition to a few bugfixes most changes were related to the make sure VIATRA is correctly building in the current Eclipse build infrastructure. Furthermore, together with the release, the documentation of the CPS demonstrator application was restructured and a new transformation implementation was added.</p>
+</div>
 </div>
 </div>
 </div>
@@ -82,7 +106,7 @@
 </dl>
 </div>
 <div class="sect2">
-<h3 id="_new_and_noteworthy"><a class="link" href="#_new_and_noteworthy">New and Noteworthy</a></h3>
+<h3 id="_new_and_noteworthy_2"><a class="link" href="#_new_and_noteworthy_2">New and Noteworthy</a></h3>
 
 </div>
 <div class="sect2">
@@ -90,7 +114,7 @@
 <div class="sect3">
 <h4 id="_updated_logging_configuration"><a class="link" href="#_updated_logging_configuration">Updated logging configuration</a></h4>
 <div class="paragraph">
-<p>In order to simplify log output, the default logging configuration was updated to remove unnecessary duplication in identifiers and ensure everything uses the same configuration.</p>
+<p>In order to simplify log output, the default logging configuration was updated to remove unnecessary duplication and ensure everything uses the same configuration.</p>
 </div>
 <div class="paragraph">
 <p>Old output:</p>
@@ -107,7 +131,7 @@
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>0 [main] DEBUG org.eclipse.viatra.query.runtime.api.ViatraQueryEngine.1361289747  - Scaffold: patternbody build started for org.example.Range
-272 [main] DEBUG org.eclipse.viatra.transformation.evm.api.Agenda@4567f35d  - INACTIVE -- CREATE --&gt; CREATED on org.eclipse.viatra.transformation.evm.api.Activation{atom=Match&lt;org.example.Range&gt;{"start"=0, "end"=30}, state=CREATED}</code></pre>
+272 [main] DEBUG org.eclipse.viatra.transformation.evm.api.Agenda@4567f35d  - CREATED -- FIRE --&gt; FIRED on org.eclipse.viatra.transformation.evm.api.Activation{atom=Match&lt;org.example.Range&gt;{"start"=0, "end"=30}, state=FIRED}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -133,7 +157,7 @@
 </dl>
 </div>
 <div class="sect2">
-<h3 id="_new_and_noteworthy_2"><a class="link" href="#_new_and_noteworthy_2">New and Noteworthy</a></h3>
+<h3 id="_new_and_noteworthy_3"><a class="link" href="#_new_and_noteworthy_3">New and Noteworthy</a></h3>
 <div class="sect3">
 <h4 id="_fixed_custom_java_support_in_pattern_parser"><a class="link" href="#_fixed_custom_java_support_in_pattern_parser">Fixed Custom Java Support in Pattern Parser</a></h4>
 <div class="paragraph">
@@ -208,7 +232,7 @@
 </dl>
 </div>
 <div class="sect2">
-<h3 id="_new_and_noteworthy_3"><a class="link" href="#_new_and_noteworthy_3">New and Noteworthy</a></h3>
+<h3 id="_new_and_noteworthy_4"><a class="link" href="#_new_and_noteworthy_4">New and Noteworthy</a></h3>
 <div class="sect3">
 <h4 id="_dependency_cleanup"><a class="link" href="#_dependency_cleanup">Dependency Cleanup</a></h4>
 <div class="paragraph">
@@ -296,7 +320,7 @@ long time = profiler.totalMeasuredTimeInMS);</code></pre>
 </dl>
 </div>
 <div class="sect2">
-<h3 id="_new_and_noteworthy_4"><a class="link" href="#_new_and_noteworthy_4">New and Noteworthy</a></h3>
+<h3 id="_new_and_noteworthy_5"><a class="link" href="#_new_and_noteworthy_5">New and Noteworthy</a></h3>
 <div class="sect3">
 <h4 id="_license_change_to_epl_v2_0"><a class="link" href="#_license_change_to_epl_v2_0">License change to EPL v2.0</a></h4>
 <div class="paragraph">
@@ -429,7 +453,7 @@ The field <code>accessMap</code> and the API method <code>withClasses</code> for
 </dl>
 </div>
 <div class="sect2">
-<h3 id="_new_and_noteworthy_5"><a class="link" href="#_new_and_noteworthy_5">New and Noteworthy</a></h3>
+<h3 id="_new_and_noteworthy_6"><a class="link" href="#_new_and_noteworthy_6">New and Noteworthy</a></h3>
 <div class="sect3">
 <h4 id="_graphical_query_editor"><a class="link" href="#_graphical_query_editor">Graphical Query Editor</a></h4>
 <div class="paragraph">
@@ -506,7 +530,7 @@ The field <code>accessMap</code> and the API method <code>withClasses</code> for
 </dl>
 </div>
 <div class="sect2">
-<h3 id="_new_and_noteworthy_6"><a class="link" href="#_new_and_noteworthy_6">New and Noteworthy</a></h3>
+<h3 id="_new_and_noteworthy_7"><a class="link" href="#_new_and_noteworthy_7">New and Noteworthy</a></h3>
 <div class="sect3">
 <h4 id="_new_language_features"><a class="link" href="#_new_language_features">New Language Features</a></h4>
 <div class="paragraph">
