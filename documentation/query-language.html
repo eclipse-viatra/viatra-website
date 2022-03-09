@@ -344,6 +344,9 @@ As of some shortcomings of the EMF generator, the <code>org.eclipse.emf.ecore.ge
 <p>Constant literals of enumeration types, such as <code>MyEEnum::MY_LITERAL</code></p>
 </li>
 <li>
+<p>Java constants, more specifically, public static final fields can be represented after the java keyword, such as <code>java Integer::MAX_VALUE</code>.</p>
+</li>
+<li>
 <p>Aggregation of multiple matches of a called pattern into a single value, in a syntax analogous to negative pattern calls:</p>
 </li>
 <li>
@@ -363,6 +366,15 @@ As of some shortcomings of the EMF generator, the <code>org.eclipse.emf.ecore.ge
 </li>
 <li>
 <p>The Java types of variables are inferred based on the EMF Ecore specification (using the generated Java classes)</p>
+</li>
+<li>
+<p><code>eval unwind (&#8230;&#8203;)</code> lets you compute values for each member of a Set object (available since version 2.7)</p>
+</li>
+<li>
+<p>The returned set <strong>should not</strong> contain duplicate values. Adding duplicate values would not cause duplicate results in the match set of the pattern but increases processing time.</p>
+</li>
+<li>
+<p>As of version 2.7 the functionality was not tested with large sets returned. If such cases result in slow query evaluation, please open a bug report with as much details as possible to help finetuning the responsible algorithms.</p>
 </li>
 </ul>
 </div>
@@ -982,7 +994,6 @@ Once again, please read the Javadoc carefully and take a look at the built-in im
 <p>The optional markers for backend selection and parameter directions are not validated in the context of the provided pattern. Use them only if necessary.</p>
 </li>
 </ul>
-</div>
 </div>
 </div>
 </div>

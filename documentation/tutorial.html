@@ -354,16 +354,19 @@ If the 'Load model from active editor' button is not enabled, it either means, t
 <div class="ulist">
 <ul>
 <li>
-<p>The well-formedness validation of the IP address strings requires specific validation blocks called <code>check</code> expressions where  you can write a wide range of <em>Xbase</em> expressions, behaving similarly to Java and accessing Java classes from the classpath of the project. In this case, the well-formedness of the address values is represented with a regular expression evaluation.</p>
+<p>The well-formedness validation of the IP address strings requires specific validation blocks called <code>check</code> expressions where  you can write a wide range of <em>Xbase</em> expressions, behaving similarly to Java and accessing Java classes from the classpath of the project. In this case, the well-formedness of the address values is represented via a utility method provided by Google Guava, but similar results could be expressed using Java regular expressions as well.</p>
 </li>
 <li>
-<p>It is important to note that check expressions <strong>have to</strong> be side-effect free and can only be called on attribute variables.</p>
+<p>Note that this method also matches fields where IP addresses are set to empty string.</p>
+</li>
+<li>
+<p>It is important to note that check expressions <strong>have to</strong> be deterministic, side-effect free and can only be called on attribute variables. Given VIATRA cannot decide whether a given Java method is side-effect free, a warning is provided for each unknown method referenced by the expression. If necessary, the environment supports extending the list of known methods, see <a href="query-language.html#_function_whitelist">the detailed language documentation</a> for more details.</p>
 <div id="vql-ipformatinvalid" class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-vql" data-lang="vql">pattern ipFormatInvalid(host : HostInstance, ip : java String) {
     HostInstance.nodeIp(host,ip);
     check (
-        !ip.matches("^[\\d\\.]+")
+        !com.google.common.net.InetAddresses.isInetAddress(ip)
     );
 }</code></pre>
 </div>
@@ -410,9 +413,6 @@ If the 'Load model from active editor' button is not enabled, it either means, t
 <div class="content">
 <pre class="highlight"><code class="language-vql" data-lang="vql">pattern badHost(host : HostInstance, ip : java String) {
     find sameIpAddress(host, _other, ip);
-} or {
-    HostInstance.nodeIp(host, ip);
-    find emptyIpAddress(host);
 } or {
     find ipFormatInvalid(host, ip);
 }</code></pre>
@@ -577,13 +577,13 @@ pattern sameIpAddress(host1: HostInstance, host2: HostInstance, commonIp : java 
 <p>It is possible to find the Application Type that has the most instances defined in the model by combining a <em>counting</em> of the values of the related feature and a <em>max</em> function.  The <code>sumNumberOfInstances</code> helper pattern uses a <code>count</code> call of the <code>ApplicationType.instances</code> feature (note the omission of the <code>find</code> keyword there). This feature is available starting with VIATRA 2.0, and allows reducing the number of trivial helper patterns, like the pattern <code>hostIpAddress</code> introduced earlier in this tutorial.</p>
 </div>
 <div class="paragraph">
-<p>After the counts are available in the match set of a pattern, it is possible to calculate the maximum value using the <code>max find</code> construct. However, it is important that calculating the maximum does not connect the ApplicationType instances to their maximum, that needs to be done with an additional constraint.</p>
+<p>After the counts are available in the match set of a pattern, it is possible to calculate the maximum value using the <code>max find</code> construct. The <code>#</code> symbol represents an otherwise unbound parameter of the called pattern that needs is be aggregated, e.g. in case of a <code>max</code> aggregator the largest value is selected. It is important to note that calculating the maximum does not connect the ApplicationType instances to their maximum, that needs to be done with an additional constraint.</p>
 </div>
 <div id="vql-maximumNumberOfInstances" class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-vql" data-lang="vql">pattern maximumNumberOfInstances(at : ApplicationType, max : java Integer) {
 	max == max find sumNumberOfInstances(at, #);
-	find sumNumberOfInstances(applicationType, max);
+	find sumNumberOfInstances(at, max);
 }
 
 pattern sumNumberOfInstances(at : ApplicationType, n : java Integer) {
@@ -641,7 +641,7 @@ private pattern totalMemoryRequirements(h : HostInstance, ai : ApplicationInstan
 
 private pattern applicationTypeRequirementRAM(at : ApplicationType, ram : java Integer) {
 	ApplicationType.requirements(at, req);
-	ResourceRequirement.requiredRam(req, ram);
+	ram == sum ResourceRequirement.requiredRam(req, #);
 }</code></pre>
 </div>
 </div>
@@ -2527,7 +2527,8 @@ The changes made this ways could produce unpredictable behavior in the model tra
 </div>
 </div>
 </div>
-</div>	
+</div>
+</div>
 
 <div class="clear"></div>
 <ng-include src="'/viatra/angular/blocks/footer.html'"></ng-include>
